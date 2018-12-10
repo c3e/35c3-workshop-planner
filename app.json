@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "35c3 workshop planner",
+    "icon": "./src/assets/images/tux.png",
+    "version": "1.0.0",
+    "description": "Plan your workshops at the 35c3 event in Leipzig by browsing the wiki, mark interisting workshops and add them to your calendar.",
+    "slug": "35c3-workshop-planner",
+    "sdkVersion": "31.0.0",
+    "privacy": "public",
+    "githubUrl": "https://github.com/c3e/35c3-workshop-planner",
+    "ios": {
+      "bundleIdentifier": "de.chaospott.workshopplanner.event35c3",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "package": "de.chaospott.workshopplanner.event35c3",
+      "versionCode": 1,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=de.chaospott.workshopplanner.event35c3",
+      "permissions": [
+        "READ_CALENDAR",
+	    "WRITE_CALENDAR"
+      ]
+    },
+    "packagerOpts": {
+      "sourceExts": ["ts", "tsx"],
+      "transformer": "node_modules/react-native-typescript-transformer/index.js"
+    },
+    "orientation": "portrait",
+    "primaryColor": "#000000",
+    "splash": {
+      "image": "./src/assets/images/splash.png",
+      "backgroundColor": "#000000",
+      "resizeMode": "contain"
+    }
+  }
+}
+
