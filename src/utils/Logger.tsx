@@ -49,18 +49,18 @@ export default class LOGGER {
   private static buildLogLine = function(level: LogLevel, message: string): string {
     switch (level) {
       case LogLevel.VERBOSE:
-        return LOGGER.gray(`${LOGGER.getTimeFormatted()} -=SipgateCallerId=- [${level}]: ${message}`);
+        return LOGGER.gray(`${LOGGER.getTimeFormatted()} -=35c3-workshop-planner=- [${level}]: ${message}`);
       case LogLevel.DEBUG:
-        return LOGGER.white(`${LOGGER.getTimeFormatted()} -=SipgateCallerId=- [${level}]: ${message}`);
+        return LOGGER.white(`${LOGGER.getTimeFormatted()} -=35c3-workshop-planner=- [${level}]: ${message}`);
       case LogLevel.INFO:
-        return LOGGER.green(`${LOGGER.getTimeFormatted()} -=SipgateCallerId=- [${level}]: ${message}`);
+        return LOGGER.green(`${LOGGER.getTimeFormatted()} -=35c3-workshop-planner=- [${level}]: ${message}`);
       case LogLevel.WARN:
-        return LOGGER.yellow(`${LOGGER.getTimeFormatted()} -=SipgateCallerId=- [${level}]: ${message}`);
+        return LOGGER.yellow(`${LOGGER.getTimeFormatted()} -=35c3-workshop-planner=- [${level}]: ${message}`);
       case LogLevel.ERROR:
       case LogLevel.FATAL:
-        return LOGGER.red(`${LOGGER.getTimeFormatted()} -=SipgateCallerId=- [${level}]: ${message}`);
+        return LOGGER.red(`${LOGGER.getTimeFormatted()} -=35c3-workshop-planner=- [${level}]: ${message}`);
       default:
-        return LOGGER.red(`${LOGGER.getTimeFormatted()} -=SipgateCallerId=- [${level}]: ${message}`);
+        return LOGGER.red(`${LOGGER.getTimeFormatted()} -=35c3-workshop-planner=- [${level}]: ${message}`);
     }
   };
 

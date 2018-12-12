@@ -1,8 +1,15 @@
 import React from 'react';
 import { Image, Platform, ScrollView, StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-elements';
+import GetAllSessions from '../apicalls/GetAllSessions';
+import { Dispatch } from 'redux';
+import LOGGER from '../utils/Logger';
 
-export default class YourWorkshopsScreen extends React.Component {
+interface IYourWorkshopScreenProps {
+  dispatch: Dispatch;
+}
+
+export default class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
@@ -22,7 +29,10 @@ export default class YourWorkshopsScreen extends React.Component {
           </View>
 
           <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={() => { ToastAndroid.show('nope', ToastAndroid.LONG); }} style={styles.helpLink}>
+            <TouchableOpacity onPress={() => {
+              LOGGER.debug(new GetAllSessions(this.props.dispatch).getSessions());
+              ToastAndroid.show('nope', ToastAndroid.LONG);
+            }} style={styles.helpLink}>
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
             </TouchableOpacity>
           </View>

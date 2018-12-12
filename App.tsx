@@ -39,6 +39,8 @@ interface AppState {
 // noinspection JSUnusedGlobalSymbols
 export default class App extends React.Component<{}, AppState> {
 
+  public static OFFLINE_DEBUG = false;
+
   constructor(props: any) {
     super(props);
   }
