@@ -8,9 +8,10 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+  Home: HomeScreen
 });
 
+// noinspection JSUnusedGlobalSymbols
 HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
@@ -22,13 +23,14 @@ HomeStack.navigationOptions = {
           : 'md-information-circle'
       }
     />
-  ),
+  )
 };
 
 const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+  Links: LinksScreen
 });
 
+// noinspection JSUnusedGlobalSymbols
 LinksStack.navigationOptions = {
   tabBarLabel: 'Links',
   tabBarIcon: ({ focused }) => (
@@ -36,13 +38,14 @@ LinksStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
     />
-  ),
+  )
 };
 
 const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
+  Settings: SettingsScreen
 });
 
+// noinspection JSUnusedGlobalSymbols
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
   tabBarIcon: ({ focused }) => (
@@ -50,11 +53,11 @@ SettingsStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
     />
-  ),
+  )
 };
 
 export default createBottomTabNavigator({
   HomeStack,
   LinksStack,
-  SettingsStack,
+  SettingsStack
 });

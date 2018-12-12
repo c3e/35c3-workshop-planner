@@ -33,3 +33,15 @@ Now you are ready to install the dependencies:
 To start the app run:
 
 ``yarn start``
+
+
+### NOTES FOR DEVELOPMENT
+
+- url for all workshops: ``https://events.ccc.de/congress/2017/wiki/api.php?action=query&list=categorymembers&cmprop=ids|title|type|sortkey|timestamp&cmlimit=5000&cmtitle=Category:Session``
+
+- 2017 workshop list: ``https://events.ccc.de/congress/2017/wiki/index.php/Static:Self-organized_Sessions#List_of_Self-organized_Sessions``
+
+- Table Component you maybe want to use: ``https://www.npmjs.com/package/react-native-table-component``
+
+- Howto use the expo.io calendar: ``https://docs.expo.io/versions/latest/sdk/calendar``
+
