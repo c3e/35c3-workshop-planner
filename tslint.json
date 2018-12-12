@@ -1,0 +1,17 @@
+{
+  "extends": "tslint-config-standard",
+  "rules": {
+    "semicolon": [ true, "always" ],
+    "space-before-function-paren": false,
+    "prefer-template": true,
+    "typedef": [
+      true,
+      "call-signature",
+      "property-declaration"
+    ],
+    "array-type": [true, "array"],
+    "no-for-in-array": true,
+    "no-sparse-arrays": true,
+    "no-floating-promises": true
+  }
+}
