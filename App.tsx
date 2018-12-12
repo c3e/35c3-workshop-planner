@@ -1,7 +1,7 @@
 import React from 'react';
-import HomeScreen from './src/screens/HomeScreen';
+import YourWorkshopsScreen from './src/screens/YourWorkshopsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
-import LinksScreen from './src/screens/LinksScreen';
+import DiscoverWorkshopsScreen from './src/screens/DiscoverWorkshopsScreen';
 import { createStackNavigator, NavigationContainer } from 'react-navigation';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Font } from 'expo';
@@ -16,10 +16,10 @@ import LOGGER from './src/utils/Logger';
 const RootStack: NavigationContainer =
     createStackNavigator({
       YourWorkshops: {
-        screen: HomeScreen
+        screen: YourWorkshopsScreen
       },
       DiscoverWorkshops: {
-        screen: LinksScreen
+        screen: DiscoverWorkshopsScreen
       },
       Settings: {
         screen: SettingsScreen

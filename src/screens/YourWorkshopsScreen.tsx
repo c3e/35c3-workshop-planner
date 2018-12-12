@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Platform, ScrollView, StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-elements';
 
-export default class HomeScreen extends React.Component {
+export default class YourWorkshopsScreen extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {

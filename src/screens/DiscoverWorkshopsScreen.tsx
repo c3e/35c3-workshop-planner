@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 
-export default class LinksScreen extends React.Component {
+export default class DiscoverWorkshopsScreen extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
