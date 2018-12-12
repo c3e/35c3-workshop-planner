@@ -3,7 +3,7 @@ import YourWorkshopsScreen from './src/screens/YourWorkshopsScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import DiscoverWorkshopsScreen from './src/screens/DiscoverWorkshopsScreen';
 import { createStackNavigator, NavigationContainer } from 'react-navigation';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
 import { AppLoading, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './src/navigation/AppNavigator';
@@ -28,6 +28,9 @@ const RootStack: NavigationContainer =
       initialRouteName: 'YourWorkshops'
       // headerMode: 'none',
     });
+
+// disable debugger warning
+YellowBox.ignoreWarnings(['Remote debugger']);
 
 interface AppState {
   fontLoaded: boolean;

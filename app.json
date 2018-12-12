@@ -25,7 +25,7 @@
       "sourceExts": ["ts", "tsx"],
       "transformer": "node_modules/react-native-typescript-transformer/index.js"
     },
-    "orientation": "portrait",
+    "orientation": "default",
     "primaryColor": "#000000",
     "splash": {
       "image": "./src/assets/images/splash.png",
