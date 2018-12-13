@@ -6,6 +6,7 @@ import { Dispatch } from 'redux';
 import LOGGER from '../utils/Logger';
 import { ApplicationState } from '../../store';
 import { connect } from 'react-redux';
+import t from '../i18n/Translator';
 
 interface IYourWorkshopScreenProps {
   dispatch: Dispatch;
@@ -15,7 +16,7 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
-    title: 'Your workshops'
+    title: t('Your workshops')
   };
 
   render(): any {
