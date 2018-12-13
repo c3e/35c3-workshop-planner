@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Platform, ScrollView, StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import GetAllSessions from '../apicalls/GetAllSessions';
 import { Dispatch } from 'redux';
@@ -7,6 +7,7 @@ import LOGGER from '../utils/Logger';
 import { ApplicationState } from '../../store';
 import { connect } from 'react-redux';
 import t from '../i18n/Translator';
+import OfflineNotification from '../components/OfflineNotification';
 
 interface IYourWorkshopScreenProps {
   dispatch: Dispatch;
@@ -44,8 +45,8 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
           </View>
         </ScrollView>
 
-        <View style={styles.tabBarInfoContainer}>
-          <Text style={styles.tabBarInfoText}>I am absolute on bottom</Text>
+        <View style={OfflineNotification.CONTAINER_STYLE}>
+          <OfflineNotification />
         </View>
       </View>
     );
@@ -68,13 +69,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 5
   },
-  developmentModeText: {
-    marginBottom: 20,
-    color: 'rgba(0,0,0,0.4)',
-    fontSize: 14,
-    lineHeight: 19,
-    textAlign: 'center'
-  },
   contentContainer: {
     paddingTop: 30
   },
@@ -90,54 +84,8 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginLeft: -10
   },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50
-  },
   homeScreenFilename: {
     marginVertical: 7
-  },
-  codeHighlightText: {
-    color: 'rgba(96,100,109, 0.8)'
-  },
-  codeHighlightContainer: {
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 3,
-    paddingHorizontal: 4
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center'
-  },
-  tabBarInfoContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    ...Platform.select({
-      ios: {
-        shadowColor: 'black',
-        shadowOffset: { height: -3 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3
-      },
-      android: {
-        elevation: 20
-      }
-    }),
-    alignItems: 'center',
-    backgroundColor: '#fbfbfb',
-    paddingVertical: 20
-  },
-  tabBarInfoText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    textAlign: 'center'
-  },
-  navigationFilename: {
-    marginTop: 5
   },
   helpContainer: {
     marginTop: 15,

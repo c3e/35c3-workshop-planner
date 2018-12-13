@@ -1,6 +1,7 @@
 import React from 'react';
 import { SectionList, Image, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo';
+import OfflineNotification from './OfflineNotification';
 
 export default class ConfigView extends React.Component {
   render(): any {
@@ -27,15 +28,20 @@ export default class ConfigView extends React.Component {
     ];
 
     return (
-        <SectionList
-            style={styles.container}
-            renderItem={this._renderItem}
-            renderSectionHeader={this._renderSectionHeader}
-            stickySectionHeadersEnabled={true}
-            keyExtractor={(item, index) => index}
-            ListHeaderComponent={ListHeader}
-            sections={sections}
-        />
+        <View style={styles.container}>
+          <SectionList
+              style={styles.container}
+              renderItem={this._renderItem}
+              renderSectionHeader={this._renderSectionHeader}
+              stickySectionHeadersEnabled={true}
+              keyExtractor={(item, index) => index}
+              ListHeaderComponent={ListHeader}
+              sections={sections}
+          />
+          <View style={OfflineNotification.CONTAINER_STYLE}>
+            <OfflineNotification />
+          </View>
+        </View>
     );
   }
 
