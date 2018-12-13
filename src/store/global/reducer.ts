@@ -1,6 +1,6 @@
 import { Reducer } from 'redux';
 import { GlobalState, defaultGlobalState, GlobalActionTypes } from './types';
-import LOGGER from '../../src/utils/Logger';
+import LOGGER from '../../utils/Logger';
 
 // Type-safe initialState
 const initialState: GlobalState = defaultGlobalState;

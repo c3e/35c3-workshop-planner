@@ -3,7 +3,7 @@ import { YellowBox } from 'react-native';
 import { AppLoading, Font } from 'expo';
 import AppNavigator from './src/navigation/AppNavigator';
 import LOGGER from './src/utils/Logger';
-import { ApplicationState, defaultApplicationState, rootReducer } from './store';
+import { ApplicationState, defaultApplicationState, rootReducer } from './src/store';
 import { createStore, Store } from 'redux';
 import { Provider } from 'react-redux';
 

@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import WorkshopSession from '../dataobjects/WorkshopSession';
 import App from '../../App';
 import LOGGER from '../utils/Logger';
-import { workshopsLoaded } from '../../store/global/actions';
+import { workshopsLoaded } from '../store/global/actions';
 import AppSettings from '../helper/AppSettings';
 
 export default class GetAllSessions {

@@ -4,7 +4,7 @@ import { Text } from 'react-native-elements';
 import GetAllSessions from '../apicalls/GetAllSessions';
 import { Dispatch } from 'redux';
 import LOGGER from '../utils/Logger';
-import { ApplicationState } from '../../store';
+import { ApplicationState } from '../store';
 import { connect } from 'react-redux';
 import t from '../i18n/Translator';
 import OfflineNotification from '../components/OfflineNotification';

@@ -1,4 +1,4 @@
-import WorkshopSession from '../../src/dataobjects/WorkshopSession';
+import WorkshopSession from '../../dataobjects/WorkshopSession';
 
 export interface GlobalState {
   workshops: WorkshopSession[];
