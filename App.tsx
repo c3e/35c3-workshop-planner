@@ -30,7 +30,6 @@ interface AppState {
 // noinspection JSUnusedGlobalSymbols
 export default class App extends React.Component<{}, AppState> {
 
-  public static OFFLINE_DEBUG = false;
   private readonly globalStore: Store<ApplicationState>;
 
   constructor(props: any) {

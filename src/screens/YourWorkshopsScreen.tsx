@@ -6,7 +6,6 @@ import { Dispatch } from 'redux';
 import LOGGER from '../utils/Logger';
 import { ApplicationState } from '../../store';
 import { connect } from 'react-redux';
-import { error } from 'util';
 
 interface IYourWorkshopScreenProps {
   dispatch: Dispatch;
@@ -16,14 +15,13 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
-    header: null
+    title: 'Your workshops'
   };
 
   render(): any {
     return (
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-          <Text h2>Your Workshops</Text>
           <View style={styles.welcomeContainer}>
             <Image
               source={require('../assets/images/robot-dev.png')}
@@ -66,7 +64,8 @@ export default connect(mapStateToProps, mapDispatchToProps)(YourWorkshopsScreen)
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    padding: 5
   },
   developmentModeText: {
     marginBottom: 20,

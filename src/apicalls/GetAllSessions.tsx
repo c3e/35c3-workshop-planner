@@ -3,6 +3,7 @@ import WorkshopSession from '../dataobjects/WorkshopSession';
 import App from '../../App';
 import LOGGER from '../utils/Logger';
 import { workshopsLoaded } from '../../store/global/actions';
+import AppSettings from '../helper/AppSettings';
 
 export default class GetAllSessions {
 
@@ -31,7 +32,7 @@ export default class GetAllSessions {
   getSessions(): Promise<WorkshopSession[]> {
     return new Promise(async (resolve, reject) => {
 
-      if (App.OFFLINE_DEBUG) {
+      if (AppSettings.OFFLINE_DEBUG) {
 
         resolve(GetAllSessions.OFFLINE_DEBUG_LIST);
         return;

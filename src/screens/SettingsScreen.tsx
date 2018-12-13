@@ -5,7 +5,7 @@ export default class SettingsScreen extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
-    title: 'app.json'
+    title: 'Settings'
   };
 
   render(): any {

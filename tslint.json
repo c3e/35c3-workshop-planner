@@ -12,6 +12,7 @@
     "array-type": [true, "array"],
     "no-for-in-array": true,
     "no-sparse-arrays": true,
-    "no-floating-promises": true
+    "no-floating-promises": true,
+    "no-unused-variable": {"severity": "warning"}
   }
 }
