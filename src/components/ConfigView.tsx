@@ -113,11 +113,6 @@ const SectionContent = props => {
 };
 
 const AppIconPreview = ({ iconUrl }) => {
-  if (!iconUrl) {
-    iconUrl =
-        'https://s3.amazonaws.com/exp-brand-assets/ExponentEmptyManifest_192.png';
-  }
-
   return (
       <Image
           source={{ uri: iconUrl }}
