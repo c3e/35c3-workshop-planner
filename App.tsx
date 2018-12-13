@@ -1,9 +1,5 @@
 import React from 'react';
-import YourWorkshopsScreen from './src/screens/YourWorkshopsScreen';
-import SettingsScreen from './src/screens/SettingsScreen';
-import DiscoverWorkshopsScreen from './src/screens/DiscoverWorkshopsScreen';
-import { createStackNavigator, NavigationContainer } from 'react-navigation';
-import { Platform, StatusBar, StyleSheet, View, YellowBox } from 'react-native';
+import { YellowBox } from 'react-native';
 import { AppLoading, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './src/navigation/AppNavigator';
@@ -11,26 +7,21 @@ import AppNavigator from './src/navigation/AppNavigator';
 // @ts-ignore
 import SpaceMonoRegular from './src/assets/fonts/SpaceMono-Regular.ttf';
 import LOGGER from './src/utils/Logger';
-
-// noinspection JSUnusedLocalSymbols
-const RootStack: NavigationContainer =
-    createStackNavigator({
-      YourWorkshops: {
-        screen: YourWorkshopsScreen
-      },
-      DiscoverWorkshops: {
-        screen: DiscoverWorkshopsScreen
-      },
-      Settings: {
-        screen: SettingsScreen
-      }
-    }, {
-      initialRouteName: 'YourWorkshops'
-      // headerMode: 'none',
-    });
+import { ApplicationState, defaultApplicationState, rootReducer } from './store';
+import { createStore, Store } from 'redux';
+import { Provider } from 'react-redux';
 
 // disable debugger warning
 YellowBox.ignoreWarnings(['Remote debugger']);
+
+function configureStore(
+    initialState: ApplicationState
+): Store<ApplicationState> {
+  return createStore(
+      rootReducer,
+      initialState
+  );
+}
 
 interface AppState {
   fontLoaded: boolean;
@@ -40,9 +31,11 @@ interface AppState {
 export default class App extends React.Component<{}, AppState> {
 
   public static OFFLINE_DEBUG = false;
+  private readonly globalStore: Store<ApplicationState>;
 
   constructor(props: any) {
     super(props);
+    this.globalStore = configureStore(defaultApplicationState);
   }
 
   state: Readonly<AppState> = {
@@ -70,10 +63,9 @@ export default class App extends React.Component<{}, AppState> {
       );
     } else {
       return (
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
-          <AppNavigator />
-        </View>
+          <Provider store={this.globalStore}>
+            <AppNavigator />
+          </Provider>
       );
     }
   }
@@ -82,10 +74,3 @@ export default class App extends React.Component<{}, AppState> {
     LOGGER.error(`Error on Loading the app. Reason: ${error}`);
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  }
-});

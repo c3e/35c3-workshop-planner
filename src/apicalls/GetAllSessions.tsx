@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 import WorkshopSession from '../dataobjects/WorkshopSession';
 import App from '../../App';
 import LOGGER from '../utils/Logger';
+import { workshopsLoaded } from '../../store/global/actions';
 
 export default class GetAllSessions {
 
@@ -16,20 +17,19 @@ export default class GetAllSessions {
   private _dispatcher: Dispatch;
 
   constructor(dispatcher: Dispatch) {
-    this._dispatcher = dispatcher;
-  }
-
-  get dispatcher(): Dispatch {
-    return this._dispatcher;
+    this.dispatcher = dispatcher;
   }
 
   set dispatcher(value: Dispatch) {
     this._dispatcher = value;
   }
 
+  get dispatcher(): Dispatch {
+    return this._dispatcher;
+  }
+
   getSessions(): Promise<WorkshopSession[]> {
     return new Promise(async (resolve, reject) => {
-      const workshops: WorkshopSession[] = [];
 
       if (App.OFFLINE_DEBUG) {
 
@@ -49,12 +49,15 @@ export default class GetAllSessions {
           alert('Hopla, da ist etwas schief gelaufen beim abrufen der Sessions');
           reject(response.statusText);
         } else {
-          response.json().then((json) => {
-            LOGGER.debug(json);
-            json.items.forEach((session: any) => {
-              LOGGER.debug(session);
-            });
-            resolve([]);
+          const workshops: WorkshopSession[] = [];
+          response.json().then((json: any) => {
+            const members: Object[] = json.query.categorymembers;
+            LOGGER.info(`Found ${members.length} Sessions`);
+            members.forEach((session: object) => {
+              workshops.push(WorkshopSession.buildFromApiObject(session));
+            }, members);
+            this.dispatcher(workshopsLoaded(workshops));
+            resolve(workshops);
           }).catch((reason) =>
               reject(`Error parsing JSON: ${reason.toString()}`)
           );

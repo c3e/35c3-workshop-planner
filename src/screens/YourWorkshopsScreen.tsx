@@ -4,12 +4,15 @@ import { Text } from 'react-native-elements';
 import GetAllSessions from '../apicalls/GetAllSessions';
 import { Dispatch } from 'redux';
 import LOGGER from '../utils/Logger';
+import { ApplicationState } from '../../store';
+import { connect } from 'react-redux';
+import { error } from 'util';
 
 interface IYourWorkshopScreenProps {
   dispatch: Dispatch;
 }
 
-export default class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
+class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
@@ -30,8 +33,12 @@ export default class YourWorkshopsScreen extends React.Component<IYourWorkshopSc
 
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={() => {
-              LOGGER.debug(new GetAllSessions(this.props.dispatch).getSessions());
-              ToastAndroid.show('nope', ToastAndroid.LONG);
+              new GetAllSessions(this.props.dispatch).getSessions().then((sessions) => {
+                ToastAndroid.show(`Loaded ${sessions.length} Workshop Sessions`, ToastAndroid.LONG);
+              }).catch((e) => {
+                LOGGER.error(`Failed to load sessions. Error: ${e}`);
+                ToastAndroid.show('Nope nope, nope,   nope', ToastAndroid.LONG);
+              });
             }} style={styles.helpLink}>
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
             </TouchableOpacity>
@@ -45,6 +52,16 @@ export default class YourWorkshopsScreen extends React.Component<IYourWorkshopSc
     );
   }
 }
+
+const mapStateToProps = ({ global }: ApplicationState) => ({
+  workshops: global.workshops
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(YourWorkshopsScreen);
 
 const styles = StyleSheet.create({
   container: {

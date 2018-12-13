@@ -21,6 +21,18 @@ export default class WorkshopSession {
     return new WorkshopSession(pageid, ns, title, sortkey, type, timestamp);
   }
 
+  static buildFromApiObject(raw: object): WorkshopSession {
+
+    const pageid = getNumberProp(raw, 'pageid');
+    const ns = getNumberProp(raw, 'ns');
+    const title = getStringProp(raw, 'title');
+    const sortkey = getStringProp(raw, 'sortkey');
+    const type = getStringProp(raw, 'type');
+    const timestamp = getStringProp(raw, 'timestamp');
+
+    return new WorkshopSession(pageid, ns, title, sortkey, type, timestamp);
+  }
+
   constructor(pageid: number, ns: number, title: string, sortkey: string, type: string, timestamp: string) {
     this._pageid = pageid;
     this._ns = ns;
