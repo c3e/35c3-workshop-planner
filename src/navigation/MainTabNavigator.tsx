@@ -6,37 +6,36 @@ import TabBarIcon from '../components/TabBarIcon';
 import YourWorkshopsScreen from '../screens/YourWorkshopsScreen';
 import DiscoverWorkshopsScreen from '../screens/DiscoverWorkshopsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import t from '../i18n/Translator';
 
-const HomeStack = createStackNavigator({
-  Home: YourWorkshopsScreen
+const YourWorkshopStack = createStackNavigator({
+  YourWorkshopsScreen
 });
 
 // noinspection JSUnusedGlobalSymbols
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+YourWorkshopStack.navigationOptions = {
+  tabBarLabel: t('Your list'),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
+      type={'Entypo'}
+      name={'bookmarks'}
     />
   )
 };
 
-const LinksStack = createStackNavigator({
-  Links: DiscoverWorkshopsScreen
+const DiscoverWorkshopsStack = createStackNavigator({
+  DiscoverWorkshopsScreen
 });
 
 // noinspection JSUnusedGlobalSymbols
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+DiscoverWorkshopsStack.navigationOptions = {
+  tabBarLabel: t('Discover'),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
+      type={'MaterialCommunity'}
+      name={`feature-search${focused ? '-outline' : ''}` }
     />
   )
 };
@@ -47,17 +46,18 @@ const SettingsStack = createStackNavigator({
 
 // noinspection JSUnusedGlobalSymbols
 SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
+  tabBarLabel: t('Settings'),
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      type={'Ionicons'}
+      name={'md-options'}
     />
   )
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
+  YourWorkshopStack,
+  DiscoverWorkshopsStack,
   SettingsStack
 });

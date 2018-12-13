@@ -1,15 +1,13 @@
 import React from 'react';
 import { YellowBox } from 'react-native';
 import { AppLoading, Font } from 'expo';
-import { Ionicons } from '@expo/vector-icons';
 import AppNavigator from './src/navigation/AppNavigator';
-
-// @ts-ignore
-import SpaceMonoRegular from './src/assets/fonts/SpaceMono-Regular.ttf';
 import LOGGER from './src/utils/Logger';
 import { ApplicationState, defaultApplicationState, rootReducer } from './store';
 import { createStore, Store } from 'redux';
 import { Provider } from 'react-redux';
+
+import SpaceMonoRegular from './src/assets/fonts/SpaceMono-Regular.ttf';
 
 // disable debugger warning
 YellowBox.ignoreWarnings(['Remote debugger']);
