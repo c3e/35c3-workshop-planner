@@ -68,8 +68,8 @@ export default class GetAllSessions {
               workshops.push(WorkshopSession.buildFromApiObject(session));
             }, members);
 
-            this.getSessionsData.getSessionData(workshops).then((ws) => {
-              LOGGER.verbose(ws);
+            this.getSessionsData.getSessionData(workshops).then((workshops) => {
+              // LOGGER.verbose(ws);
               this.dispatcher(workshopsLoaded(workshops));
               resolve(workshops);
             }).catch(e => {

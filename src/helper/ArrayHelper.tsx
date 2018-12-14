@@ -14,3 +14,7 @@ export function chunkArray<T extends object>(myArray: T[], chunkSize: number): T
 
   return tempArray;
 }
+
+export const onlyUnique = (value: string, index: number, self: String[]) => {
+  return self.indexOf(value) === index;
+};

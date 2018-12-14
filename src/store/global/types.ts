@@ -2,10 +2,12 @@ import WorkshopSession from '../../dataobjects/WorkshopSession';
 
 export interface GlobalState {
   workshops: WorkshopSession[];
+  rooms: string[];
 }
 
 export const defaultGlobalState: GlobalState = {
-  workshops: []
+  workshops: [],
+  rooms: []
 } ;
 
 // Use `const enum`s for better autocompletion of action type names. These will

@@ -1,7 +1,6 @@
 import { parse } from 'fast-xml-parser';
 import { getNumberProp, getObjectProp, getStringProp } from '../helper/TypeOf';
 import WorkshopEvent from './WorkshopEvent';
-import { isArray } from 'util';
 import LOGGER from '../utils/Logger';
 
 interface IWorkshopRawData {
@@ -140,7 +139,7 @@ export default class WorkshopSession {
 
     Object.keys(event).forEach(key => {
       if (knownKeys.indexOf(key) < 0) {
-        console.log(`Unknown event key found: ${key}`);
+        LOGGER.warn(`Unknown event key found: ${key}`);
       }
     });
 
@@ -155,7 +154,7 @@ export default class WorkshopSession {
       workshopEvent.subtitle = event['Has subtitle'];
     }
 
-    return WorkshopEvent;
+    return workshopEvent;
   }
 
   private convertSessionData(extendedSessionData: object): void {
@@ -168,7 +167,7 @@ export default class WorkshopSession {
 
     Object.keys(extendedSessionData).forEach(key => {
       if (knownKeys.indexOf(key) < 0) {
-        console.log(`Unknown session key "${key}" found on pageId: ${this.pageid}`);
+        LOGGER.warn(`Unknown session key "${key}" found on pageId: ${this.pageid}`);
       }
     });
 

@@ -38,7 +38,7 @@ export default class GetSessionsData {
   }
 
   getSessionData(workshops: WorkshopSession[]): Promise<WorkshopSession[]> {
-    return new Promise(async (resolve) => {
+    return new Promise(async (resolve, reject) => {
 
       if (AppSettings.OFFLINE_DEBUG) {
         resolve(workshops);
@@ -63,15 +63,15 @@ export default class GetSessionsData {
       const promises = querys.map(c => this.fetchForBatch(c));
       Promise.all(promises).then(results => {
         const result = this.flatResults(results);
-        console.log(`got ${Object.keys(result).length} results`);
-        console.log(`keys: ${Object.keys(result)}`);
+        LOGGER.debug(`got ${Object.keys(result).length} results`);
+        LOGGER.debug(`keys: ${Object.keys(result)}`);
         workshops.forEach(ws => {
           ws.addSessionData(result[ws.pageid]);
         });
-        console.log(workshops);
         resolve(workshops);
       }).catch(error => {
         LOGGER.error(`could not collect all session data. Error: ${error}`);
+        reject(error);
       });
     });
   }
@@ -79,7 +79,7 @@ export default class GetSessionsData {
   private fetchForBatch(chunck: Chunk): Promise<any[]> {
     return new Promise<any[]>((resolve, reject) => {
       const url = GetSessionsData.API_URL + chunck.idList;
-      console.log(url);
+      LOGGER.debug(url);
       fetch(GetSessionsData.API_URL + chunck.idList, {
         method: 'GET',
         headers: {
