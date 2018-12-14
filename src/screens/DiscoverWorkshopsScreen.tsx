@@ -3,8 +3,24 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import OfflineNotification from '../components/OfflineNotification';
 import { Text } from 'react-native-elements';
 import SessionTable from '../components/SessionTable';
+import { ApplicationState } from '../store';
+import { Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import WorkshopSession from '../dataobjects/WorkshopSession';
 
-export default class DiscoverWorkshopsScreen extends React.Component {
+interface iDiscoverWorkshopsScreenProps {
+  workshops: WorkshopSession[];
+  dispatcher: Dispatch;
+  rooms: string[];
+}
+
+interface iDiscoverWorkshopsScreenState {}
+
+class DiscoverWorkshopsScreen extends React.Component<iDiscoverWorkshopsScreenProps, iDiscoverWorkshopsScreenState> {
+  
+  constructor(props) {
+    super(props);
+  }
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
@@ -14,7 +30,7 @@ export default class DiscoverWorkshopsScreen extends React.Component {
   render(): any {
     return (
       <ScrollView style={styles.container}>
-        <SessionTable/>
+        <SessionTable rooms={this.props.rooms} workshops={this.props.workshops}/>
         {/* Go ahead and delete ExpoLinksView and replace it with your
            * content, we just wanted to provide you with some helpful links */}
         <View style={OfflineNotification.CONTAINER_STYLE}>
@@ -24,6 +40,17 @@ export default class DiscoverWorkshopsScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = ({ global } : ApplicationState ) => ({
+  workshops: global.workshops,
+  rooms: global.rooms
+});
+
+const mapDispatchToProps = (dispatch : Dispatch) => ({
+  dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoverWorkshopsScreen);
 
 const styles = StyleSheet.create({
   container: {

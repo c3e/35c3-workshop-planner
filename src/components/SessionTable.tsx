@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row } from 'react-native-table-component';
+import WorkshopSession from '../dataobjects/WorkshopSession';
 
-interface iSessionTableProps {}
+interface iSessionTableProps {
+  rooms: string[];
+  workshops: WorkshopSession[];
+}
 
 interface iSessionTableState {
-    tableHead: string[];
     widthArr: number[];
 }
 
@@ -13,13 +16,11 @@ export default class SessionTable extends Component<iSessionTableProps, iSession
   constructor(props) {
     super(props);
     this.state = {
-      tableHead: ['Head', 'Head2', 'Head3', 'Head4', 'Head5', 'Head6', 'Head7', 'Head8', 'Head9'],
       widthArr: [40, 60, 80, 100, 120, 140, 160, 180, 200]
     }
   }
 
   render() {
-    const state = this.state;
     const tableData = [];
     for (let i = 0; i < 30; i += 1) {
       const rowData = [];
@@ -34,7 +35,7 @@ export default class SessionTable extends Component<iSessionTableProps, iSession
         <ScrollView horizontal={true}>
           <View>
             <Table borderStyle={{borderColor: '#C1C0B9'}}>
-              <Row data={state.tableHead} widthArr={state.widthArr} style={styles.header} textStyle={styles.text}/>
+              <Row data={this.props.rooms} widthArr={this.state.widthArr} style={styles.header} textStyle={styles.text}/>
             </Table>
             <ScrollView style={styles.dataWrapper}>
               <Table borderStyle={{borderColor: '#C1C0B9'}}>
@@ -43,7 +44,7 @@ export default class SessionTable extends Component<iSessionTableProps, iSession
                     <Row
                       key={index}
                       data={rowData}
-                      widthArr={state.widthArr}
+                      widthArr={this.state.widthArr}
                       style={[styles.row, index%2 && {backgroundColor: '#F7F6E7'}]}
                       textStyle={styles.text}
                     />
