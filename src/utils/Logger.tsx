@@ -64,8 +64,14 @@ export default class LOGGER {
     }
   };
 
-  public static verbose(message: string): void {
-    console.log(LOGGER.buildLogLine(LogLevel.VERBOSE, message));
+  public static verbose(message: string| Object): void {
+    if (typeof message === 'string') {
+      console.log(LOGGER.buildLogLine(LogLevel.VERBOSE, message));
+    } else {
+      const toLog = LOGGER.buildLogLine(LogLevel.DEBUG, 'Debug Object: ');
+      console.log(toLog);
+      console.log(JSON.stringify(message));
+    }
   }
 
   public static debug(message: string | Object): void {

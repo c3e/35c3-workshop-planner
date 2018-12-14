@@ -1,8 +1,6 @@
 import { Dispatch } from 'redux';
 import WorkshopSession from '../dataobjects/WorkshopSession';
-import App from '../../App';
 import LOGGER from '../utils/Logger';
-import { workshopsLoaded } from '../store/global/actions';
 import AppSettings from '../helper/AppSettings';
 import { chunkArray } from '../helper/ArrayHelper';
 
@@ -40,7 +38,7 @@ export default class GetSessionsData {
   }
 
   getSessionData(workshops: WorkshopSession[]): Promise<WorkshopSession[]> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
 
       if (AppSettings.OFFLINE_DEBUG) {
         resolve(workshops);
@@ -64,8 +62,14 @@ export default class GetSessionsData {
 
       const promises = querys.map(c => this.fetchForBatch(c));
       Promise.all(promises).then(results => {
-        //TODO parse xml results to workshops
-        console.log(results);
+        const result = this.flatResults(results);
+        console.log(`got ${Object.keys(result).length} results`);
+        console.log(`keys: ${Object.keys(result)}`);
+        workshops.forEach(ws => {
+          ws.addSessionData(result[ws.pageid]);
+        });
+        console.log(workshops);
+        resolve(workshops);
       }).catch(error => {
         LOGGER.error(`could not collect all session data. Error: ${error}`);
       });
@@ -102,4 +106,13 @@ export default class GetSessionsData {
       }));
     });
   }
+
+  private flatResults(myArray: any[]): object {
+    let result = {};
+    myArray.map((e) => {
+      result = { ...result, ...e };
+    });
+    return result;
+  }
+
 }

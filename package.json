@@ -56,6 +56,7 @@
     "@expo/vector-icons": "^8.0.0",
     "@types/react-redux": "^6.0.4",
     "expo": "^31.0.4",
+    "fast-xml-parser": "^3.12.10",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.1.tar.gz",
     "react-native-elements": "^1.0.0-beta5",

@@ -67,11 +67,14 @@ export default class GetAllSessions {
             members.forEach((session: object) => {
               workshops.push(WorkshopSession.buildFromApiObject(session));
             }, members);
-            this.dispatcher(workshopsLoaded(workshops));
 
-            const result = this.getSessionsData.getSessionData(workshops);
-
-            resolve(workshops);
+            this.getSessionsData.getSessionData(workshops).then((ws) => {
+              LOGGER.verbose(ws);
+              this.dispatcher(workshopsLoaded(workshops));
+              resolve(workshops);
+            }).catch(e => {
+              reject(`Error parsing JSON: ${e.toString()}`);
+            });
           }).catch((reason) =>
               reject(`Error parsing JSON: ${reason.toString()}`)
           );
