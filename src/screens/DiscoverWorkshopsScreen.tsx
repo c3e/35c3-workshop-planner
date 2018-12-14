@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import OfflineNotification from '../components/OfflineNotification';
 import { Text } from 'react-native-elements';
+import SessionTable from '../components/SessionTable';
 
 export default class DiscoverWorkshopsScreen extends React.Component {
 
@@ -13,9 +14,7 @@ export default class DiscoverWorkshopsScreen extends React.Component {
   render(): any {
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.container}>
-          <Text style={{ width: '100%' }}>Hello world my friend</Text>
-        </View>
+        <SessionTable/>
         {/* Go ahead and delete ExpoLinksView and replace it with your
            * content, we just wanted to provide you with some helpful links */}
         <View style={OfflineNotification.CONTAINER_STYLE}>

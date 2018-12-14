@@ -7,4 +7,4 @@ import WorkshopSession from '../../dataobjects/WorkshopSession';
 // Remember, you can also pass parameters into an action creator. Make sure to
 // type them properly as well.
 
-export const workshopsLoaded = (workshops: WorkshopSession[]) => action<String, WorkshopSession[]>(GlobalActionTypes.WORKSHOPS_LOADED, workshops);
+export const workshopsLoaded = (workshops: WorkshopSession[]) => action<string, WorkshopSession[]>(GlobalActionTypes.WORKSHOPS_LOADED, workshops);
