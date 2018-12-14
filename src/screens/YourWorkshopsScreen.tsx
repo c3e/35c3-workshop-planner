@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ScrollView, StyleSheet, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, ToastAndroid, TouchableOpacity, View, Platform } from 'react-native';
 import { Text } from 'react-native-elements';
 import GetAllSessions from '../apicalls/GetAllSessions';
 import { Dispatch } from 'redux';
@@ -34,10 +34,14 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
           <View style={styles.helpContainer}>
             <TouchableOpacity onPress={() => {
               new GetAllSessions(this.props.dispatch).getSessions().then((sessions) => {
-                ToastAndroid.show(`Loaded ${sessions.length} Workshop Sessions`, ToastAndroid.LONG);
+                if (Platform.OS === 'android') {
+                  ToastAndroid.show(`Loaded ${sessions.length} Workshop Sessions`, ToastAndroid.LONG); 
+                }
               }).catch((e) => {
                 LOGGER.error(`Failed to load sessions. Error: ${e}`);
-                ToastAndroid.show('Nope nope, nope,   nope', ToastAndroid.LONG);
+                if (Platform.OS === 'android') {
+                  ToastAndroid.show('Nope nope, nope,   nope', ToastAndroid.LONG);
+                }
               });
             }} style={styles.helpLink}>
               <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
