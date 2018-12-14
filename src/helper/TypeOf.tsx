@@ -5,6 +5,14 @@ export function getStringProp(object: any, propertyName: string, defaultVal: str
   return defaultVal;
 }
 
+export function getObjectProp(object: any, propertyName: string, defaultVal: object = {}): object {
+  if (object.hasOwnProperty(propertyName)) {
+    return object[propertyName];
+  }
+  return defaultVal;
+}
+
+
 export function getNumberProp(object: any, propertyName: string, defaultVal: number = 0): number {
   if (object.hasOwnProperty(propertyName) && typeof object[propertyName] === 'number') {
     return object[propertyName];

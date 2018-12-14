@@ -1,4 +1,4 @@
-import { getNumberProp, getStringProp } from '../helper/TypeOf';
+import { getNumberProp, getObjectProp, getStringProp } from '../helper/TypeOf';
 
 export default class WorkshopSession {
 
@@ -8,6 +8,7 @@ export default class WorkshopSession {
   private _sortkey: string;
   private _type: string;
   private _timestamp: string;
+  private _data: any;
 
   static buildFromStoreObject(raw: object): WorkshopSession {
 
@@ -17,8 +18,9 @@ export default class WorkshopSession {
     const sortkey = getStringProp(raw, '_sortkey');
     const type = getStringProp(raw, '_type');
     const timestamp = getStringProp(raw, '_timestamp');
+    const data = getObjectProp(raw,'_data');
 
-    return new WorkshopSession(pageid, ns, title, sortkey, type, timestamp);
+    return new WorkshopSession(pageid, ns, title, sortkey, type, timestamp, data);
   }
 
   static buildFromApiObject(raw: object): WorkshopSession {
@@ -29,17 +31,19 @@ export default class WorkshopSession {
     const sortkey = getStringProp(raw, 'sortkey');
     const type = getStringProp(raw, 'type');
     const timestamp = getStringProp(raw, 'timestamp');
+    const data = getObjectProp(raw, 'data');
 
-    return new WorkshopSession(pageid, ns, title, sortkey, type, timestamp);
+    return new WorkshopSession(pageid, ns, title, sortkey, type, timestamp, data);
   }
 
-  constructor(pageid: number, ns: number, title: string, sortkey: string, type: string, timestamp: string) {
+  constructor(pageid: number, ns: number, title: string, sortkey: string, type: string, timestamp: string, data: object) {
     this._pageid = pageid;
     this._ns = ns;
     this._title = title;
     this._sortkey = sortkey;
     this._type = type;
     this._timestamp = timestamp;
+    this._data = data;
   }
 
   get pageid(): number {
@@ -88,5 +92,13 @@ export default class WorkshopSession {
 
   set timestamp(value: string) {
     this._timestamp = value;
+  }
+
+  get data(): any {
+    return this._data;
+  }
+
+  set data(value: any) {
+    this._data = value;
   }
 }

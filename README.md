@@ -43,3 +43,7 @@ To start the app run:
 
 - Howto use the expo.io calendar: ``https://docs.expo.io/versions/latest/sdk/calendar``
 
+- Get information about the sessions:
+ ``https://events.ccc.de/congress/2017/wiki/api.php?action=query&prop=revisions&pageids=2081|2195&rvprop=ids|timestamp|user|userid|size|tags|parsetree``
+ 
+- to better parse information use: fast-xml-parser
