@@ -2,22 +2,19 @@ import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import WorkshopSession from '../dataobjects/WorkshopSession';
+import LoadingSpinner from './LoadingSpinner';
+import Location from '../dataobjects/Location';
 
 interface ISessionTableProps {
-  rooms: string[];
+  locations: Location[];
   workshops: WorkshopSession[];
 }
 
-interface ISessionTableState {
-  widthArr: number[];
-}
+interface ISessionTableState {}
 
 export default class SessionTable extends Component<ISessionTableProps, ISessionTableState> {
   constructor(props) {
     super(props);
-    this.state = {
-      widthArr: [40, 60, 80, 100, 120, 140, 160, 180, 200]
-    };
   }
 
   render(): any {
@@ -30,12 +27,23 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
       tableData.push(rowData);
     }
 
+    const widthArray = Array
+        .apply(null, { length: this.props.locations.length + 1 })
+        .map(() => { return 100; }, Number);
+
+    if (this.props.locations.length <= 0 || this.props.workshops.length <= 0) {
+      return (<View style={styles.loadingSpinnerContainer}><LoadingSpinner /></View>);
+    }
+
+    const header = [];
+    this.props.locations.map((l) => header.push(l.getPrintName()));
+
     return (
         <View style={styles.container}>
           <ScrollView horizontal={true}>
             <View>
               <Table borderStyle={{ borderColor: '#C1C0B9' }}>
-                <Row data={this.props.rooms} widthArr={this.state.widthArr} style={styles.header}
+                <Row data={header} widthArr={widthArray} style={styles.header}
                      textStyle={styles.text}/>
               </Table>
               <ScrollView style={styles.dataWrapper}>
@@ -45,7 +53,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
                         <Row
                             key={index}
                             data={rowData}
-                            widthArr={this.state.widthArr}
+                            widthArr={widthArray}
                             style={[styles.row, index % 2 && { backgroundColor: '#F7F6E7' }]}
                             textStyle={styles.text}
                         />
@@ -63,9 +71,13 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    paddingTop: 30,
+    padding: 0,
     backgroundColor: '#fff'
+  },
+  loadingSpinnerContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   header: {
     height: 50,

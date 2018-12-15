@@ -1,7 +1,8 @@
 import { parse } from 'fast-xml-parser';
-import { getNumberProp, getObjectProp, getStringProp } from '../helper/TypeOf';
+import { getArrayProp, getNumberProp, getObjectProp, getStringProp } from '../helper/TypeOf';
 import WorkshopEvent from './WorkshopEvent';
 import LOGGER from '../utils/Logger';
+import { string } from 'prop-types';
 
 interface IWorkshopRawData {
   revid: number;
@@ -68,6 +69,26 @@ export default class WorkshopSession {
     result.rawSessionData = getStringProp(raw, '_rawSessionData');
 
     // todo fix load of 2. data blog
+    result.description = getStringProp(raw, '_description');
+    result.orgaContact = getStringProp(raw, '_orgaContact');
+    result.organizedBy = getStringProp(raw, '_organizedBy');
+    result.tags = getArrayProp<string>(raw, '_tags');
+    result.keywords = getArrayProp<string>(raw, '_tags');
+    result.website = getStringProp(raw, '_website');
+    result.language = getStringProp(raw, '_language');
+    result.forKids = getStringProp(raw, '_forKids');
+    result.processedByAssembly = getStringProp(raw, '_processedByAssembly');
+    result.sessionType = getStringProp(raw, '_sessionType');
+    result.isRelatedTo = getStringProp(raw, '_isRelatedTo');
+
+    if (raw.hasOwnProperty('_workshopEvents') && Array.isArray(raw._workshopEvents)) {
+      result.workshopEvents = [];
+      raw._workshopEvents.forEach((e) => {
+        result.workshopEvents.push(WorkshopEvent.buildFromStoreObject(e));
+      });
+    }
+
+    result.rawDescription = getStringProp(raw, '_rawDescription');
 
     return result;
   }

@@ -26,3 +26,10 @@ export function getBooleanProp(object: any, propertyName: string, defaultVal: bo
   }
   return defaultVal;
 }
+
+export function getArrayProp<T extends object>(object: any, propertyName: string, defaultVal: T[] = []): T[] {
+  if (object.hasOwnProperty(propertyName) && Array.isArray(object[propertyName])) {
+    return object[propertyName];
+  }
+  return defaultVal;
+}

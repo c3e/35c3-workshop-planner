@@ -12,5 +12,9 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
   offlineRedBackground: '#f00',
-  backgroundBlack: '#000'
+  backgroundBlack: '#000',
+
+  fresh: '#0084B0',
+  hope: '#00A356',
+  beboot: '#D4D4D3'
 };

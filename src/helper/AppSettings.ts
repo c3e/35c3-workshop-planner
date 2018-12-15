@@ -2,7 +2,7 @@ import { AvailableLanguages } from '../i18n/AvailableLanguages';
 
 export default class AppSettings {
 
-  private static _OFFLINE_DEBUG = false;
+  private static _OFFLINE_DEBUG = true;
 
   private static _LANGUAGE: AvailableLanguages = AvailableLanguages.de;
 

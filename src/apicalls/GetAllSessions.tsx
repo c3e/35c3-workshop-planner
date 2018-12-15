@@ -44,7 +44,13 @@ export default class GetAllSessions {
 
       if (AppSettings.OFFLINE_DEBUG) {
 
-        resolve(GetAllSessions.OFFLINE_DEBUG_LIST);
+        const result = require('../helper/offline-debug.json');
+        const workshops: WorkshopSession[] = [];
+        result.forEach((w) => {
+          workshops.push(WorkshopSession.buildFromStoreObject(w));
+        });
+        this.dispatcher(workshopsLoaded(workshops));
+        resolve(workshops);
         return;
       }
 

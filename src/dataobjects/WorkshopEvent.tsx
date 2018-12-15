@@ -1,3 +1,5 @@
+import { getNumberProp, getObjectProp, getStringProp } from '../helper/TypeOf';
+
 export default class WorkshopEvent {
 
   private _guid: string;
@@ -51,5 +53,19 @@ export default class WorkshopEvent {
 
   set subtitle(value: string) {
     this._subtitle = value;
+  }
+
+  static buildFromStoreObject(raw: any): WorkshopEvent {
+
+    const guid = getStringProp(raw, '_guid');
+    const startTime = getStringProp(raw, '_startTime');
+    const duration = getNumberProp(raw, '_duration');
+    const location = getStringProp(raw, '_location');
+    const subtitle = getStringProp(raw, '_subtitle');
+
+    const result = new WorkshopEvent(guid, startTime, duration, location);
+    result.subtitle = subtitle;
+
+    return result;
   }
 }
