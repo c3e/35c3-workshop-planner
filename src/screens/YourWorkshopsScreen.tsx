@@ -1,9 +1,7 @@
 import React from 'react';
 import { Image, ScrollView, StyleSheet, ToastAndroid, TouchableOpacity, View, Platform } from 'react-native';
 import { Text } from 'react-native-elements';
-import GetAllSessions from '../apicalls/GetAllSessions';
 import { Dispatch } from 'redux';
-import LOGGER from '../utils/Logger';
 import { ApplicationState } from '../store';
 import { connect } from 'react-redux';
 import t from '../i18n/Translator';
@@ -25,27 +23,7 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
-            <Image
-              source={require('../assets/images/robot-dev.png')}
-              style={styles.welcomeImage}
-            />
-          </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={() => {
-              new GetAllSessions(this.props.dispatch).getSessions().then((sessions) => {
-                if (Platform.OS === 'android') {
-                  ToastAndroid.show(`Loaded ${sessions.length} Workshop Sessions`, ToastAndroid.LONG); 
-                }
-              }).catch((e) => {
-                LOGGER.error(`Failed to load sessions. Error: ${e}`);
-                if (Platform.OS === 'android') {
-                  ToastAndroid.show('Nope nope, nope,   nope', ToastAndroid.LONG);
-                }
-              });
-            }} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
+            <Text style={styles.noBookmarksLabel} h4>{t('No workshops bookmarked yet')}</Text>
           </View>
         </ScrollView>
 
@@ -101,5 +79,8 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7'
+  },
+  noBookmarksLabel: {
+    textAlign: 'center'
   }
 });

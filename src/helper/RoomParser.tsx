@@ -5,9 +5,9 @@ export function parseRoomsFrom(workshops: WorkshopSession[]): string[] {
   const locations: string[] = [];
 
   workshops.forEach(ws => {
-    ws.workshopEvents.forEach(event => {;
+    ws.workshopEvents.forEach(event => {
       if (event.location !== undefined && event.location !== null) {
-        locations.push(event.location.replace('Room:',''));
+        locations.push(event.location);
       }
     });
   });

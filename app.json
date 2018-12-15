@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "35c3 workshop planner",
-    "icon": "./src/assets/images/tux.png",
+    "icon": "./src/assets/images/35c3-workshop-planner-logo-256px.png",
     "version": "1.0.0",
     "description": "Plan your workshops at the 35c3 event in Leipzig by browsing the wiki, mark interisting workshops and add them to your calendar.",
     "slug": "35c3-workshop-planner",
@@ -28,7 +28,7 @@
     "orientation": "default",
     "primaryColor": "#000000",
     "splash": {
-      "image": "./src/assets/images/splash.png",
+      "image": "./src/assets/images/35c3-workshop-planner-splash.png",
       "backgroundColor": "#000000",
       "resizeMode": "contain"
     }

@@ -8,6 +8,7 @@ import { createStore, Store } from 'redux';
 import { Provider } from 'react-redux';
 
 import SpaceMonoRegular from './src/assets/fonts/SpaceMono-Regular.ttf';
+import { loadWorkshopData } from './src/actions/Load';
 
 // disable debugger warning
 YellowBox.ignoreWarnings(['Remote debugger']);
@@ -41,6 +42,7 @@ export default class App extends React.Component<{}, AppState> {
 
   async componentWillMount(): void {
     try {
+      loadWorkshopData(this.globalStore.dispatch);
       await Font.loadAsync({
         'space-mono': SpaceMonoRegular
       });
