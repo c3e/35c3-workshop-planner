@@ -4,39 +4,62 @@ import { Table, TableWrapper, Row } from 'react-native-table-component';
 import WorkshopSession from '../dataobjects/WorkshopSession';
 import LoadingSpinner from './LoadingSpinner';
 import Location from '../dataobjects/Location';
+import t from '../i18n/Translator';
 
 interface ISessionTableProps {
-  locations: Location[];
+  locations: Map<string, Location>;
   workshops: WorkshopSession[];
+  date: string;
+  startTime?: number; // quarters after midnight
+  length?: number; // in hours
 }
 
-interface ISessionTableState {}
+interface ISessionTableState {
+  startTime: number; // quarters after midnight
+  length: number; // in hours
+}
 
 export default class SessionTable extends Component<ISessionTableProps, ISessionTableState> {
   constructor(props) {
     super(props);
+    this.state = {
+      startTime: props.startTime !== undefined ? props.startTime : 0,
+      length: props.length !== undefined ? props.length : 28
+    };
   }
 
   render(): any {
     const tableData = [];
-    for (let i = 0; i < 30; i += 1) {
+
+    console.log(this.state.startTime);
+    console.log(this.state.length);
+
+    for (let i = this.state.startTime; i < 4 * (this.state.length); i += 1) {
       const rowData = [];
       for (let j = 0; j < 9; j += 1) {
-        rowData.push(`${i}${j}`);
+        if (j === 0) {
+          const min = (i % 4) * 15;
+          const hour = Math.floor(i / 4);
+          const newDay = Math.floor(hour / 24) >= 1;
+
+          rowData.push(`${newDay ? 'n ' : ''}${Math.floor(hour % 24)}:${min === 0 ? '00' : min}`);
+        } else {
+          rowData.push(`${i}${j}`);
+        }
       }
       tableData.push(rowData);
     }
-
+    const locations: Location[] = Array.from<Location>(this.props.locations.values());
     const widthArray = Array
-        .apply(null, { length: this.props.locations.length + 1 })
+        .apply(null, { length: locations.length + 1 })
         .map(() => { return 100; }, Number);
 
-    if (this.props.locations.length <= 0 || this.props.workshops.length <= 0) {
+    if (locations.length <= 0 || this.props.workshops.length <= 0) {
       return (<View style={styles.loadingSpinnerContainer}><LoadingSpinner /></View>);
     }
 
-    const header = [];
-    this.props.locations.map((l) => header.push(l.getPrintName()));
+    const header = [t('Time')];
+    locations.map((l) => header.push(l.getPrintName()));
 
     return (
         <View style={styles.container}>

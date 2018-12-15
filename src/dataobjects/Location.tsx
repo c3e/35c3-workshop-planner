@@ -1,9 +1,9 @@
 export default class Location extends Object {
 
   private _name: string;
-  private _subLocations: string[] = [];
+  private _subLocations: Location[] = [];
 
-  constructor(name: string, subLocations: string[] = []) {
+  constructor(name: string, subLocations: Location[] = []) {
     super();
     this._name = name;
     this._subLocations = subLocations;
@@ -17,11 +17,11 @@ export default class Location extends Object {
     this._name = value;
   }
 
-  get subLocations(): string[] {
+  get subLocations(): Location[] {
     return this._subLocations;
   }
 
-  set subLocations(value: string[]) {
+  set subLocations(value: Location[]) {
     this._subLocations = value;
   }
 

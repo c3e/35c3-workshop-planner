@@ -16,7 +16,6 @@ const reducer: Reducer<GlobalState> = (state = initialState, action: any) => {
       } catch (e) {
         //
       }
-      console.log(parseRoomsFrom(action.payload));
       return { ...state, workshops: action.payload, rooms: parseRoomsFrom(action.payload) };
     }
     default: {

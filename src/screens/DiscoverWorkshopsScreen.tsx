@@ -32,11 +32,12 @@ class DiscoverWorkshopsScreen
   };
 
   render(): any {
-    const locations: Location[] = this.getLocations(this.props.rooms);
+    const locations = this.getLocations(this.props.rooms);
+    const date = '2017-12-27';
 
     return (
         <View style={styles.container}>
-          <SessionTable locations={locations} workshops={this.props.workshops}/>
+          <SessionTable date={date} locations={locations} workshops={this.props.workshops}/>
           {/* Go ahead and delete ExpoLinksView and replace it with your
            * content, we just wanted to provide you with some helpful links */}
           <View style={OfflineNotification.CONTAINER_STYLE}>
@@ -46,11 +47,28 @@ class DiscoverWorkshopsScreen
     );
   }
 
-  private getLocations(rooms: string[]): Location[] {
-    const result: Location[] = [];
+  private getLocations(rooms: string[]): Map<string, Location> {
+    // const result = new Map<string, Location>();
+    const assemblies = new Location('Assembly');
+    const officialRooms: Location[] = [];
+    const others = new Location('others');
+
     rooms.forEach(r => {
-      result.push(new Location(r));
+      const location: Location = new Location(r);
+      if (r.indexOf('Assembly:') > -1) {
+        assemblies.subLocations.push(location);
+      } else if (r.indexOf('Room:') > -1) {
+        officialRooms.push(location);
+      } else {
+        others.subLocations.push(location);
+      }
     });
+    const allRooms = [...officialRooms, assemblies, others];
+    const result = new Map<string, Location>();
+    allRooms.forEach((l) => {
+      result.set(l.name, l);
+    });
+    console.log(result);
     return result;
   }
 }
