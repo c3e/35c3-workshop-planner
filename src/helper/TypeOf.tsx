@@ -12,7 +12,6 @@ export function getObjectProp(object: any, propertyName: string, defaultVal: obj
   return defaultVal;
 }
 
-
 export function getNumberProp(object: any, propertyName: string, defaultVal: number = 0): number {
   if (object.hasOwnProperty(propertyName) && typeof object[propertyName] === 'number') {
     return object[propertyName];

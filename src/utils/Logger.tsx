@@ -64,7 +64,7 @@ export default class LOGGER {
     }
   };
 
-  public static verbose(message: string| Object): void {
+  public static verbose(message: string | Object): void {
     if (typeof message === 'string') {
       console.log(LOGGER.buildLogLine(LogLevel.VERBOSE, message));
     } else {
