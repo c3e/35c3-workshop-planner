@@ -88,12 +88,43 @@ class DiscoverWorkshopsScreen
     });
     const allRooms = [...officialRooms, assemblies, others];
     const result = new Map<string, Location>();
-    allRooms.forEach((l) => {
+    const sortedRooms = allRooms.sort((a, b) => {
+      const rankingA = DiscoverWorkshopsScreen.getRankingOfRoom(a);
+      const rankingB = DiscoverWorkshopsScreen.getRankingOfRoom(b);
+      if (rankingA !== 0 || rankingB !== 0) {
+        // prio some locations
+        return (rankingA < rankingB) ? -1 : (rankingA > rankingB) ? 1 : 0;
+      }
+      const roomA = a.getPrintName().toUpperCase();
+      const roomB = b.getPrintName().toUpperCase();
+      return (roomA < roomB) ? -1 : (roomA > roomB) ? 1 : 0;
+    });
+    sortedRooms.forEach((l) => {
       result.set(l.name, l);
     });
     console.log(result);
-    // TODO sort by importance
+
     return result;
+  }
+
+  private static getRankingOfRoom(l: Location): number {
+    if (l.getPrintName().indexOf('Lecture room') > -1) {
+      return -10000;
+    }
+
+    if (l.getPrintName().indexOf('Seminar room') > -1) {
+      return -1000;
+    }
+
+    if (l.getPrintName().indexOf('Chaos West Stage') > -1) {
+      return -100;
+    }
+
+    if (l.getPrintName().indexOf('other') > -1) {
+      return 10;
+    }
+
+    return 0;
   }
 }
 
