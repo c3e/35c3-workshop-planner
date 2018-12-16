@@ -1,6 +1,6 @@
 import { Component } from 'react'; //
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Table, TableWrapper, Row } from 'react-native-table-component';
+import { Table, Row, TableWrapper, Col, Cols } from '../components/table/TableComponent';
 import WorkshopSession from '../dataobjects/WorkshopSession';
 import LoadingSpinner from './LoadingSpinner';
 import Location from '../dataobjects/Location';
@@ -32,6 +32,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
 
   render(): any {
     const tableData = [];
+    const timeSlots = [];
 
     console.log(this.state.startTime);
     console.log(this.state.length);
@@ -43,8 +44,9 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
           const min = (i % 4) * 15;
           const hour = Math.floor(i / 4);
           const newDay = Math.floor(hour / 24) >= 1;
-
-          rowData.push(`${newDay ? 'n ' : ''}${Math.floor(hour % 24)}:${min === 0 ? '00' : min}`);
+          const timeSlot = `${newDay ? 'n ' : ''}${Math.floor(hour % 24)}:${min === 0 ? '00' : min}`;
+          timeSlots.push([timeSlot]);
+          rowData.push(timeSlot);
         } else {
           rowData.push(`${i}${j}`);
         }
@@ -108,6 +110,9 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: '#537791'
   },
+  verticalHeader: {
+    backgroundColor: '#537791'
+  },
   text: {
     textAlign: 'center',
     fontWeight: '100'
@@ -118,5 +123,8 @@ const styles = StyleSheet.create({
   row: {
     height: 40,
     backgroundColor: '#E7E6E1'
-  }
+  },
+  head: { flex: 1, backgroundColor: '#c8e1ff' },
+  title: { flex: 2, backgroundColor: '#f6f8fa' },
+  titleText: { marginRight: 6, textAlign: 'right' }
 });

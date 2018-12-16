@@ -7094,7 +7094,7 @@ react-native-gesture-handler@1.0.9:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-react-native-maps@*, "react-native-maps@github:expo/react-native-maps#v0.22.1-exp.0":
+react-native-maps@*, react-native-maps@expo/react-native-maps#v0.22.1-exp.0:
   version "0.22.1"
   resolved "https://codeload.github.com/expo/react-native-maps/tar.gz/e6f98ff7272e5d0a7fe974a41f28593af2d77bb2"
 
@@ -7175,11 +7175,6 @@ react-native-tab-view@^1.0.0:
   integrity sha512-QNt6VkEW8SP1UJ7yjD5P4bOTWwHQfoIMD5CqnA06pcubdNwHR1NmjiNZsVnIvp5wAEVbW6yTHjLXOh1fzab4xg==
   dependencies:
     prop-types "^15.6.1"
-
-react-native-table-component@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/react-native-table-component/-/react-native-table-component-1.1.8.tgz#4d0846d077914e1c608769e55a1a9e76ea32a90f"
-  integrity sha512-OBvcqF/LgcmFjcOFZ13a7xc2XvkaVCb91TQCtGD0WPLx0og9meLXOOYHuZHlGArlkV8pfoHDMeNY4QTlrdnK7g==
 
 react-native-typescript-transformer@^1.2.3:
   version "1.2.10"
