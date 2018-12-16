@@ -1,6 +1,6 @@
 import { Text } from 'react-native-elements';
-import { NetInfo, Platform, StyleSheet, View } from 'react-native';
-import React from 'react';
+import { NetInfo, Platform, StyleSheet } from 'react-native';
+import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import Colors from '../constants/Colors';
 import t from '../i18n/Translator';
 import LOGGER from '../utils/Logger';
@@ -12,6 +12,7 @@ interface IOfflineNotificationState {
   isOnline: boolean;
 }
 
+// @ts-ignore
 const styles = StyleSheet.create({
   notification: {
     flex: 1,
@@ -46,7 +47,7 @@ export default class OfflineNotification extends
     React.Component<IOfflineNotificationProps, IOfflineNotificationState> {
   static CONTAINER_STYLE = styles.parentContainer;
 
-  constructor(props) {
+  constructor(props: IOfflineNotificationProps) {
     super(props);
     this.state = { isOnline: true };
 

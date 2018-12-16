@@ -1,4 +1,3 @@
-import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import OfflineNotification from '../components/OfflineNotification';
 import SessionTable from '../components/SessionTable';
@@ -9,6 +8,10 @@ import WorkshopSession from '../dataobjects/WorkshopSession';
 import Colors from '../constants/Colors';
 import DiscoveryNavigation from '../components/DiscoveryNavigation';
 import Location from '../dataobjects/Location';
+import WorkshopEvent from '../dataobjects/WorkshopEvent';
+import LOGGER from '../utils/Logger';
+import { parseZone } from 'moment';
+import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 
 interface IDiscoverWorkshopsScreenProps {
   workshops: WorkshopSession[];
@@ -22,7 +25,7 @@ interface IDiscoverWorkshopsScreenState {
 class DiscoverWorkshopsScreen
     extends React.Component<IDiscoverWorkshopsScreenProps, IDiscoverWorkshopsScreenState> {
 
-  constructor(props) {
+  constructor(props: IDiscoverWorkshopsScreenProps) {
     super(props);
   }
 
@@ -33,13 +36,33 @@ class DiscoverWorkshopsScreen
 
   render(): any {
     const locations = this.getLocations(this.props.rooms);
-    const date = '2017-12-27';
+    const year = 2017;
+    const month = 12;
+    const date = 27;
+    const startHour = 0;
+    const lengthInHour = 28;
+    const lengthInMilli = lengthInHour * 60 * 60 * 1000; // in milliseconds
+    const startObject = parseZone(`${year}/${month}/${date} ${startHour}:00`, 'YYYY/MM/DD H:mm');
+    const events: WorkshopEvent[] = [];
+    this.props.workshops.forEach((w) => {
+      events.push(...w.workshopEvents);
+    });
+    LOGGER.info(`found ${events.length} events`);
+    // filter events with invalid date
+    let filteredEvents = events
+        .filter((e) => {
+          if (e.startTimeObject == null) {
+            return false;
+          }
+          const duration = e.startTimeObject.diff(startObject);
+          return duration >= 0 && duration <= lengthInMilli;
+        });
+    LOGGER.info(`found ${filteredEvents.length} filtered events`);
 
     return (
         <View style={styles.container}>
-          <SessionTable date={date} locations={locations} workshops={this.props.workshops}/>
-          {/* Go ahead and delete ExpoLinksView and replace it with your
-           * content, we just wanted to provide you with some helpful links */}
+          <SessionTable date={startObject} startTime={startHour} length={lengthInHour}
+                        locations={locations} workshops={this.props.workshops}/>
           <View style={OfflineNotification.CONTAINER_STYLE}>
             <OfflineNotification/>
           </View>
@@ -69,6 +92,7 @@ class DiscoverWorkshopsScreen
       result.set(l.name, l);
     });
     console.log(result);
+    // TODO sort by importance
     return result;
   }
 }

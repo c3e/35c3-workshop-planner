@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
+import { Component } from 'react'; //
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row } from 'react-native-table-component';
 import WorkshopSession from '../dataobjects/WorkshopSession';
 import LoadingSpinner from './LoadingSpinner';
 import Location from '../dataobjects/Location';
 import t from '../i18n/Translator';
+import { Moment } from 'moment';
+import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 
 interface ISessionTableProps {
   locations: Map<string, Location>;
   workshops: WorkshopSession[];
-  date: string;
+  date: Moment;
   startTime?: number; // quarters after midnight
   length?: number; // in hours
 }
@@ -20,7 +22,7 @@ interface ISessionTableState {
 }
 
 export default class SessionTable extends Component<ISessionTableProps, ISessionTableState> {
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       startTime: props.startTime !== undefined ? props.startTime : 0,

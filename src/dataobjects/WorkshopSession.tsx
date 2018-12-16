@@ -169,7 +169,7 @@ export default class WorkshopSession {
     const location = event['Has session location'];
     const start = event['Has start time'];
 
-    const workshopEvent = new WorkshopEvent(guid, start, duration, location);
+    const workshopEvent = new WorkshopEvent(guid, start, duration, location, this.pageid);
 
     if (event.hasOwnProperty('Has subtitle')) {
       workshopEvent.subtitle = event['Has subtitle'];

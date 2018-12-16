@@ -47,3 +47,5 @@ To start the app run:
  ``https://events.ccc.de/congress/2017/wiki/api.php?action=query&prop=revisions&pageids=2081|2195&rvprop=ids|timestamp|user|userid|size|tags|parsetree``
  
 - to better parse information use: fast-xml-parser
+
+styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg

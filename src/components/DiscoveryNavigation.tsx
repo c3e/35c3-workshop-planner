@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import { Text, View } from 'react-native';
 
 export default class DiscoveryNavigation extends React.Component<{}, {}> {
