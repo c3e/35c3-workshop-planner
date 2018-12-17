@@ -26,7 +26,7 @@ export default class GetSessionsData {
   private _dispatcher: Dispatch;
 
   constructor(dispatcher: Dispatch) {
-    this.dispatcher = dispatcher;
+    this._dispatcher = dispatcher;
   }
 
   set dispatcher(value: Dispatch) {
@@ -107,7 +107,7 @@ export default class GetSessionsData {
     });
   }
 
-  private flatResults(myArray: any[]): object {
+  private flatResults(myArray: any[]): any {
     let result = {};
     myArray.map((e) => {
       result = { ...result, ...e };

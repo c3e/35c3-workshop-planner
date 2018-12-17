@@ -19,8 +19,8 @@ export default class GetAllSessions {
   private _getSessionsData: GetSessionsData;
 
   constructor(dispatcher: Dispatch) {
-    this.dispatcher = dispatcher;
-    this.getSessionsData = new GetSessionsData(dispatcher);
+    this._dispatcher = dispatcher;
+    this._getSessionsData = new GetSessionsData(dispatcher);
   }
 
   set dispatcher(value: Dispatch) {
@@ -43,10 +43,9 @@ export default class GetAllSessions {
     return new Promise(async (resolve, reject) => {
 
       if (AppSettings.OFFLINE_DEBUG) {
-
         const result = require('../helper/offline-debug.json');
         const workshops: WorkshopSession[] = [];
-        result.forEach((w) => {
+        result.forEach((w: any) => {
           workshops.push(WorkshopSession.buildFromStoreObject(w));
         });
         this.dispatcher(workshopsLoaded(workshops));
@@ -75,8 +74,8 @@ export default class GetAllSessions {
             }, members);
 
             this.getSessionsData.getSessionData(workshops).then((workshops) => {
-              // LOGGER.verbose(ws);
               this.dispatcher(workshopsLoaded(workshops));
+              // console.log(JSON.stringify(workshops));
               resolve(workshops);
             }).catch(e => {
               reject(`Error parsing JSON: ${e.toString()}`);

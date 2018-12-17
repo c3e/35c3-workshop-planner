@@ -32,4 +32,11 @@ export default class Location extends Object {
   public toString(): string {
     return this.getPrintName();
   }
+
+  public containsLocation(location: string): boolean {
+    if (this.name === location) {
+      return true;
+    }
+    return this.subLocations.some(l => (l.name === location));
+  }
 }

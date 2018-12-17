@@ -79,14 +79,14 @@ export default class WorkshopEvent {
     this._startTimeObject = value;
   }
 
-  static buildFromStoreObject(raw: any): WorkshopEvent {
+  static buildFromStoreObject(raw: any, parentId = 0): WorkshopEvent {
 
     const guid = getStringProp(raw, '_guid');
     const startTime = getStringProp(raw, '_startTime');
     const duration = getNumberProp(raw, '_duration');
     const location = getStringProp(raw, '_location');
     const subtitle = getStringProp(raw, '_subtitle');
-    const workshopId = getNumberProp(raw, '_workshopId');
+    const workshopId = parentId > 0 ? parentId : getNumberProp(raw, '_workshopId');
 
     const result = new WorkshopEvent(guid, startTime, duration, location, workshopId);
     result.subtitle = subtitle;

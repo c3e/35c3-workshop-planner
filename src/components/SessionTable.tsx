@@ -1,59 +1,34 @@
 import { Component } from 'react'; //
 import { StyleSheet, View, ScrollView } from 'react-native';
-import { Table, Row, TableWrapper, Col, Cols } from '../components/table/TableComponent';
+import { Table, Row } from '../components/table/TableComponent';
 import WorkshopSession from '../dataobjects/WorkshopSession';
 import LoadingSpinner from './LoadingSpinner';
 import Location from '../dataobjects/Location';
 import t from '../i18n/Translator';
 import { Moment } from 'moment';
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
+import WorkshopEvent from '../dataobjects/WorkshopEvent';
 
 interface ISessionTableProps {
   locations: Map<string, Location>;
   workshops: WorkshopSession[];
   date: Moment;
-  startTime?: number; // quarters after midnight
-  length?: number; // in hours
+  startTime: number; // hours after midnight
+  length: number; // in hours
+  events: WorkshopEvent[];
 }
 
-interface ISessionTableState {
-  startTime: number; // quarters after midnight
-  length: number; // in hours
-}
+interface ISessionTableState {}
 
 export default class SessionTable extends Component<ISessionTableProps, ISessionTableState> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      startTime: props.startTime !== undefined ? props.startTime : 0,
-      length: props.length !== undefined ? props.length : 28
-    };
   }
 
   render(): any {
-    const tableData = [];
-    const timeSlots = [];
-
-    console.log(this.state.startTime);
-    console.log(this.state.length);
-
-    for (let i = this.state.startTime; i < 4 * (this.state.length); i += 1) {
-      const rowData = [];
-      for (let j = 0; j < 9; j += 1) {
-        if (j === 0) {
-          const min = (i % 4) * 15;
-          const hour = Math.floor(i / 4);
-          const newDay = Math.floor(hour / 24) >= 1;
-          const timeSlot = `${newDay ? 'n ' : ''}${Math.floor(hour % 24)}:${min === 0 ? '00' : min}`;
-          timeSlots.push([timeSlot]);
-          rowData.push(timeSlot);
-        } else {
-          rowData.push(`${i}${j}`);
-        }
-      }
-      tableData.push(rowData);
-    }
     const locations: Location[] = Array.from<Location>(this.props.locations.values());
+    const tableData = this.buildTableData(locations);
+
     const widthArray = Array
         .apply(null, { length: locations.length + 1 })
         .map(() => { return 100; }, Number);
@@ -83,6 +58,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
                             widthArr={widthArray}
                             style={[styles.row, index % 2 && { backgroundColor: '#F7F6E7' }]}
                             textStyle={styles.text}
+                            firstColumnStyle={styles.verticalHeader}
                         />
                     ))
                   }
@@ -92,6 +68,38 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
           </ScrollView>
         </View>
     );
+  }
+
+  private buildTableData(locations: Location[]): any[] {
+    const tableData = [];
+    for (let i = this.props.startTime * 4; i < 4 * (this.props.startTime + this.props.length); i += 1) {
+      const rowData = [];
+      for (let j = 0; j < locations.length; j += 1) {
+        const min = (i % 4) * 15;
+        const hour = Math.floor(i / 4);
+        const newDay = Math.floor(hour / 24) >= 1;
+
+        if (j === 0) {
+          const timeSlot = `${newDay ? 'n ' : ''}${Math.floor(hour % 24)}:${min === 0 ? '00' : min}`;
+          rowData.push(timeSlot);
+        } else {
+          const eventsInThisTimeSlotAndLocation = this.props.events.filter((event) => {
+            return locations[j].containsLocation(event.location) &&
+                event.startTimeObject.hour() === hour &&
+                event.startTimeObject.minute() >= min &&
+                event.startTimeObject.minute() < min + 15;
+          });
+          if (eventsInThisTimeSlotAndLocation.length === 0) {
+            rowData.push('');
+          } else {
+            rowData.push(eventsInThisTimeSlotAndLocation[0].workshopId);
+          }
+        }
+
+      }
+      tableData.push(rowData);
+    }
+    return tableData;
   }
 }
 

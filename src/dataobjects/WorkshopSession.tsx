@@ -2,13 +2,12 @@ import { parse } from 'fast-xml-parser';
 import { getArrayProp, getNumberProp, getObjectProp, getStringProp } from '../helper/TypeOf';
 import WorkshopEvent from './WorkshopEvent';
 import LOGGER from '../utils/Logger';
-import { string } from 'prop-types';
 
 interface IWorkshopRawData {
   revid: number;
   parentid: number;
-  user: string;
-  userid: number;
+  user?: string;
+  userid?: number;
   timestamp: string;
   size: number;
   tags: any[];
@@ -81,10 +80,12 @@ export default class WorkshopSession {
     result.sessionType = getStringProp(raw, '_sessionType');
     result.isRelatedTo = getStringProp(raw, '_isRelatedTo');
 
+    // @ts-ignore
     if (raw.hasOwnProperty('_workshopEvents') && Array.isArray(raw._workshopEvents)) {
       result.workshopEvents = [];
-      raw._workshopEvents.forEach((e) => {
-        result.workshopEvents.push(WorkshopEvent.buildFromStoreObject(e));
+      // @ts-ignore
+      raw._workshopEvents.forEach((e: any) => {
+        result.workshopEvents.push(WorkshopEvent.buildFromStoreObject(e, pageid));
       });
     }
 
@@ -124,7 +125,7 @@ export default class WorkshopSession {
     this.revisionId = revision.revid;
     this.rawSessionData = revision.parsetree;
 
-    const parsedXML: any = parse(this.rawSessionData);
+    const parsedXML: any = this.rawSessionData != null ? parse(this.rawSessionData) : '';
 
     if (parsedXML.root.hasOwnProperty('template') && Array.isArray(parsedXML.root.template)) {
       const templates: any[] = parsedXML.root.template;
@@ -153,7 +154,7 @@ export default class WorkshopSession {
     }
   }
 
-  private convertEventData(event): WorkshopEvent {
+  private convertEventData(event: any): WorkshopEvent {
     const knownKeys = [
       'GUID', 'Has duration', 'Has session location', 'Has start time', 'Has subtitle'
     ];
@@ -178,7 +179,7 @@ export default class WorkshopSession {
     return workshopEvent;
   }
 
-  private convertSessionData(extendedSessionData: object): void {
+  private convertSessionData(extendedSessionData: any): void {
 
     const knownKeys = [
       'Has description', 'Has orga contact', 'Has session keywords', 'Has session tag',
@@ -212,6 +213,7 @@ export default class WorkshopSession {
   private parsePart(raw: any[]): any {
     const result = {};
     raw.forEach(entry => {
+      // @ts-ignore
       result[entry.name.trim()] = entry.value;
     });
     return result;
@@ -273,35 +275,35 @@ export default class WorkshopSession {
     this._data = value;
   }
 
-  get user(): string {
+  get user(): string | undefined {
     return this._user;
   }
 
-  set user(value: string) {
+  set user(value: string | undefined) {
     this._user = value;
   }
 
-  get userId(): number {
+  get userId(): number | undefined {
     return this._userId;
   }
 
-  set userId(value: number) {
+  set userId(value: number | undefined) {
     this._userId = value;
   }
 
-  get revisionId(): number {
+  get revisionId(): number | undefined {
     return this._revisionId;
   }
 
-  set revisionId(value: number) {
+  set revisionId(value: number | undefined) {
     this._revisionId = value;
   }
 
-  get rawSessionData(): string {
+  get rawSessionData(): string | undefined {
     return this._rawSessionData;
   }
 
-  set rawSessionData(value: string) {
+  set rawSessionData(value: string | undefined) {
     this._rawSessionData = value;
   }
 

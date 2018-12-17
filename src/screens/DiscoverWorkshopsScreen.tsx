@@ -39,8 +39,8 @@ class DiscoverWorkshopsScreen
     const year = 2017;
     const month = 12;
     const date = 27;
-    const startHour = 0;
-    const lengthInHour = 28;
+    const startHour = 8;
+    const lengthInHour = 18;
     const lengthInMilli = lengthInHour * 60 * 60 * 1000; // in milliseconds
     const startObject = parseZone(`${year}/${month}/${date} ${startHour}:00`, 'YYYY/MM/DD H:mm');
     const events: WorkshopEvent[] = [];
@@ -62,7 +62,7 @@ class DiscoverWorkshopsScreen
     return (
         <View style={styles.container}>
           <SessionTable date={startObject} startTime={startHour} length={lengthInHour}
-                        locations={locations} workshops={this.props.workshops}/>
+                        locations={locations} workshops={this.props.workshops} events={filteredEvents}/>
           <View style={OfflineNotification.CONTAINER_STYLE}>
             <OfflineNotification/>
           </View>

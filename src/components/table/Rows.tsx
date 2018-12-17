@@ -12,7 +12,7 @@ class Row extends Component<any> {
   };
 
   render(): any {
-    const { data, style, widthArr, height, flexArr, textStyle, borderStyle, ...props } = this.props;
+    const { data, style, widthArr, height, flexArr, textStyle, borderStyle, firstColumnStyle, ...props } = this.props;
     let widthNum = 0;
     if (widthArr) {
       for (let i = 0; i < widthArr.length; i++) {
@@ -32,7 +32,8 @@ class Row extends Component<any> {
           data.map((item: any, i: number) => {
             const flex = flexArr && flexArr[i];
             const width = widthArr && widthArr[i];
-            return <Cell key={i} data={item} width={width} height={height} flex={flex} textStyle={textStyle} borderStyle={borderStyle} {...props}/>;
+            const style = (i === 0) ? firstColumnStyle : {};
+            return <Cell key={i} data={item} width={width} height={height} flex={flex} style={style} textStyle={textStyle} borderStyle={borderStyle} {...props}/>;
           })
         }
       </View>
