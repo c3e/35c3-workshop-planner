@@ -1,18 +1,13 @@
 import { Component } from 'react';
-import { View, ViewPropTypes, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import Cell from './Cell';
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 
 class Row extends Component<any> {
 
-  static propTypes = {
-    style: ViewPropTypes.style,
-    // @ts-ignore
-    textStyle: Text.propTypes.style
-  };
-
   render(): any {
-    const { data, style, widthArr, height, flexArr, textStyle, borderStyle, firstColumnStyle, ...props } = this.props;
+    const { data, style, widthArr, height, flexArr, textStyle,
+      borderStyle, firstColumnStyle, firstColumnHeaderStyle, ...props } = this.props;
     let widthNum = 0;
     if (widthArr) {
       for (let i = 0; i < widthArr.length; i++) {
@@ -33,7 +28,9 @@ class Row extends Component<any> {
             const flex = flexArr && flexArr[i];
             const width = widthArr && widthArr[i];
             const style = (i === 0) ? firstColumnStyle : {};
-            return <Cell key={i} data={item} width={width} height={height} flex={flex} style={style} textStyle={textStyle} borderStyle={borderStyle} {...props}/>;
+            const cellTextStyle = (i === 0) ? firstColumnHeaderStyle : textStyle;
+            return <Cell key={i} data={item} width={width} height={height} flex={flex}
+                         style={style} textStyle={cellTextStyle} borderStyle={borderStyle} {...props}/>;
           })
         }
       </View>

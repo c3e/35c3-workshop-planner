@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import { SectionList, Image, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo';
 import OfflineNotification from './OfflineNotification';
@@ -34,7 +34,7 @@ export default class ConfigView extends React.Component {
               renderItem={this._renderItem}
               renderSectionHeader={this._renderSectionHeader}
               stickySectionHeadersEnabled={true}
-              keyExtractor={(item, index) => index}
+              keyExtractor={(item, index) => Number(index).toString()}
               ListHeaderComponent={ListHeader}
               sections={sections}
           />
@@ -45,11 +45,11 @@ export default class ConfigView extends React.Component {
     );
   }
 
-  _renderSectionHeader = ({ section }) => {
+  _renderSectionHeader = ({ section }: any) => {
     return <SectionHeader title={section.title} />;
-  }
+  };
 
-  _renderItem = ({ item }) => {
+  _renderItem = ({ item }: any) => {
     if (item.type === 'color') {
       return (
           <SectionContent>
@@ -94,7 +94,7 @@ const ListHeader = () => {
   );
 };
 
-const SectionHeader = ({ title }) => {
+const SectionHeader = ({ title }: any) => {
   return (
       <View style={styles.sectionHeaderContainer}>
         <Text style={styles.sectionHeaderText}>
@@ -104,7 +104,7 @@ const SectionHeader = ({ title }) => {
   );
 };
 
-const SectionContent = props => {
+const SectionContent = (props: any) => {
   return (
       <View style={styles.sectionContentContainer}>
         {props.children}
@@ -112,7 +112,7 @@ const SectionContent = props => {
   );
 };
 
-const AppIconPreview = ({ iconUrl }) => {
+const AppIconPreview = ({ iconUrl }: any) => {
   return (
       <Image
           source={{ uri: iconUrl }}
@@ -122,7 +122,7 @@ const AppIconPreview = ({ iconUrl }) => {
   );
 };
 
-const Color = ({ value }) => {
+const Color = ({ value }: any) => {
   if (!value) {
     return <View />;
   } else {

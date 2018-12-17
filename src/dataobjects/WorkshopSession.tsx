@@ -219,6 +219,12 @@ export default class WorkshopSession {
     return result;
   }
 
+  public getPrintTitle(): string {
+    let title = this.title;
+    title = title.replace('Session:', '');
+    return title.trim();
+  }
+
   get pageid(): number {
     return this._pageid;
   }

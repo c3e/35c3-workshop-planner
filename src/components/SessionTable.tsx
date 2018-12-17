@@ -8,10 +8,11 @@ import t from '../i18n/Translator';
 import { Moment } from 'moment';
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import WorkshopEvent from '../dataobjects/WorkshopEvent';
+import LOGGER from '../utils/Logger';
 
 interface ISessionTableProps {
   locations: Map<string, Location>;
-  workshops: WorkshopSession[];
+  workshops: Map<number, WorkshopSession>;
   date: Moment;
   startTime: number; // hours after midnight
   length: number; // in hours
@@ -33,7 +34,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
         .apply(null, { length: locations.length + 1 })
         .map(() => { return 100; }, Number);
 
-    if (locations.length <= 0 || this.props.workshops.length <= 0) {
+    if (locations.length <= 0 || Array.from(this.props.workshops.values()).length <= 0) {
       return (<View style={styles.loadingSpinnerContainer}><LoadingSpinner /></View>);
     }
 
@@ -46,7 +47,8 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
             <View>
               <Table borderStyle={{ borderColor: '#C1C0B9' }}>
                 <Row data={header} widthArr={widthArray} style={styles.header}
-                     textStyle={styles.text}/>
+                     textStyle={styles.headerText} firstColumnHeaderStyle={styles.headerText}
+                />
               </Table>
               <ScrollView style={styles.dataWrapper}>
                 <Table borderStyle={{ borderColor: '#C1C0B9' }}>
@@ -59,6 +61,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
                             style={[styles.row, index % 2 && { backgroundColor: '#F7F6E7' }]}
                             textStyle={styles.text}
                             firstColumnStyle={styles.verticalHeader}
+                            firstColumnHeaderStyle={styles.headerText}
                         />
                     ))
                   }
@@ -92,7 +95,13 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
           if (eventsInThisTimeSlotAndLocation.length === 0) {
             rowData.push('');
           } else {
-            rowData.push(eventsInThisTimeSlotAndLocation[0].workshopId);
+            const workshop = this.props.workshops.get(eventsInThisTimeSlotAndLocation[0].workshopId);
+            if (workshop !== undefined) {
+              rowData.push({ workshopId: workshop.pageid, title: workshop.getPrintTitle() });
+            } else {
+              LOGGER.error(`Cannot find workshop with id ${eventsInThisTimeSlotAndLocation[0].workshopId} in workshop List`);
+              rowData.push('');
+            }
           }
         }
 
@@ -123,13 +132,19 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    fontWeight: '100'
+    fontWeight: '100',
+    fontSize: 10
+  },
+  headerText: {
+    textAlign: 'center',
+    fontWeight: '500',
+    fontSize: 14
   },
   dataWrapper: {
     marginTop: -1
   },
   row: {
-    height: 40,
+    height: 50,
     backgroundColor: '#E7E6E1'
   },
   head: { flex: 1, backgroundColor: '#c8e1ff' },

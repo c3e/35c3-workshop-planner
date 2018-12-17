@@ -1,14 +1,21 @@
 import { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 
 class Cell extends Component<any> {
 
   render(): any {
-    const { data, width, height, flex, style, textStyle, ...props } = this.props;
-    const textDom = React.isValidElement(data) ? data : (
-        <Text style={[textStyle, styles.text]} {...props}>{data}</Text>
-      );
+    const { data, width, height, flex, style, textStyle, buttonStyle, ...props } = this.props;
+    const textDom = React.isValidElement(data) ? data :
+        data.hasOwnProperty('workshopId') && data.hasOwnProperty('title') ?
+          (
+              <TouchableOpacity onPress={() => alert(data.title)}>
+                <View style={buttonStyle}>
+                  <Text style={[textStyle, styles.text]}>{data.title}</Text>
+                </View>
+              </TouchableOpacity>
+          ) :
+          (<Text style={[textStyle, styles.text]} {...props}>{data}</Text>);
     let borderWidth;
     let borderColor;
     if (this.props.borderStyle && this.props.borderStyle.borderWidth !== undefined) {
