@@ -16,5 +16,6 @@ export default {
 
   fresh: '#0084B0',
   hope: '#00A356',
-  beboot: '#D4D4D3'
+  beboot: '#D4D4D3',
+  workshopDetailsSessionType: '#0084B0'
 };

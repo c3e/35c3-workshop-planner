@@ -13,7 +13,8 @@ import LOGGER from '../utils/Logger';
 import { parseZone } from 'moment';
 import * as React from 'react';
 import { currentWorkshopSelected } from '../store/global/actions';
-import t from '../i18n/Translator'; // tslint:disable-line no-duplicate-imports
+import t from '../i18n/Translator';
+import { onlyUnique } from '../helper/ArrayHelper'; // tslint:disable-line no-duplicate-imports
 
 interface IDiscoverWorkshopsScreenProps {
   workshops: WorkshopSession[];
@@ -117,7 +118,6 @@ class DiscoverWorkshopsScreen
     sortedRooms.forEach((l) => {
       result.set(l.name, l);
     });
-    console.log(result);
 
     return result;
   }

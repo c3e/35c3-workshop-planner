@@ -1,12 +1,15 @@
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import { Constants } from 'expo';
-import { Image, SectionList, StyleSheet, Text, View } from 'react-native';
+import { SectionList, StyleSheet, Text, View } from 'react-native';
 import OfflineNotification from '../components/OfflineNotification';
 import t from '../i18n/Translator';
 import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import { Dispatch } from 'redux';
 import WorkshopSession from '../dataobjects/WorkshopSession';
+import { Entypo, Foundation, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
+import LOGGER from '../utils/Logger';
 
 interface IWorkshopDetailsScreenProps {
   currentWorkshop: WorkshopSession | null;
@@ -55,6 +58,8 @@ class WorkshopDetailsScreen extends React.Component<IWorkshopDetailsScreenProps>
       );
     }
 
+    LOGGER.debug(this.props.currentWorkshop);
+
     return (
         <View style={styles.container}>
           <SectionList
@@ -98,12 +103,11 @@ class WorkshopDetailsScreen extends React.Component<IWorkshopDetailsScreenProps>
 
 const ListHeader = (workshop: WorkshopSession | null) => {
   if (workshop === null) return (<Text style={styles.descriptionText}>{t('Error')}</Text>);
-  const { manifest } = Constants;
 
   return (
       <View style={styles.titleContainer}>
         <View style={styles.titleIconContainer}>
-          <AppIconPreview iconUrl={manifest.iconUrl} />
+          {GetIconBySessionType(workshop.sessionType)}
         </View>
 
         <View style={styles.titleTextContainer}>
@@ -137,14 +141,45 @@ const SectionContent = (props: any) => {
   );
 };
 
-const AppIconPreview = ({ iconUrl }: any) => {
-  return (
-      <Image
-          source={{ uri: iconUrl }}
-          style={{ width: 64, height: 64 }}
-          resizeMode='cover'
-      />
-  );
+const GetIconBySessionType = (sessionType: string) => {
+  switch (sessionType) {
+    case 'Hands-On':
+      return (
+          <Foundation name={'social-skillshare'} size={58} color={Colors.workshopDetailsSessionType}
+                      style={styles.sessionTypeIcon}/>
+      );
+    case 'Talk':
+      return (
+          <MaterialCommunityIcons name={'presentation'} size={58} color={Colors.workshopDetailsSessionType}
+                                  style={styles.sessionTypeIcon}/>
+      );
+    case 'Outside':
+      return (
+          <Foundation name={'map'} size={58} color={Colors.workshopDetailsSessionType}
+                  style={styles.sessionTypeIcon}/>
+      );
+    case 'Discussion':
+      return (
+          <Entypo name={'chat'} size={58} color={Colors.workshopDetailsSessionType}
+                  style={styles.sessionTypeIcon}/>
+      );
+    case 'Game':
+      return (
+          <Entypo name={'game-controller'} size={58} color={Colors.workshopDetailsSessionType}
+                  style={styles.sessionTypeIcon}/>
+      );
+    case 'Meeting':
+      return (
+          <Entypo name={'users'} size={58} color={Colors.workshopDetailsSessionType}
+                  style={styles.sessionTypeIcon}/>
+      );
+    default:
+      // 'Workshop', 'Other', ''
+      return (
+          <Entypo name={'tools'} size={58} color={Colors.workshopDetailsSessionType}
+                    style={styles.sessionTypeIcon}/>
+      );
+  }
 };
 
 const Color = ({ value }: any) => {
@@ -181,27 +216,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   titleContainer: {
-    paddingHorizontal: 15,
     paddingTop: 15,
     paddingBottom: 15,
-    paddingLeft: 5,
-    paddingRight: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
     flex: 1,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'nowrap',
     width: '100%'
   },
   titleIconContainer: {
-    padding: 2,
-    maxWidth: '20%',
-    marginRight: 15,
-    paddingRight: 15,
-    alignSelf: 'center'
+    padding: 0,
+    maxWidth: '25%',
+    marginRight: 10,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  sessionTypeIcon: {
+    width: 'auto',
+    height: '100%'
   },
   titleTextContainer: {
     padding: 0,
-    maxWidth: '80%'
+    maxWidth: '80%',
+    alignSelf: 'center'
   },
   sectionHeaderContainer: {
     backgroundColor: '#fbfbfb',

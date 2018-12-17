@@ -49,3 +49,5 @@ To start the app run:
 - to better parse information use: fast-xml-parser
 
 styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg
+
+- icon archive: https://oblador.github.io/react-native-vector-icons/ oder https://expo.github.io/vector-icons/
