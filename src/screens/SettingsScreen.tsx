@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import ConfigView from '../components/ConfigView';
 
 export default class SettingsScreen extends React.Component {

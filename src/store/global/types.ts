@@ -2,11 +2,13 @@ import WorkshopSession from '../../dataobjects/WorkshopSession';
 
 export interface GlobalState {
   workshops: WorkshopSession[];
+  currentWorkshop: WorkshopSession | null;
   rooms: string[];
 }
 
 export const defaultGlobalState: GlobalState = {
   workshops: [],
+  currentWorkshop: null,
   rooms: []
 } ;
 
@@ -17,5 +19,6 @@ export const defaultGlobalState: GlobalState = {
 // personally, I use the `@@context/ACTION_TYPE` convention, to follow the convention
 // of Redux's `@@INIT` action.
 export enum GlobalActionTypes {
-  WORKSHOPS_LOADED = '@@global/WORKSHOPS_LOADED'
+  WORKSHOPS_LOADED = '@@global/WORKSHOPS_LOADED',
+  CURRENT_WORKSHOP_SELECTED = '@@global/CURRENT_WORKSHOP_SELECTED'
 }

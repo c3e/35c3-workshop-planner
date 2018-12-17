@@ -8,3 +8,5 @@ import WorkshopSession from '../../dataobjects/WorkshopSession';
 // type them properly as well.
 
 export const workshopsLoaded = (workshops: WorkshopSession[]) => action<string, WorkshopSession[]>(GlobalActionTypes.WORKSHOPS_LOADED, workshops);
+
+export const currentWorkshopSelected = (workshop: WorkshopSession) => action<string, WorkshopSession>(GlobalActionTypes.CURRENT_WORKSHOP_SELECTED, workshop);

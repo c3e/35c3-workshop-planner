@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, ScrollView, StyleSheet, ToastAndroid, TouchableOpacity, View, Platform } from 'react-native';
+import * as React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { Dispatch } from 'redux';
 import { ApplicationState } from '../store';

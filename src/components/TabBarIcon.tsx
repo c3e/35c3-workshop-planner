@@ -1,5 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import Colors from '../constants/Colors';
+// @ts-ignore
 import { Ionicons, MaterialCommunityIcons, Entypo } from '@expo/vector-icons';
 
 interface ITabBarIconProps {

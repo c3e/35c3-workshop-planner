@@ -17,6 +17,7 @@ interface ISessionTableProps {
   startTime: number; // hours after midnight
   length: number; // in hours
   events: WorkshopEvent[];
+  onClickCell: (event: any) => void;
 }
 
 interface ISessionTableState {}
@@ -48,6 +49,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
               <Table borderStyle={{ borderColor: '#C1C0B9' }}>
                 <Row data={header} widthArr={widthArray} style={styles.header}
                      textStyle={styles.headerText} firstColumnHeaderStyle={styles.headerText}
+                     onClickCell={this.props.onClickCell}
                 />
               </Table>
               <ScrollView style={styles.dataWrapper}>
@@ -62,6 +64,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
                             textStyle={styles.text}
                             firstColumnStyle={styles.verticalHeader}
                             firstColumnHeaderStyle={styles.headerText}
+                            onClickCell={this.props.onClickCell}
                         />
                     ))
                   }

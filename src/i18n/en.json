@@ -4,5 +4,12 @@
   "Discover": "Discover",
   "Settings": "Settings",
   "App is offline": "App is offline",
-  "No workshops bookmarked yet": "No workshops bookmarked yet"
+  "No workshops bookmarked yet": "No workshops bookmarked yet",
+  "Workshop Details": "Workshop Details",
+  "Time": "Time",
+  "Cannot find workshop with id: ": "Cannot find workshop with id: ",
+  "No workshop selected": "No workshop selected",
+  "Error": "Error",
+  "by ": "by ",
+  "unknown": "unknown"
 }

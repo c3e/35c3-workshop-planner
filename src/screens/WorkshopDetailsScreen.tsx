@@ -1,9 +1,29 @@
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
-import { SectionList, Image, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo';
-import OfflineNotification from './OfflineNotification';
+import { Image, SectionList, StyleSheet, Text, View } from 'react-native';
+import OfflineNotification from '../components/OfflineNotification';
+import t from '../i18n/Translator';
+import { connect } from 'react-redux';
+import { ApplicationState } from '../store';
+import { Dispatch } from 'redux';
+import WorkshopSession from '../dataobjects/WorkshopSession';
 
-export default class ConfigView extends React.Component {
+interface IWorkshopDetailsScreenProps {
+  currentWorkshop: WorkshopSession | null;
+  dispatch: Dispatch;
+}
+
+class WorkshopDetailsScreen extends React.Component<IWorkshopDetailsScreenProps> {
+
+  constructor(props: IWorkshopDetailsScreenProps) {
+    super(props);
+  }
+
+  // noinspection JSUnusedGlobalSymbols
+  static navigationOptions = {
+    title: t('Workshop Details')
+  };
+
   render(): any {
     const { manifest } = Constants;
     const sections = [
@@ -27,15 +47,23 @@ export default class ConfigView extends React.Component {
       }
     ];
 
+    if (this.props.currentWorkshop === null) {
+      return (
+          <View style={styles.container}>
+            <Text style={styles.errorText} >{t('No workshop selected')}</Text>
+          </View>
+      );
+    }
+
     return (
         <View style={styles.container}>
           <SectionList
               style={styles.container}
+              ListHeaderComponent={() => ListHeader(this.props.currentWorkshop)}
               renderItem={this._renderItem}
               renderSectionHeader={this._renderSectionHeader}
               stickySectionHeadersEnabled={true}
               keyExtractor={(item, index) => Number(index).toString()}
-              ListHeaderComponent={ListHeader}
               sections={sections}
           />
           <View style={OfflineNotification.CONTAINER_STYLE}>
@@ -68,7 +96,8 @@ export default class ConfigView extends React.Component {
   }
 }
 
-const ListHeader = () => {
+const ListHeader = (workshop: WorkshopSession | null) => {
+  if (workshop === null) return (<Text style={styles.descriptionText}>{t('Error')}</Text>);
   const { manifest } = Constants;
 
   return (
@@ -78,16 +107,12 @@ const ListHeader = () => {
         </View>
 
         <View style={styles.titleTextContainer}>
-          <Text style={styles.nameText} numberOfLines={1}>
-            {manifest.name}
+          <Text style={styles.nameText}>
+            {workshop.getPrintTitle()}
           </Text>
 
           <Text style={styles.slugText}>
-            {manifest.slug}
-          </Text>
-
-          <Text style={styles.descriptionText}>
-            {manifest.description}
+            {`${t('by ')}${workshop.organizedBy ? workshop.organizedBy : t('unknown')}`}
           </Text>
         </View>
       </View>
@@ -139,6 +164,16 @@ const Color = ({ value }: any) => {
   }
 };
 
+const mapStateToProps = ({ global }: ApplicationState) => ({
+  currentWorkshop: global.currentWorkshop
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatch
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(WorkshopDetailsScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -149,6 +184,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 15,
     paddingBottom: 15,
+    paddingLeft: 5,
+    paddingRight: 5,
     flex: 1,
     alignItems: 'flex-start',
     flexDirection: 'row',
@@ -215,5 +252,8 @@ const styles = StyleSheet.create({
   },
   colorTextContainer: {
     flex: 1
+  },
+  errorText: {
+
   }
 });

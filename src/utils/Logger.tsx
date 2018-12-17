@@ -65,6 +65,9 @@ export default class LOGGER {
   };
 
   public static verbose(message: string | Object): void {
+    if (!__DEV__) {
+      return;
+    }
     if (typeof message === 'string') {
       console.log(LOGGER.buildLogLine(LogLevel.VERBOSE, message));
     } else {
@@ -75,6 +78,9 @@ export default class LOGGER {
   }
 
   public static debug(message: string | Object): void {
+    if (!__DEV__) {
+      return;
+    }
     if (typeof message === 'string') {
       const toLog = LOGGER.buildLogLine(LogLevel.DEBUG, message);
       console.log(toLog);
@@ -86,18 +92,30 @@ export default class LOGGER {
   }
 
   public static info(message: string): void {
+    if (!__DEV__) {
+      return;
+    }
     console.log(LOGGER.buildLogLine(LogLevel.INFO, message));
   }
 
   public static warn(message: string): void {
+    if (!__DEV__) {
+      return;
+    }
     console.log(LOGGER.buildLogLine(LogLevel.WARN, message));
   }
 
   public static error(message: string): void {
+    if (!__DEV__) {
+      return;
+    }
     console.log(LOGGER.buildLogLine(LogLevel.ERROR, message));
   }
 
   public static fatal(message: string): void {
+    if (!__DEV__) {
+      return;
+    }
     console.log(LOGGER.buildLogLine(LogLevel.FATAL, message));
   }
 }

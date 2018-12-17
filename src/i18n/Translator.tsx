@@ -1,4 +1,6 @@
+// @ts-ignore
 import * as EN from './en.json';
+// @ts-ignore
 import * as DE from './de.json';
 import AppSettings from '../helper/AppSettings';
 import { AvailableLanguages } from './AvailableLanguages';

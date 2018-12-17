@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { YellowBox } from 'react-native';
 import { AppLoading, Font } from 'expo';
 import AppNavigator from './src/navigation/AppNavigator';
@@ -7,6 +7,7 @@ import { ApplicationState, defaultApplicationState, rootReducer } from './src/st
 import { createStore, Store } from 'redux';
 import { Provider } from 'react-redux';
 
+// @ts-ignore
 import SpaceMonoRegular from './src/assets/fonts/SpaceMono-Regular.ttf';
 import { loadWorkshopData } from './src/actions/Load';
 
@@ -40,7 +41,7 @@ export default class App extends React.Component<{}, AppState> {
     fontLoaded: false
   };
 
-  async componentWillMount(): void {
+  async componentWillMount(): Promise<void> {
     try {
       loadWorkshopData(this.globalStore.dispatch);
       await Font.loadAsync({
@@ -69,7 +70,7 @@ export default class App extends React.Component<{}, AppState> {
     }
   }
 
-  _handleLoadingError = error => {
+  _handleLoadingError = (error: any) => {
     LOGGER.error(`Error on Loading the app. Reason: ${error}`);
   }
 }

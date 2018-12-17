@@ -11,12 +11,15 @@ import Location from '../dataobjects/Location';
 import WorkshopEvent from '../dataobjects/WorkshopEvent';
 import LOGGER from '../utils/Logger';
 import { parseZone } from 'moment';
-import * as React from 'react'; // tslint:disable-line no-duplicate-imports
+import * as React from 'react';
+import { currentWorkshopSelected } from '../store/global/actions';
+import t from '../i18n/Translator'; // tslint:disable-line no-duplicate-imports
 
 interface IDiscoverWorkshopsScreenProps {
   workshops: WorkshopSession[];
-  dispatcher: Dispatch;
+  dispatch: Dispatch;
   rooms: string[];
+  navigation: any;
 }
 
 interface IDiscoverWorkshopsScreenState {
@@ -64,7 +67,17 @@ class DiscoverWorkshopsScreen
     return (
         <View style={styles.container}>
           <SessionTable date={startObject} startTime={startHour} length={lengthInHour}
-                        locations={locations} workshops={workshopMap} events={filteredEvents}/>
+                        locations={locations} workshops={workshopMap} events={filteredEvents}
+                        onClickCell={(workshopId: number) => {
+                          const workshop = workshopMap.get(workshopId);
+                          if (workshop === undefined) {
+                            alert(`${t('Cannot find workshop with id: ')}${workshopId}`);
+                          } else {
+                            this.props.dispatch(currentWorkshopSelected(workshop));
+                            this.props.navigation.navigate('WorkshopDetailsScreen');
+                          }
+                        }}
+          />
           <View style={OfflineNotification.CONTAINER_STYLE}>
             <OfflineNotification/>
           </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { createSwitchNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';

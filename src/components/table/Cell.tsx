@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import * as React from 'react'; // tslint:disable-line no-duplicate-imports
+import * as React from 'react';// tslint:disable-line no-duplicate-imports
 
 class Cell extends Component<any> {
 
@@ -9,7 +9,9 @@ class Cell extends Component<any> {
     const textDom = React.isValidElement(data) ? data :
         data.hasOwnProperty('workshopId') && data.hasOwnProperty('title') ?
           (
-              <TouchableOpacity onPress={() => alert(data.title)}>
+              <TouchableOpacity onPress={() => {
+                this.props.onClickCell(data.workshopId);
+              }}>
                 <View style={buttonStyle}>
                   <Text style={[textStyle, styles.text]}>{data.title}</Text>
                 </View>
