@@ -14,7 +14,6 @@ import { parseZone } from 'moment';
 import * as React from 'react';
 import { currentWorkshopSelected } from '../store/global/actions';
 import t from '../i18n/Translator';
-import { onlyUnique } from '../helper/ArrayHelper'; // tslint:disable-line no-duplicate-imports
 
 interface IDiscoverWorkshopsScreenProps {
   workshops: WorkshopSession[];
@@ -69,12 +68,12 @@ class DiscoverWorkshopsScreen
         <View style={styles.container}>
           <SessionTable date={startObject} startTime={startHour} length={lengthInHour}
                         locations={locations} workshops={workshopMap} events={filteredEvents}
-                        onClickCell={(workshopId: number) => {
+                        onClickCell={(workshopId: number, workshopEvent: WorkshopEvent) => {
                           const workshop = workshopMap.get(workshopId);
-                          if (workshop === undefined) {
+                          if (workshop === undefined || workshopEvent === undefined) {
                             alert(`${t('Cannot find workshop with id: ')}${workshopId}`);
                           } else {
-                            this.props.dispatch(currentWorkshopSelected(workshop));
+                            this.props.dispatch(currentWorkshopSelected(workshop, workshopEvent));
                             this.props.navigation.navigate('WorkshopDetailsScreen');
                           }
                         }}

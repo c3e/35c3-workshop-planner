@@ -17,7 +17,7 @@ interface ISessionTableProps {
   startTime: number; // hours after midnight
   length: number; // in hours
   events: WorkshopEvent[];
-  onClickCell: (event: any) => void;
+  onClickCell: (workshopId: number, workshopEvent: WorkshopEvent) => void;
 }
 
 interface ISessionTableState {}
@@ -98,9 +98,10 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
           if (eventsInThisTimeSlotAndLocation.length === 0) {
             rowData.push('');
           } else {
-            const workshop = this.props.workshops.get(eventsInThisTimeSlotAndLocation[0].workshopId);
+            const event = eventsInThisTimeSlotAndLocation[0];
+            const workshop = this.props.workshops.get(event.workshopId);
             if (workshop !== undefined) {
-              rowData.push({ workshopId: workshop.pageid, title: workshop.getPrintTitle() });
+              rowData.push({ workshopId: workshop.pageid, title: workshop.getPrintTitle(), event });
             } else {
               LOGGER.error(`Cannot find workshop with id ${eventsInThisTimeSlotAndLocation[0].workshopId} in workshop List`);
               rowData.push('');

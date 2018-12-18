@@ -11,5 +11,7 @@
   "No workshop selected": "No workshop selected",
   "Error": "Error",
   "by ": "by ",
-  "unknown": "unknown"
+  "unknown": "unknown",
+  "duration": "duration",
+  "min.": "min."
 }

@@ -7,10 +7,12 @@ class Cell extends Component<any> {
   render(): any {
     const { data, width, height, flex, style, textStyle, buttonStyle, ...props } = this.props;
     const textDom = React.isValidElement(data) ? data :
-        data.hasOwnProperty('workshopId') && data.hasOwnProperty('title') ?
+        data.hasOwnProperty('workshopId') &&
+        data.hasOwnProperty('title') &&
+        data.hasOwnProperty('event') ?
           (
               <TouchableOpacity onPress={() => {
-                this.props.onClickCell(data.workshopId);
+                this.props.onClickCell(data.workshopId, data.event);
               }}>
                 <View style={buttonStyle}>
                   <Text style={[textStyle, styles.text]}>{data.title}</Text>

@@ -1,5 +1,4 @@
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
-import { Constants } from 'expo';
 import { SectionList, StyleSheet, Text, View } from 'react-native';
 import OfflineNotification from '../components/OfflineNotification';
 import t from '../i18n/Translator';
@@ -7,12 +6,14 @@ import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import { Dispatch } from 'redux';
 import WorkshopSession from '../dataobjects/WorkshopSession';
-import { Entypo, Foundation, MaterialCommunityIcons, FontAwesome } from '@expo/vector-icons';
+import { Entypo, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import LOGGER from '../utils/Logger';
+import WorkshopEvent from '../dataobjects/WorkshopEvent';
 
 interface IWorkshopDetailsScreenProps {
   currentWorkshop: WorkshopSession | null;
+  currentEvent: WorkshopEvent | null;
   dispatch: Dispatch;
 }
 
@@ -28,35 +29,39 @@ class WorkshopDetailsScreen extends React.Component<IWorkshopDetailsScreenProps>
   };
 
   render(): any {
-    const { manifest } = Constants;
-    const sections = [
-      { data: [{ value: manifest.sdkVersion }], title: 'sdkVersion' },
-      { data: [{ value: manifest.privacy }], title: 'privacy' },
-      { data: [{ value: manifest.version }], title: 'version' },
-      { data: [{ value: manifest.orientation }], title: 'orientation' },
-      { data: [{ value: manifest.primaryColor, type: 'color' }], title: 'primaryColor' },
-      { data: [{ value: manifest.splash && manifest.splash.image }], title: 'splash.image' },
-      {
-        data: [{ value: manifest.splash && manifest.splash.backgroundColor, type: 'color' }],
-        title: 'splash.backgroundColor'
-      },
-      {
-        data: [{ value: manifest.splash && manifest.splash.resizeMode }],
-        title: 'splash.resizeMode'
-      },
-      {
-        data: [{ value: manifest.ios && manifest.ios.supportsTablet ? 'true' : 'false' } ],
-        title: 'ios.supportsTablet'
-      }
-    ];
 
-    if (this.props.currentWorkshop === null) {
+    if (this.props.currentWorkshop === null || this.props.currentEvent === null) {
       return (
           <View style={styles.container}>
             <Text style={styles.errorText} >{t('No workshop selected')}</Text>
           </View>
       );
     }
+
+    const workshop = this.props.currentWorkshop;
+    const event = this.props.currentEvent;
+
+    const sections = [
+      { data: [{ value: workshop.description }], title: t('Description') },
+      { data: [{ value: workshop.organizedBy }], title: t('Orga') },
+      { data: [{ value: workshop.orgaContact }], title: t('Orga Contact') },
+      { data: [{ value: event.location }], title: t('Location') },
+      { data: [{ value: `${event.startTime} - ${t('duration')}: ${event.duration}${t('min.')}` }], title: t('Starttime') },
+      { data: [{ value: workshop.tags.join(', ') }], title: t('Tags') },
+      { data: [{ value: workshop.keywords.join(', ') }], title: t('Keywords') },
+      { data: [{ value: workshop.website }], title: t('Website') },
+      { data: [{ value: workshop.language }], title: t('Language') },
+      { data: [{ value: workshop.sessionType }], title: 'Session Type' },
+      { data: [{ value: workshop.forKids }], title: 'For Kids' },
+      { data: [{ value: workshop.timestamp }], title: 'Last Update' },
+      { data: [{ value: workshop.description }], title: 'Description - long' }
+    ];
+
+    const eventData: any[] = [];
+    workshop.workshopEvents.forEach((event) => {
+      eventData.push({ value: `${event.startTime} @ ${event.location}` });
+    });
+    sections.push({ data: eventData, title: 'Additional Event' });
 
     LOGGER.debug(this.props.currentWorkshop);
 
@@ -200,7 +205,8 @@ const Color = ({ value }: any) => {
 };
 
 const mapStateToProps = ({ global }: ApplicationState) => ({
-  currentWorkshop: global.currentWorkshop
+  currentWorkshop: global.currentWorkshop,
+  currentEvent: global.currentEvent
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

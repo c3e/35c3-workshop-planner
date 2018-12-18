@@ -1,14 +1,17 @@
 import WorkshopSession from '../../dataobjects/WorkshopSession';
+import WorkshopEvent from '../../dataobjects/WorkshopEvent';
 
 export interface GlobalState {
   workshops: WorkshopSession[];
   currentWorkshop: WorkshopSession | null;
+  currentEvent: WorkshopEvent | null;
   rooms: string[];
 }
 
 export const defaultGlobalState: GlobalState = {
   workshops: [],
   currentWorkshop: null,
+  currentEvent:  null,
   rooms: []
 } ;
 
@@ -20,5 +23,5 @@ export const defaultGlobalState: GlobalState = {
 // of Redux's `@@INIT` action.
 export enum GlobalActionTypes {
   WORKSHOPS_LOADED = '@@global/WORKSHOPS_LOADED',
-  CURRENT_WORKSHOP_SELECTED = '@@global/CURRENT_WORKSHOP_SELECTED'
+  CURRENT_WORKSHOP_SELECTED = '@@global/CURRENT_WORKSHOP_SELECTED',
 }
