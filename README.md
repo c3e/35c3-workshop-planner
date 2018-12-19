@@ -51,3 +51,16 @@ To start the app run:
 styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg
 
 - icon archive: https://oblador.github.io/react-native-vector-icons/ oder https://expo.github.io/vector-icons/
+
+
+## current TODO list 
+
+- Fixes TimesSlots in session table
+- Add Filter for Day in Discovery screen
+- Add button for adding event to event list
+- Add change language into settings-tab
+- cleanup workshop detail page
+- cleanup settings tab
+- Add link to session creation page
+- finish translation
+- ship it!
