@@ -19,7 +19,10 @@ const reducer: Reducer<GlobalState> = (state = initialState, action: any) => {
       return { ...state, workshops: action.payload, rooms: parseRoomsFrom(action.payload) };
     }
     case GlobalActionTypes.CURRENT_WORKSHOP_SELECTED: {
-      return { ...state, currentWorkshop: action.payload.workshop, currentEvent: action.payload.event};
+      return { ...state, currentWorkshop: action.payload.workshop, currentEvent: action.payload.event };
+    }
+    case GlobalActionTypes.SELECTED_DATE_CHANGED: {
+      return { ...state, selectedDate: action.payload };
     }
     default: {
       return state;

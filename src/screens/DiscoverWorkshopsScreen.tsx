@@ -21,6 +21,7 @@ interface IDiscoverWorkshopsScreenProps {
   dispatch: Dispatch;
   rooms: string[];
   navigation: any;
+  selectedDate: string;
 }
 
 interface IDiscoverWorkshopsScreenState {
@@ -35,14 +36,16 @@ class DiscoverWorkshopsScreen
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
-    headerTitle: <DiscoveryNavigation />
+    headerTitle: <DiscoveryNavigation />,
+    headerStyle: { borderWidth: 0, borderBottom: 0, margin: 0 }
   };
 
   render(): any {
     const locations = this.getLocations(this.props.rooms);
-    const year = 2018;
-    const month = 12;
-    const date = 27;
+    const selectedDateObj = parseZone(this.props.selectedDate, 'YYYY/MM/DD');
+    const year = selectedDateObj.year();
+    const month = selectedDateObj.month() + 1;
+    const date = selectedDateObj.date();
     const startHour = 8;
     const lengthInHour = 18;
     const lengthInMilli = lengthInHour * 60 * 60 * 1000; // in milliseconds
@@ -148,7 +151,8 @@ class DiscoverWorkshopsScreen
 
 const mapStateToProps = ({ global }: ApplicationState) => ({
   workshops: global.workshops,
-  rooms: global.rooms
+  rooms: global.rooms,
+  selectedDate: global.selectedDate
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

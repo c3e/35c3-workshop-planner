@@ -98,7 +98,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
               event.startTimeObject.minute() < min + 15) ||
               (
                   currentMoment.valueOf() >= event.startTimeObject.valueOf() &&
-                  currentMoment.valueOf() <= event.endTimeObject.valueOf()
+                  currentMoment.valueOf() < event.endTimeObject.valueOf()
               ));
         });
         if (eventsInThisTimeSlotAndLocation.length === 0) {
@@ -106,7 +106,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
         } else {
           const event = eventsInThisTimeSlotAndLocation[0];
           if (eventsInThisTimeSlotAndLocation.length > 1) {
-            LOGGER.warn(`found more then one event at the same location and timeslot. Eventids: ${eventsInThisTimeSlotAndLocation.join(',')}`);
+            LOGGER.warn(`found more then one event at the same location and time-slot. EventIds: ${eventsInThisTimeSlotAndLocation.join(',')}`);
           }
           const workshop = this.props.workshops.get(event.workshopId);
           if (workshop !== undefined) {

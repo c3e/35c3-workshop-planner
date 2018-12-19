@@ -14,3 +14,5 @@ export const currentWorkshopSelected = (workshop: WorkshopSession, event: Worksh
     action<string, {workshop: WorkshopSession, event: WorkshopEvent}>(
         GlobalActionTypes.CURRENT_WORKSHOP_SELECTED, { workshop, event }
         );
+
+export const selectedDateChanged = (date: string) => action<string, string>(GlobalActionTypes.SELECTED_DATE_CHANGED, date);

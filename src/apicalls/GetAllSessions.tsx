@@ -75,8 +75,6 @@ export default class GetAllSessions {
 
             this.getSessionsData.getSessionData(workshops).then((workshops) => {
               this.dispatcher(workshopsLoaded(workshops));
-              console.log(workshops);
-              console.log(JSON.stringify(workshops));
               resolve(workshops);
             }).catch(e => {
               reject(`Error parsing JSON: ${e.toString()}`);
