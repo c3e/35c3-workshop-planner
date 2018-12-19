@@ -11,11 +11,13 @@ const reducer: Reducer<GlobalState> = (state = initialState, action: any) => {
   LOGGER.info(`Reducer called with action ${action.type}`);
   switch (action.type) {
     case GlobalActionTypes.WORKSHOPS_LOADED: {
-      try {
-        storeData(StorageKeys.WORKSHOP_PLANNER_SESSION_LIST, action.payload);
-      } catch (e) {
-        //
-      }
+      storeData(StorageKeys.WORKSHOP_PLANNER_SESSION_LIST, action.payload)
+          .then((val) => {
+            LOGGER.debug(`WorkshopSessions stored call result in : ${val}`);
+          })
+          .catch((e) => {
+            LOGGER.error(`Cannot store workshop list. Error: ${e}`);
+          });
       return { ...state, workshops: action.payload, rooms: parseRoomsFrom(action.payload) };
     }
     case GlobalActionTypes.CURRENT_WORKSHOP_SELECTED: {
@@ -23,6 +25,12 @@ const reducer: Reducer<GlobalState> = (state = initialState, action: any) => {
     }
     case GlobalActionTypes.SELECTED_DATE_CHANGED: {
       return { ...state, selectedDate: action.payload };
+    }
+    case GlobalActionTypes.LAST_API_UPDATE_CHANGED: {
+      return { ...state, lastApiUpdate: action.payload };
+    }
+    case GlobalActionTypes.API_UPDATE_FREQUENCY_CHANGED: {
+      return { ...state, updateApiFrequency: action.payload };
     }
     default: {
       return state;

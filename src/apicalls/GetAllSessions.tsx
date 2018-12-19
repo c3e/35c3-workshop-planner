@@ -10,11 +10,6 @@ export default class GetAllSessions {
   // wiki api url for all sessions
   private static API_URL = 'https://events.ccc.de/congress/2018/wiki/api.php?action=query&format=json&list=categorymembers&cmprop=ids|title|type|sortkey|timestamp&cmlimit=5000&cmtitle=Category:Session';
 
-  private static OFFLINE_DEBUG_LIST: WorkshopSession[] = [
-    new WorkshopSession(2081, 502, 'Session:"Pen&Paper" Game Jam','2250454e265041504552222047414d45204a414d', 'page', '2017-12-22T17:19:06Z', {}),
-    new WorkshopSession(2195,502,'Session:(Wie) Audible Magic hacken?', '28574945292041554449424c45204d41474943204841434b454e3f','page','2017-12-24T01:05:25Z', {})
-  ];
-
   private _dispatcher: Dispatch;
   private _getSessionsData: GetSessionsData;
 

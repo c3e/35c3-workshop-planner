@@ -1,10 +1,10 @@
 import { AsyncStorage } from 'react-native';
 import LOGGER from '../utils/Logger';
 
-export async function storeData (key: StorageKeys, value: any): boolean {
+export async function storeData (key: StorageKeys, value: any): Promise<boolean> {
   try {
     await AsyncStorage.setItem(`WORKSHOP_PLANNER:${key}`, JSON.stringify(value));
-    LOGGER.info(`Successfully stored values or key "${key}"`);
+    LOGGER.info(`Successfully stored values for key "${key}"`);
     return Promise.resolve(true);
   } catch (error) {
     LOGGER.error(`Error on store value for key "${key}"`);
@@ -12,12 +12,12 @@ export async function storeData (key: StorageKeys, value: any): boolean {
   }
 }
 
-export async function retrieveData (key: StorageKeys): string | null {
+export async function retrieveData (key: StorageKeys): Promise<string | null> {
   try {
     const value = await AsyncStorage.getItem(`WORKSHOP_PLANNER:${key}`);
-    if (value !== null) {
-      // We have data!!
+    if (value === null) {
       LOGGER.error(`No value found for key "${key}"`);
+      return value;
     }
     return value;
   } catch (error) {

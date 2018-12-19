@@ -43,7 +43,11 @@ export default class App extends React.Component<{}, AppState> {
 
   async componentWillMount(): Promise<void> {
     try {
-      loadWorkshopData(this.globalStore.dispatch);
+      await loadWorkshopData(
+          this.globalStore.dispatch,
+          this.globalStore.getState().global.lastApiUpdate,
+          this.globalStore.getState().global.updateApiFrequency,
+          true, true);
       await Font.loadAsync({
         'space-mono': SpaceMonoRegular
       });
@@ -64,7 +68,20 @@ export default class App extends React.Component<{}, AppState> {
     } else {
       return (
           <Provider store={this.globalStore}>
-            <AppNavigator />
+            <AppNavigator onNavigationStateChange={() => {
+              loadWorkshopData(
+                    this.globalStore.dispatch,
+                    this.globalStore.getState().global.lastApiUpdate,
+                    this.globalStore.getState().global.updateApiFrequency,
+                    false, false)
+                  .then(() => {
+                    //
+                  })
+                  .catch(() => {
+                    //
+                  });
+            }}
+            />
           </Provider>
       );
     }

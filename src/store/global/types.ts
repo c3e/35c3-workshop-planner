@@ -8,6 +8,8 @@ export interface GlobalState {
   currentEvent: WorkshopEvent | null;
   rooms: string[];
   selectedDate: '2018/12/27' | '2018/12/28' | '2018/12/29' | '2018/12/30';
+  lastApiUpdate: number;
+  updateApiFrequency: number;
 }
 
 export const VALID_DATES = [
@@ -21,7 +23,9 @@ export const defaultGlobalState: GlobalState = {
   currentWorkshop: null,
   currentEvent:  null,
   rooms: [],
-  selectedDate: '2018/12/27'
+  selectedDate: '2018/12/27',
+  lastApiUpdate: 0,
+  updateApiFrequency: 15 * 60 * 1000
 } ;
 
 // Use `const enum`s for better autocompletion of action type names. These will
@@ -33,5 +37,7 @@ export const defaultGlobalState: GlobalState = {
 export enum GlobalActionTypes {
   WORKSHOPS_LOADED = '@@global/WORKSHOPS_LOADED',
   CURRENT_WORKSHOP_SELECTED = '@@global/CURRENT_WORKSHOP_SELECTED',
-  SELECTED_DATE_CHANGED = '@@global/SELECTED_DATE_CHANGED'
+  SELECTED_DATE_CHANGED = '@@global/SELECTED_DATE_CHANGED',
+  LAST_API_UPDATE_CHANGED = '@@global/LAST_API_UPDATE_CHANGED',
+  API_UPDATE_FREQUENCY_CHANGED = '@@global/API_UPDATE_FREQUENCY_CHANGED'
 }
