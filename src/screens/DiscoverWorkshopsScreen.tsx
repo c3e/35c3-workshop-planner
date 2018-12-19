@@ -14,6 +14,7 @@ import { parseZone } from 'moment';
 import * as React from 'react';
 import { currentWorkshopSelected } from '../store/global/actions';
 import t from '../i18n/Translator';
+import { onlyUnique } from '../helper/ArrayHelper';
 
 interface IDiscoverWorkshopsScreenProps {
   workshops: WorkshopSession[];
@@ -39,7 +40,7 @@ class DiscoverWorkshopsScreen
 
   render(): any {
     const locations = this.getLocations(this.props.rooms);
-    const year = 2017;
+    const year = 2018;
     const month = 12;
     const date = 27;
     const startHour = 8;
@@ -48,10 +49,13 @@ class DiscoverWorkshopsScreen
     const startObject = parseZone(`${year}/${month}/${date} ${startHour}:00`, 'YYYY/MM/DD H:mm');
     const events: WorkshopEvent[] = [];
     const workshopMap = new Map<number, WorkshopSession>();
+    const sessionTypes: string[] = [];
     this.props.workshops.forEach((w) => {
       workshopMap.set(w.pageid, w);
       events.push(...w.workshopEvents);
+      sessionTypes.push(w.sessionType);
     });
+    LOGGER.debug(`found session types: ${sessionTypes.filter(onlyUnique).join(',')}`);
     LOGGER.info(`found ${events.length} events`);
     // filter events with invalid date
     let filteredEvents = events
