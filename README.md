@@ -55,8 +55,7 @@ styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg
 
 ## current TODO list 
 
-- Fixes TimesSlots in session table
-- Add Filter for Day in Discovery screen
+- show concurrent 
 - Add button for adding event to event list
 - Add change language into settings-tab
 - cleanup workshop detail page

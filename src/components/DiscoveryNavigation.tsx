@@ -103,12 +103,12 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     width: '100%',
-    height: 42,
+    height: 44,
     borderWidth: 0
   },
   dayPickerContainer: {
     width: '33%',
-    height: 42,
+    height: 44,
     borderWidth: 0
   }
 });

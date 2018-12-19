@@ -31,9 +31,10 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
     const locations: Location[] = Array.from<Location>(this.props.locations.values());
     const tableData = this.buildTableData(locations, this.props.date);
 
-    const widthArray = Array
-        .apply(null, { length: locations.length + 1 })
-        .map(() => { return 100; }, Number);
+    const widthArray = [100];
+    for (let i = 0; i < locations.length; i++) {
+      widthArray.push(100 * tableData.maxItemsPerSlot[i]);
+    }
 
     if (locations.length <= 0 || Array.from(this.props.workshops.values()).length <= 0) {
       return (<View style={styles.loadingSpinnerContainer}><LoadingSpinner /></View>);
@@ -55,7 +56,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
               <ScrollView style={styles.dataWrapper}>
                 <Table borderStyle={{ borderColor: '#C1C0B9' }}>
                   {
-                    tableData.map((rowData, index) => (
+                    tableData.tableData.map((rowData, index) => (
                         <Row
                             key={index}
                             data={rowData}
@@ -76,8 +77,9 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
     );
   }
 
-  private buildTableData(locations: Location[], startDate: Moment): any[] {
+  private buildTableData(locations: Location[], startDate: Moment): {tableData: any[], maxItemsPerSlot: number[]} {
     const tableData = [];
+    const maxItemsPerSlot: any = {};
     for (let i = this.props.startTime * 4; i < 4 * (this.props.startTime + this.props.length); i += 1) {
       const rowData = [];
       for (let j = 0; j < locations.length; j += 1) {
@@ -101,25 +103,32 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
                   currentMoment.valueOf() < event.endTimeObject.valueOf()
               ));
         });
+        if (maxItemsPerSlot.hasOwnProperty(j)) {
+          if (eventsInThisTimeSlotAndLocation.length > maxItemsPerSlot[j]) {
+            maxItemsPerSlot[j] = eventsInThisTimeSlotAndLocation.length;
+          }
+        } else {
+          maxItemsPerSlot[j] = eventsInThisTimeSlotAndLocation.length;
+        }
         if (eventsInThisTimeSlotAndLocation.length === 0) {
           rowData.push('');
         } else {
-          const event = eventsInThisTimeSlotAndLocation[0];
-          if (eventsInThisTimeSlotAndLocation.length > 1) {
-            LOGGER.warn(`found more then one event at the same location and time-slot. EventIds: ${eventsInThisTimeSlotAndLocation.join(',')}`);
-          }
-          const workshop = this.props.workshops.get(event.workshopId);
-          if (workshop !== undefined) {
-            rowData.push({ workshopId: workshop.pageid, title: workshop.getPrintTitle(), event });
-          } else {
-            LOGGER.error(`Cannot find workshop with id ${eventsInThisTimeSlotAndLocation[0].workshopId} in workshop List`);
-            rowData.push('');
-          }
+          const events = eventsInThisTimeSlotAndLocation;
+          const eventsToAdd: {workshopId: number, title: string, event: WorkshopEvent | undefined, key: string}[] = [];
+          events.forEach((e) => {
+            const workshop = this.props.workshops.get(e.workshopId);
+            if (workshop !== undefined) {
+              eventsToAdd.push({ workshopId: workshop.pageid, title: workshop.getPrintTitle(), event: e, key: `${i}-${j}-${e.guid}` });
+            } else {
+              LOGGER.error(`Cannot find workshop with id ${eventsInThisTimeSlotAndLocation[0].workshopId} in workshop List`);
+            }
+          });
+          rowData.push(eventsToAdd);
         }
       }
       tableData.push(rowData);
     }
-    return tableData;
+    return { tableData, maxItemsPerSlot };
   }
 }
 
