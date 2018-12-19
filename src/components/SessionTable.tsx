@@ -5,7 +5,7 @@ import WorkshopSession from '../dataobjects/WorkshopSession';
 import LoadingSpinner from './LoadingSpinner';
 import Location from '../dataobjects/Location';
 import t from '../i18n/Translator';
-import { Moment } from 'moment';
+import { Moment, parseZone } from 'moment';
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import WorkshopEvent from '../dataobjects/WorkshopEvent';
 import LOGGER from '../utils/Logger';
@@ -29,7 +29,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
 
   render(): any {
     const locations: Location[] = Array.from<Location>(this.props.locations.values());
-    const tableData = this.buildTableData(locations);
+    const tableData = this.buildTableData(locations, this.props.date);
 
     const widthArray = Array
         .apply(null, { length: locations.length + 1 })
@@ -76,7 +76,7 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
     );
   }
 
-  private buildTableData(locations: Location[]): any[] {
+  private buildTableData(locations: Location[], startDate: Moment): any[] {
     const tableData = [];
     for (let i = this.props.startTime * 4; i < 4 * (this.props.startTime + this.props.length); i += 1) {
       const rowData = [];
@@ -84,31 +84,38 @@ export default class SessionTable extends Component<ISessionTableProps, ISession
         const min = (i % 4) * 15;
         const hour = Math.floor(i / 4);
         const newDay = Math.floor(hour / 24) >= 1;
+        const currentMoment = parseZone(
+            `${startDate.year()}/${startDate.month() + 1}/${startDate.date() + (newDay ? 1 : 0)} ${Math.floor(hour % 24)}:${min === 0 ? '00' : min}`, 'YYYY/MM/DD H:mm');
 
         if (j === 0) {
           const timeSlot = `${newDay ? 'n ' : ''}${Math.floor(hour % 24)}:${min === 0 ? '00' : min}`;
           rowData.push(timeSlot);
+        }
+        const eventsInThisTimeSlotAndLocation = this.props.events.filter((event) => {
+          return locations[j].containsLocation(event.location) &&
+              ((event.startTimeObject.hour() === hour &&
+              event.startTimeObject.minute() >= min &&
+              event.startTimeObject.minute() < min + 15) ||
+              (
+                  currentMoment.valueOf() >= event.startTimeObject.valueOf() &&
+                  currentMoment.valueOf() <= event.endTimeObject.valueOf()
+              ));
+        });
+        if (eventsInThisTimeSlotAndLocation.length === 0) {
+          rowData.push('');
         } else {
-          const eventsInThisTimeSlotAndLocation = this.props.events.filter((event) => {
-            return locations[j].containsLocation(event.location) &&
-                event.startTimeObject.hour() === hour &&
-                event.startTimeObject.minute() >= min &&
-                event.startTimeObject.minute() < min + 15;
-          });
-          if (eventsInThisTimeSlotAndLocation.length === 0) {
-            rowData.push('');
+          const event = eventsInThisTimeSlotAndLocation[0];
+          if (eventsInThisTimeSlotAndLocation.length > 1) {
+            LOGGER.warn(`found more then one event at the same location and timeslot. Eventids: ${eventsInThisTimeSlotAndLocation.join(',')}`);
+          }
+          const workshop = this.props.workshops.get(event.workshopId);
+          if (workshop !== undefined) {
+            rowData.push({ workshopId: workshop.pageid, title: workshop.getPrintTitle(), event });
           } else {
-            const event = eventsInThisTimeSlotAndLocation[0];
-            const workshop = this.props.workshops.get(event.workshopId);
-            if (workshop !== undefined) {
-              rowData.push({ workshopId: workshop.pageid, title: workshop.getPrintTitle(), event });
-            } else {
-              LOGGER.error(`Cannot find workshop with id ${eventsInThisTimeSlotAndLocation[0].workshopId} in workshop List`);
-              rowData.push('');
-            }
+            LOGGER.error(`Cannot find workshop with id ${eventsInThisTimeSlotAndLocation[0].workshopId} in workshop List`);
+            rowData.push('');
           }
         }
-
       }
       tableData.push(rowData);
     }

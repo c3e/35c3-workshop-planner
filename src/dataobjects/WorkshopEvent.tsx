@@ -8,6 +8,7 @@ export default class WorkshopEvent {
   private _guid: string;
   private _startTime: string;
   private _startTimeObject: Moment;
+  private _endTimeObject: Moment;
   private _duration: number;
   private _location: string;
   private _subtitle: string = '';
@@ -21,6 +22,7 @@ export default class WorkshopEvent {
     this._workshopId = workhopsId;
 
     this._startTimeObject = parseZone(startTime, WorkshopEvent._DATE_FORMAT);
+    this._endTimeObject = parseZone(startTime, WorkshopEvent._DATE_FORMAT).add(duration, 'minutes');
   }
 
   get guid(): string {
@@ -77,6 +79,14 @@ export default class WorkshopEvent {
 
   set startTimeObject(value: Moment) {
     this._startTimeObject = value;
+  }
+
+  get endTimeObject(): Moment {
+    return this._endTimeObject;
+  }
+
+  set endTimeObject(value: Moment) {
+    this._endTimeObject = value;
   }
 
   static buildFromStoreObject(raw: any, parentId = 0): WorkshopEvent {
