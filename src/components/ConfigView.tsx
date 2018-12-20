@@ -2,29 +2,52 @@ import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import { SectionList, Image, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo';
 import OfflineNotification from './OfflineNotification';
+import t from '../i18n/Translator';
+import { parseZone } from 'moment';
+// @ts-ignore
+import TimerMixin from 'react-timer-mixin';
 
-export default class ConfigView extends React.Component {
+interface IConfigViewProps {
+  lastApiUpdate: number;
+  updateApiFrequency: number;
+}
+
+interface IConfigViewState {
+  lastUpdate: string;
+}
+
+export default class ConfigView extends React.Component<IConfigViewProps, IConfigViewState> {
+
+  constructor(props: IConfigViewProps) {
+    super(props);
+    this.state = {
+      lastUpdate: parseZone(this.props.lastApiUpdate, 'x').fromNow()
+    };
+  }
+
+  private updateTime(): void {
+    this.setState({
+      lastUpdate: parseZone(this.props.lastApiUpdate, 'x').fromNow()
+    });
+    TimerMixin.setTimeout(() => this.updateTime(), 5000);
+  }
+
+  componentDidMount(): void {
+    TimerMixin.setTimeout(() => {
+      this.updateTime();
+    }, 5000);
+  }
+
   render(): any {
-    const { manifest } = Constants;
     const sections = [
-      { data: [{ value: manifest.sdkVersion }], title: 'sdkVersion' },
-      { data: [{ value: manifest.privacy }], title: 'privacy' },
-      { data: [{ value: manifest.version }], title: 'version' },
-      { data: [{ value: manifest.orientation }], title: 'orientation' },
-      { data: [{ value: manifest.primaryColor, type: 'color' }], title: 'primaryColor' },
-      { data: [{ value: manifest.splash && manifest.splash.image }], title: 'splash.image' },
+      { data: [{ value: this.state.lastUpdate }], title: t('Last Update') },
       {
-        data: [{ value: manifest.splash && manifest.splash.backgroundColor, type: 'color' }],
-        title: 'splash.backgroundColor'
+        data: [{ value: `${t('every')} ${this.props.updateApiFrequency / 60000} ${t('minutes')}` }],
+        title: t('Workshops update Frequency')
       },
-      {
-        data: [{ value: manifest.splash && manifest.splash.resizeMode }],
-        title: 'splash.resizeMode'
-      },
-      {
-        data: [{ value: manifest.ios && manifest.ios.supportsTablet ? 'true' : 'false' } ],
-        title: 'ios.supportsTablet'
-      }
+      { data: [{ value: 'Van Fanel' }], title: t('Author') },
+      { data: [{ value: 'vanfanel@quantentunnel.de' }], title: t('Contact - email') },
+      { data: [{ value: 'DECT: 8263' }], title: t('Contact - phone') }
     ];
 
     return (
