@@ -29,6 +29,6 @@ export async function retrieveData (key: StorageKeys): Promise<string | null> {
 
 export enum StorageKeys {
   'SETTINGS' = 'SETTINGS',
-  'WORKSHOP_PLANNER_SESSION_LIST' = 'WORKSHOP_PLANNER_SESSION_LIST',
-  'WORKSHOP_PLANNER_SESSIONS_DATA' = 'WORKSHOP_PLANNER_SESSIONS_DATA'
+  'SESSIONS' = 'SESSIONS',
+  'FAVORITES' = 'FAVORITES'
 }

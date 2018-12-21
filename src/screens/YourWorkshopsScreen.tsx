@@ -6,9 +6,11 @@ import { ApplicationState } from '../store';
 import { connect } from 'react-redux';
 import t from '../i18n/Translator';
 import OfflineNotification from '../components/OfflineNotification';
+import WorkshopFavorite from '../dataobjects/WorkshopFavorite';
 
 interface IYourWorkshopScreenProps {
   dispatch: Dispatch;
+  favorites: WorkshopFavorite[];
 }
 
 class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
@@ -24,6 +26,7 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           <View style={styles.welcomeContainer}>
             <Text style={styles.noBookmarksLabel} h4>{t('No workshops bookmarked yet')}</Text>
+            <Text>You have: {this.props.favorites.length}</Text>
           </View>
         </ScrollView>
 
@@ -36,7 +39,7 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
 }
 
 const mapStateToProps = ({ global }: ApplicationState) => ({
-  workshops: global.workshops
+  favorites: global.favorites
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

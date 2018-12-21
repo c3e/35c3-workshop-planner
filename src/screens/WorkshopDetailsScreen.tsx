@@ -10,6 +10,7 @@ import { Entypo, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import LOGGER from '../utils/Logger';
 import WorkshopEvent from '../dataobjects/WorkshopEvent';
+import AddToFavoriteButton from '../components/AddToFavoriteButton';
 
 interface IWorkshopDetailsScreenProps {
   currentWorkshop: WorkshopSession | null;
@@ -25,7 +26,8 @@ class WorkshopDetailsScreen extends React.Component<IWorkshopDetailsScreenProps>
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
-    title: t('Workshop Details')
+    title: t('Workshop Details'),
+    headerRight: (<AddToFavoriteButton />)
   };
 
   render(): any {

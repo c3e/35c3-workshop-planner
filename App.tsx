@@ -9,7 +9,8 @@ import { Provider } from 'react-redux';
 
 // @ts-ignore
 import SpaceMonoRegular from './src/assets/fonts/SpaceMono-Regular.ttf';
-import { loadWorkshopData } from './src/actions/Load';
+import { loadWorkshopData, loadWorkshopFavorites } from './src/actions/Load';
+import { retrieveData, StorageKeys } from './src/persist/Storage';
 
 // disable debugger warning
 YellowBox.ignoreWarnings(['Remote debugger']);
@@ -48,11 +49,12 @@ export default class App extends React.Component<{}, AppState> {
           this.globalStore.getState().global.lastApiUpdate,
           this.globalStore.getState().global.updateApiFrequency,
           true, true);
+      await loadWorkshopFavorites(this.globalStore.dispatch);
       await Font.loadAsync({
         'space-mono': SpaceMonoRegular
       });
     } catch (error) {
-      LOGGER.error(`error loading icon fonts: ${error}`);
+      LOGGER.error(`error on loading app: ${error}`);
     }
 
     this.setState({ fontLoaded: true });

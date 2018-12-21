@@ -14,12 +14,12 @@ export default class WorkshopEvent {
   private _subtitle: string = '';
   private _workshopId: number;
 
-  constructor(guid: string, startTime: string, duration: number, location: string, workhopsId: number = 0) {
+  constructor(guid: string, startTime: string, duration: number, location: string, workshopId: number = 0) {
     this._guid = guid;
     this._startTime = startTime;
     this._duration = duration;
     this._location = location;
-    this._workshopId = workhopsId;
+    this._workshopId = workshopId;
 
     this._startTimeObject = parseZone(startTime, WorkshopEvent._DATE_FORMAT);
     this._endTimeObject = parseZone(startTime, WorkshopEvent._DATE_FORMAT).add(duration, 'minutes');
@@ -102,5 +102,11 @@ export default class WorkshopEvent {
     result.subtitle = subtitle;
 
     return result;
+  }
+
+  public equals(workshopEvent: WorkshopEvent): boolean {
+    return this.startTimeObject.isSame(workshopEvent.startTimeObject) &&
+        this.location.trim() === workshopEvent.location.trim() &&
+        this.duration === workshopEvent.duration;
   }
 }

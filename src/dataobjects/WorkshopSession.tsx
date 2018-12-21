@@ -419,4 +419,8 @@ export default class WorkshopSession {
   set isRelatedTo(value: string) {
     this._isRelatedTo = value;
   }
+
+  public equals(workshopSession: WorkshopSession): boolean {
+    return this.pageid === workshopSession.pageid;
+  }
 }

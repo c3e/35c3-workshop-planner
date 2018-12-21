@@ -56,10 +56,9 @@ styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg
 ## current TODO list 
 
 #### Must have:
-- add button for adding event to favorites
 - show Favorites list
-- Remove event from favorites
 - show details of favorite event
+- add to calendar from fav list
 - refresh/reload button in settings screen  
 - ship it!
 

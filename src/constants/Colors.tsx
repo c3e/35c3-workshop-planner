@@ -14,8 +14,13 @@ export default {
   offlineRedBackground: '#f00',
   backgroundBlack: '#000',
 
+  black: '#000',
+
   fresh: '#0084B0',
   hope: '#00A356',
   beboot: '#D4D4D3',
-  workshopDetailsSessionType: '#0084B0'
+
+  workshopDetailsSessionType: '#0084B0',
+  addToFavorite: '#00A356',
+  removeFromFavorite: '#bc432b'
 };

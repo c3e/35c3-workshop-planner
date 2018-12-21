@@ -3,6 +3,7 @@ import { defaultGlobalState, GlobalActionTypes, GlobalState } from './types';
 import LOGGER from '../../utils/Logger';
 import { StorageKeys, storeData } from '../../persist/Storage';
 import { parseRoomsFrom } from '../../helper/RoomParser';
+import WorkshopFavorite from '../../dataobjects/WorkshopFavorite';
 
 // Type-safe initialState
 const initialState: GlobalState = defaultGlobalState;
@@ -11,7 +12,7 @@ const reducer: Reducer<GlobalState> = (state = initialState, action: any) => {
   LOGGER.info(`Reducer called with action ${action.type}`);
   switch (action.type) {
     case GlobalActionTypes.WORKSHOPS_LOADED: {
-      storeData(StorageKeys.WORKSHOP_PLANNER_SESSION_LIST, action.payload)
+      storeData(StorageKeys.SESSIONS, action.payload)
           .then((val) => {
             LOGGER.debug(`WorkshopSessions stored call result in : ${val}`);
           })
@@ -31,6 +32,44 @@ const reducer: Reducer<GlobalState> = (state = initialState, action: any) => {
     }
     case GlobalActionTypes.API_UPDATE_FREQUENCY_CHANGED: {
       return { ...state, updateApiFrequency: action.payload };
+    }
+    case GlobalActionTypes.WORKSHOP_FAVORITES_LOADED: {
+      return { ...state, favorites: action.payload };
+    }
+    case GlobalActionTypes.NEW_WORKSHOP_FAVORITE_ADDED: {
+      const newFav: WorkshopFavorite = action.payload;
+      const contains = state.favorites.find((fav) => fav.equals(newFav)) !== undefined;
+      if (contains === false) {
+        const newList: WorkshopFavorite[] = [];
+        newList.push(...state.favorites);
+        newList.push(newFav);
+        storeData(StorageKeys.FAVORITES, newList)
+            .then((val) => {
+              LOGGER.debug(`WorkshopFavorites stored call result in : ${val}`);
+            })
+            .catch((e) => {
+              LOGGER.error(`Cannot store workshop list. Error: ${e}`);
+            });
+        return { ...state, favorites: newList };
+      }
+      return { ...state };
+    }
+    case GlobalActionTypes.WORKSHOP_FAVORITE_REMOVED: {
+      const toRemove: WorkshopFavorite = action.payload;
+      const newList: WorkshopFavorite[] = [];
+
+      state.favorites.forEach((fav) => {
+        if (!fav.equals(toRemove)) newList.push(fav);
+      });
+
+      storeData(StorageKeys.FAVORITES, newList)
+          .then((val) => {
+            LOGGER.debug(`WorkshopFavorites stored call result in : ${val}`);
+          })
+          .catch((e) => {
+            LOGGER.error(`Cannot store workshop list. Error: ${e}`);
+          });
+      return { ...state, favorites: newList };
     }
     default: {
       return state;
