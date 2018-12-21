@@ -55,11 +55,19 @@ styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg
 
 ## current TODO list 
 
-- show concurrent 
-- Add button for adding event to event list
+#### Must have:
+- add button for adding event to favorites
+- show Favorites list
+- Remove event from favorites
+- show details of favorite event
+- refresh/reload button in settings screen  
+- ship it!
+
+
+#### nice to have
+- fix button with concurrent events in discover mode
+- show when event not find anymore
 - Add change language into settings-tab
 - cleanup workshop detail page
 - cleanup settings tab
 - Add link to session creation page
-- finish translation
-- ship it!
