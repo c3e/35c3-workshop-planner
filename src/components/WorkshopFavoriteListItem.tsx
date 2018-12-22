@@ -40,7 +40,9 @@ export default class WorkshopFavoriteListItem extends Component<IWorkshopFavorit
     const day = this.getEventDayByDate(event.startTimeObject.format('YYYY/MM/DD'));
     const now: Moment = moment();
 
-    // now.add(5, 'days').subtract(2, 'hours'); // Add for debuging
+    if (__DEV__) {
+      now.add(5, 'days').subtract(2, 'hours'); // Add for debuging
+    }
     now.add(1, 'hours'); // We are in germany... the saved times are utc...
 
     console.log(now);
@@ -99,9 +101,9 @@ export default class WorkshopFavoriteListItem extends Component<IWorkshopFavorit
                 <View style={styles.clockContainer}>
                   <View style={styles.clockInnerContainer}>
                     <MaterialCommunityIcons name={'progress-clock'} size={24}
-                                            color={Colors.black} style={styles.clock}
+                                            color={isInPast ? Colors.eventOverTextColor : Colors.black} style={styles.clock}
                     />
-                    <Text style={styles.clockText}>{`${event.duration} ${t('min')}`}</Text>
+                    <Text style={isInPast ? [styles.clockText, styles.isInPastText] : styles.clockText }>{`${event.duration} ${t('min')}`}</Text>
                   </View>
                 </View>
             )}
