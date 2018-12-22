@@ -23,5 +23,7 @@ export default {
   workshopDetailsSessionType: '#0084B0',
   addToFavorite: '#00A356',
   removeFromFavorite: '#bc432b',
-  listItemBottomBorderColor: '#00A356'
+  listItemBottomBorderColor: '#00A356',
+  eventOverBackgroundColor: '#A4A4A3',
+  eventOverTextColor: '#545453'
 };
