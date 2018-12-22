@@ -10,10 +10,12 @@ import WorkshopFavorite from '../dataobjects/WorkshopFavorite';
 import Colors from '../constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { GetIconBySessionType } from '../helper/IconSwitch';
+import { currentWorkshopSelected } from '../store/global/actions';
 
 interface IYourWorkshopScreenProps {
   dispatch: Dispatch;
   favorites: WorkshopFavorite[];
+  navigation: any;
 }
 
 class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
@@ -34,6 +36,10 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
     return (
         <ListItem
             containerStyle={styles.listItemContainer}
+            onPress={() => {
+              this.props.dispatch(currentWorkshopSelected(workshop, event));
+              this.props.navigation.navigate('WorkshopDetailsScreen');
+            }}
             title={(<Text style={styles.title}>{workshop.getPrintTitle()}</Text>)}
             contentContainerStyle={styles.contentContainer}
             subtitle={`${startTime} ${day}`}
