@@ -6,11 +6,10 @@ import { connect } from 'react-redux';
 import { ApplicationState } from '../store';
 import { Dispatch } from 'redux';
 import WorkshopSession from '../dataobjects/WorkshopSession';
-import { Entypo, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
-import Colors from '../constants/Colors';
 import LOGGER from '../utils/Logger';
 import WorkshopEvent from '../dataobjects/WorkshopEvent';
 import AddToFavoriteButton from '../components/AddToFavoriteButton';
+import { GetIconBySessionType } from '../helper/IconSwitch';
 
 interface IWorkshopDetailsScreenProps {
   currentWorkshop: WorkshopSession | null;
@@ -148,47 +147,6 @@ const SectionContent = (props: any) => {
   );
 };
 
-const GetIconBySessionType = (sessionType: string) => {
-  switch (sessionType) {
-    case 'Hands-On':
-      return (
-          <Foundation name={'social-skillshare'} size={58} color={Colors.workshopDetailsSessionType}
-                      style={styles.sessionTypeIcon}/>
-      );
-    case 'Talk':
-      return (
-          <MaterialCommunityIcons name={'presentation'} size={58} color={Colors.workshopDetailsSessionType}
-                                  style={styles.sessionTypeIcon}/>
-      );
-    case 'Outside':
-      return (
-          <Foundation name={'map'} size={58} color={Colors.workshopDetailsSessionType}
-                  style={styles.sessionTypeIcon}/>
-      );
-    case 'Discussion':
-      return (
-          <Entypo name={'chat'} size={58} color={Colors.workshopDetailsSessionType}
-                  style={styles.sessionTypeIcon}/>
-      );
-    case 'Game':
-      return (
-          <Entypo name={'game-controller'} size={58} color={Colors.workshopDetailsSessionType}
-                  style={styles.sessionTypeIcon}/>
-      );
-    case 'Meeting':
-      return (
-          <Entypo name={'users'} size={58} color={Colors.workshopDetailsSessionType}
-                  style={styles.sessionTypeIcon}/>
-      );
-    default:
-      // 'Workshop', 'Other', ''
-      return (
-          <Entypo name={'tools'} size={58} color={Colors.workshopDetailsSessionType}
-                    style={styles.sessionTypeIcon}/>
-      );
-  }
-};
-
 const Color = ({ value }: any) => {
   if (!value) {
     return <View />;
@@ -242,10 +200,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  sessionTypeIcon: {
-    width: 'auto',
-    height: '100%'
   },
   titleTextContainer: {
     padding: 0,

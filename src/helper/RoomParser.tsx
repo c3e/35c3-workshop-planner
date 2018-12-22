@@ -12,5 +12,7 @@ export function parseRoomsFrom(workshops: WorkshopSession[]): string[] {
     });
   });
 
+  locations.push('unknown');
+
   return locations.filter(onlyUnique);
 }

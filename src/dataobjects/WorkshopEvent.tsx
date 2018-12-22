@@ -18,7 +18,11 @@ export default class WorkshopEvent {
     this._guid = guid;
     this._startTime = startTime;
     this._duration = duration;
-    this._location = location;
+    if (location === undefined || location === null || location.trim() === '') {
+      this._location = 'unknown';
+    } else {
+      this._location = location;
+    }
     this._workshopId = workshopId;
 
     this._startTimeObject = parseZone(startTime, WorkshopEvent._DATE_FORMAT);
@@ -94,7 +98,10 @@ export default class WorkshopEvent {
     const guid = getStringProp(raw, '_guid');
     const startTime = getStringProp(raw, '_startTime');
     const duration = getNumberProp(raw, '_duration');
-    const location = getStringProp(raw, '_location');
+    let location = getStringProp(raw, '_location', 'unknown');
+    if (location.trim() === '') {
+      location = 'unknown';
+    }
     const subtitle = getStringProp(raw, '_subtitle');
     const workshopId = parentId > 0 ? parentId : getNumberProp(raw, '_workshopId');
 

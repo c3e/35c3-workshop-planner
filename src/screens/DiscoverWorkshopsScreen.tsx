@@ -42,6 +42,7 @@ class DiscoverWorkshopsScreen
 
   render(): any {
     const locations = this.getLocations(this.props.rooms);
+    console.log(locations);
     const selectedDateObj = parseZone(this.props.selectedDate, 'YYYY/MM/DD');
     const year = selectedDateObj.year();
     const month = selectedDateObj.month() + 1;
