@@ -10,6 +10,7 @@ import LOGGER from '../utils/Logger';
 import WorkshopEvent from '../dataobjects/WorkshopEvent';
 import AddToFavoriteButton from '../components/AddToFavoriteButton';
 import { GetIconBySessionType } from '../helper/IconSwitch';
+import Colors from '../constants/Colors';
 
 interface IWorkshopDetailsScreenProps {
   currentWorkshop: WorkshopSession | null;
@@ -257,6 +258,7 @@ const styles = StyleSheet.create({
     flex: 1
   },
   errorText: {
-
+    fontSize: 16,
+    color: Colors.black
   }
 });
