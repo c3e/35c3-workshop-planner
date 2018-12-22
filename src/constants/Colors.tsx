@@ -22,5 +22,6 @@ export default {
 
   workshopDetailsSessionType: '#0084B0',
   addToFavorite: '#00A356',
-  removeFromFavorite: '#bc432b'
+  removeFromFavorite: '#bc432b',
+  listItemBottomBorderColor: '#00A356'
 };

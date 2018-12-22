@@ -144,8 +144,9 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   listItemContainer: {
-    margin: 0, paddingVertical: 5, flex: 1,
-    flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
+    margin: 0, paddingVertical: 5, flex: 1, minHeight: 74,
+    flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
+    borderBottomWidth: 0.5, borderStyle: 'dotted', borderBottomColor: Colors.listItemBottomBorderColor
   },
   title: {
     fontSize: 16, fontWeight: 'bold', textAlign: 'left'
