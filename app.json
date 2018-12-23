@@ -3,7 +3,7 @@
     "name": "35c3 workshop planner",
     "icon": "./src/assets/images/35c3-workshop-planner-logo-256px.png",
     "version": "1.0.0",
-    "description": "Plan your workshops at the 35c3 event in Leipzig by browsing the wiki, mark interisting workshops and add them to your calendar.",
+    "description": "Plan your workshops at the 35c3 event in Leipzig by browsing the wiki, mark interesting workshops and add them to your calendar.",
     "slug": "35c3-workshop-planner",
     "sdkVersion": "31.0.0",
     "privacy": "public",

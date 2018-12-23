@@ -37,33 +37,19 @@ To start the app run:
 
 ### NOTES FOR DEVELOPMENT
 
-- 2017 workshop list: ``https://events.ccc.de/congress/2017/wiki/index.php/Static:Self-organized_Sessions#List_of_Self-organized_Sessions``
+- 2018 workshop list: ``https://events.ccc.de/congress/2018/wiki/index.php/Static:Self-organized_Sessions#List_of_Self-organized_Sessions``
 
-- Table Component you maybe want to use: ``https://www.npmjs.com/package/react-native-table-component``
+- styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg
 
-- Howto use the expo.io calendar: ``https://docs.expo.io/versions/latest/sdk/calendar``
-
-- Get information about the sessions:
- ``https://events.ccc.de/congress/2017/wiki/api.php?action=query&prop=revisions&pageids=2081|2195&rvprop=ids|timestamp|user|userid|size|tags|parsetree``
- 
-- to better parse information use: fast-xml-parser
-
-styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg
-
-- icon archive: https://oblador.github.io/react-native-vector-icons/ oder https://expo.github.io/vector-icons/
+- icon archive 1: https://oblador.github.io/react-native-vector-icons/
+- icon archive 2: https://expo.github.io/vector-icons/
 
 
 ## current TODO list 
 
-#### Must have:
-- add to calendar from fav list
-- ship it!
-
-
-#### nice to have
+- Add link to session creation page
 - fix button with concurrent events in discover mode
 - show when event not find anymore
-- Add change language into settings-tab
+- fix or remove change language into settings-tab
 - cleanup workshop detail page
-- cleanup settings tab
-- Add link to session creation page
+
