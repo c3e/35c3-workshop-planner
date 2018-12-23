@@ -22,8 +22,6 @@ export default function t(text: string): string {
     }
   }
 
-  console.log(currentLanguage[text]);
-
   if (!currentLanguage.hasOwnProperty(text)) {
     LOGGER.info(`Missing translation for key: "${text}"`);
     return text;

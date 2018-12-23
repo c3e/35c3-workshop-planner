@@ -6,10 +6,11 @@ import t from '../i18n/Translator';
 import { parseZone } from 'moment';
 // @ts-ignore
 import TimerMixin from 'react-timer-mixin';
-import { ButtonGroup } from 'react-native-elements';
+import { Button, ButtonGroup } from 'react-native-elements';
 import { Dispatch } from 'redux';
 import { AvailableLanguages } from '../i18n/AvailableLanguages';
 import { languageChanged } from '../store/global/actions';
+import { loadWorkshopData } from '../actions/Load';
 
 interface IConfigViewProps {
   lastApiUpdate: number;
@@ -20,6 +21,7 @@ interface IConfigViewProps {
 
 interface IConfigViewState {
   lastUpdate: string;
+  updating: boolean;
 }
 
 export default class ConfigView extends React.Component<IConfigViewProps, IConfigViewState> {
@@ -27,7 +29,8 @@ export default class ConfigView extends React.Component<IConfigViewProps, IConfi
   constructor(props: IConfigViewProps) {
     super(props);
     this.state = {
-      lastUpdate: parseZone(this.props.lastApiUpdate, 'x').fromNow()
+      lastUpdate: parseZone(this.props.lastApiUpdate, 'x').fromNow(),
+      updating: false
     };
   }
 
@@ -51,6 +54,7 @@ export default class ConfigView extends React.Component<IConfigViewProps, IConfi
         data: [{ value: `${t('every')} ${this.props.updateApiFrequency / 60000} ${t('minutes')}` }],
         title: t('Workshops update Frequency')
       },
+      { data: [{ value: [], type: 'updateNow' }], title: t('Force Update') },
       { data: [{ value: 'Van Fanel' }], title: t('Author') },
       { data: [{ value: 'vanfanel@quantentunnel.de' }], title: t('Contact - email') },
       { data: [{ value: 'DECT: 8263' }], title: t('Contact - phone') },
@@ -96,18 +100,38 @@ export default class ConfigView extends React.Component<IConfigViewProps, IConfi
 
       return (
           <SectionContent>
-              <ButtonGroup
-                  onPress={(selectedIndex) => {
-                    if (selectedIndex === 0) {
-                      this.props.dispatch(languageChanged(AvailableLanguages.en));
-                    }
-                    if (selectedIndex === 1) {
-                      this.props.dispatch(languageChanged(AvailableLanguages.de));
-                    }
-                  }}
-                  selectedIndex={selectedIndex}
-                  buttons={buttons}
-                  containerStyle={styles.chooseLanguageContainer} />
+            <ButtonGroup
+                onPress={(selectedIndex) => {
+                  if (selectedIndex === 0) {
+                    this.props.dispatch(languageChanged(AvailableLanguages.en));
+                  }
+                  if (selectedIndex === 1) {
+                    this.props.dispatch(languageChanged(AvailableLanguages.de));
+                  }
+                }}
+                selectedIndex={selectedIndex}
+                buttons={buttons}
+                containerStyle={styles.chooseLanguageContainer}/>
+          </SectionContent>
+      );
+    } else if (item.type === 'updateNow') {
+      return (
+          <SectionContent>
+            <Button
+                disabled={this.state.updating}
+                onPress={() => {
+                  this.setState({ updating: true });
+                  loadWorkshopData(
+                      this.props.dispatch,
+                      this.props.lastApiUpdate,
+                      this.props.updateApiFrequency,
+                      true, true)
+                      .then(() => this.setState({ updating: false }))
+                      .catch(() => this.setState({ updating: false }));
+                }}
+                title={t('Refresh now')}
+                buttonStyle={styles.refreshButton}
+            />
           </SectionContent>
       );
     } else {
@@ -272,5 +296,8 @@ const styles = StyleSheet.create({
   },
   chooseLanguageContainer: {
     height: 20
+  },
+  refreshButton: {
+    width: '50%'
   }
 });

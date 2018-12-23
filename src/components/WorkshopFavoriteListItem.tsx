@@ -41,7 +41,7 @@ export default class WorkshopFavoriteListItem extends Component<IWorkshopFavorit
     const now: Moment = moment();
 
     if (__DEV__) {
-      now.add(5, 'days').subtract(2, 'hours'); // Add for debuging
+      now.add(5, 'days').subtract(4, 'hours'); // Add for debuging
     }
     now.add(1, 'hours'); // We are in germany... the saved times are utc...
 

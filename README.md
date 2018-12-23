@@ -56,10 +56,7 @@ styleguide: https://pbs.twimg.com/media/DrVifILW4AEZW8R.jpg
 ## current TODO list 
 
 #### Must have:
-- show Favorites list
-- show details of favorite event
 - add to calendar from fav list
-- refresh/reload button in settings screen  
 - ship it!
 
 

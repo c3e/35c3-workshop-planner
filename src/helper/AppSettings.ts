@@ -9,7 +9,6 @@ export default class AppSettings {
 
   static async init(): Promise<AvailableLanguages> {
     const storedLang = await retrieveData(StorageKeys.LANGUAGE);
-    console.log(storedLang);
     if (storedLang === null || storedLang === '0') {
       AppSettings.LANGUAGE = AvailableLanguages.en;
     } else if (storedLang === '1') {
@@ -30,4 +29,4 @@ export default class AppSettings {
     this._LANGUAGE = lang;
   }
 }
-
+AppSettings.init();
