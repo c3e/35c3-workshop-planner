@@ -4,6 +4,7 @@ import { ApplicationState } from '../store';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { AvailableLanguages } from '../i18n/AvailableLanguages';
+import t from '../i18n/Translator';
 
 interface ISettingsScreenProps {
   lastApiUpdate: number;
@@ -15,7 +16,7 @@ interface ISettingsScreenProps {
 class SettingsScreen extends React.Component<ISettingsScreenProps> {
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
-    title: 'Settings'
+    title: t('Settings')
   };
 
   render(): any {

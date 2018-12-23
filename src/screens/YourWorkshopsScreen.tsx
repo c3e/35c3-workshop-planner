@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FlatList, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-elements';
 import { Dispatch } from 'redux';
 import { ApplicationState } from '../store';
@@ -8,21 +8,32 @@ import t from '../i18n/Translator';
 import OfflineNotification from '../components/OfflineNotification';
 import WorkshopFavorite from '../dataobjects/WorkshopFavorite';
 import WorkshopFavoriteListItem from '../components/WorkshopFavoriteListItem';
+// @ts-ignore
+import SwipeList from 'react-native-smooth-swipe-list';
+import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
+import { workshopFavoriteRemoved } from '../store/global/actions';
+import addFavoriteToCalender, { SimpleCalendar } from '../actions/AddFavoriteToCalender';
+import LOGGER from '../utils/Logger';
 
-interface IYourWorkshopScreenProps {
+interface IYourWorkshopsScreenProps {
   dispatch: Dispatch;
   favorites: WorkshopFavorite[];
   navigation: any;
 }
 
-class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
+class YourWorkshopsScreen extends React.Component<IYourWorkshopsScreenProps> {
+
+  private swipeList: any;
+
+  constructor(props: IYourWorkshopsScreenProps) {
+    super(props);
+  }
 
   // noinspection JSUnusedGlobalSymbols
   static navigationOptions = {
     title: t('Your workshops')
   };
-
-  private keyExtractor = (item: any, index: number): string => `${index}`;
 
   render(): any {
     if (this.props.favorites.length === 0) {
@@ -46,17 +57,50 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
       a.workshopEvent.startTimeObject.diff(b.workshopEvent.startTimeObject)
     );
 
+    const data: any[] = [];
+    orderedFavorites.map((fav: WorkshopFavorite) => {
+      const obj = {
+        id: fav.workshopEvent.guid + Math.random(),
+        rowView: (<WorkshopFavoriteListItem
+            favorite={fav}
+            dispatch={this.props.dispatch}
+            navigation={this.props.navigation} />),
+        leftSubView: (
+            <TouchableOpacity onPress={() => {
+              addFavoriteToCalender()
+                  .then((calendars) => {
+                    this.props.navigation.navigate(
+                        'SelectCalendarScreen',
+                        { calendars: calendars, fav: fav });
+                  })
+                  .catch((error) => LOGGER.error(error));
+            }}>
+              <View style={[styles.iconContainer, styles.leftContainerIcon]}>
+                <MaterialCommunityIcons name={'calendar-clock'} size={32} color={Colors.textWhite}/>
+              </View>
+            </TouchableOpacity>
+        ),
+        rightSubView: (
+            <TouchableOpacity onPress={() => this.props.dispatch(workshopFavoriteRemoved(fav))}>
+              <View style={[styles.iconContainer, styles.rightIconContainer]}>
+                <Entypo name={'trash'} size={32} color={Colors.black}/>
+              </View>
+            </TouchableOpacity>
+        ),
+        leftSubViewOptions: {
+          closeOnPress: false
+        }
+      };
+      data.push(obj);
+    });
+
     return (
-        <FlatList
-            keyExtractor={this.keyExtractor}
-            data={orderedFavorites}
-            renderItem={({ item }: {item: WorkshopFavorite}): any => {
-              return (<WorkshopFavoriteListItem
-                  favorite={item}
-                  dispatch={this.props.dispatch}
-                  navigation={this.props.navigation} />);
-            }}
-        />
+        <View>
+          <SwipeList
+              ref={(component: any) => this.swipeList = component}
+              rowData={data}
+          />
+        </View>
     );
   }
 }
@@ -88,5 +132,30 @@ const styles = StyleSheet.create({
   },
   noBookmarksLabel: {
     textAlign: 'center'
+  },
+  rowBack: {
+    alignItems: 'center',
+    backgroundColor: '#DDD',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15
+  },
+  iconContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  leftContainerIcon: {
+    justifyContent: 'flex-start',
+    paddingLeft: 200,
+    paddingRight: 20,
+    backgroundColor: Colors.addToCalendar
+  },
+  rightIconContainer: {
+    justifyContent: 'flex-end',
+    paddingRight: 200,
+    paddingLeft: 20,
+    backgroundColor: Colors.removeFromFavorite
   }
 });

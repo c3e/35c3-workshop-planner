@@ -31,5 +31,10 @@
   "German": "German",
   "Change Language": "Change Language",
   "Force Update": "Force Update",
-  "Refresh now": "Refresh now"
+  "Refresh now": "Refresh now",
+  "Access to your calendar": "Access to your calendar",
+  "I cannot write an event to your calendar if you deny me access to your calendar.": "I cannot write an event to your calendar if you deny me access to your calendar.",
+  "Back": "Back",
+  "Choose a calendar for event": "Choose a calendar for event",
+  "Calendar entry added successfully": "Calendar entry added successfully"
 }

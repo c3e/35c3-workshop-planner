@@ -31,5 +31,10 @@
   "German": "German",
   "Change Language": "Sprache ändern",
   "Force Update": "Sofortiges Update",
-  "Refresh now": "Jetzt aktuallisieren"
+  "Refresh now": "Jetzt aktuallisieren",
+  "Access to your calendar": "Zugriff auf deinen Calendar",
+  "I cannot write an event to your calendar if you deny me access to your calendar.": "Ich kann leider das Event nicht in deinen Kalender eintragen, da mir der Zugriff verweigert wurde.",
+  "Back": "Zurück",
+  "Choose a calendar for event": "Wähle einen Kalender für das Event",
+  "Calendar entry added successfully": "Kalender-Eintrag erfolgreich angelegt"
 }

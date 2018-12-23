@@ -7,10 +7,12 @@ import DiscoverWorkshopsScreen from '../screens/DiscoverWorkshopsScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import t from '../i18n/Translator';
 import WorkshopDetailsScreen from '../screens/WorkshopDetailsScreen';
+import SelectCalendarScreen from '../screens/SelectCalendarScreen';
 
 const YourWorkshopStack = createStackNavigator({
   YourWorkshopsScreen,
-  WorkshopDetailsScreen
+  WorkshopDetailsScreen,
+  SelectCalendarScreen
 });
 
 // noinspection JSUnusedGlobalSymbols

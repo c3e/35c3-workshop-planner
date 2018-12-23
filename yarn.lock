@@ -7037,6 +7037,14 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-addons-shallow-compare@^15.6.2:
+  version "15.6.2"
+  resolved "https://registry.yarnpkg.com/react-addons-shallow-compare/-/react-addons-shallow-compare-15.6.2.tgz#198a00b91fc37623db64a28fd17b596ba362702f"
+  integrity sha1-GYoAuR/DdiPbZKKP0XtZa6NicC8=
+  dependencies:
+    fbjs "^0.8.4"
+    object-assign "^4.1.0"
+
 react-clone-referenced-element@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.1.0.tgz#9cdda7f2aeb54fea791f3ab8c6ab96c7a77d0158"
@@ -7180,6 +7188,16 @@ react-native-scripts-ts@1.15.0:
     qrcode-terminal "^0.11.0"
     rimraf "^2.6.1"
     xdl "48.1.4"
+
+react-native-smooth-swipe-list@^1.4.7:
+  version "1.4.7"
+  resolved "https://registry.yarnpkg.com/react-native-smooth-swipe-list/-/react-native-smooth-swipe-list-1.4.7.tgz#ff8729f637fb13e2ed684e3f2b64e6da3f6f1709"
+  integrity sha512-pciXmmEI/jTZd401B3I98rIL38uhuG640eg/1EW6FKKA3sfKwQ29RPN0q645mQuIoJ67lciDNcgnM1HRzXF5xA==
+  dependencies:
+    create-react-class "^15.6.3"
+    lodash "^4.17.4"
+    prop-types "^15.6.0"
+    react-addons-shallow-compare "^15.6.2"
 
 react-native-svg@8.0.8:
   version "8.0.8"
