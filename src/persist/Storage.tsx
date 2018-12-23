@@ -30,5 +30,6 @@ export async function retrieveData (key: StorageKeys): Promise<string | null> {
 export enum StorageKeys {
   'SETTINGS' = 'SETTINGS',
   'SESSIONS' = 'SESSIONS',
-  'FAVORITES' = 'FAVORITES'
+  'FAVORITES' = 'FAVORITES',
+  'LANGUAGE' = 'LANGUAGE'
 }

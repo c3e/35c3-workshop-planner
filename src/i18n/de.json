@@ -14,6 +14,7 @@
   "unknown": "unbekannt",
   "duration": "Dauer",
   "min.": "min.",
+  "min": "min",
   "Select a day": "Wähle einen Tag",
   "Day 1": "Tag 1",
   "Day 2": "Tag 2",
@@ -25,5 +26,8 @@
   "Contact - phone": "Kontakt - phone",
   "Workshops update Frequency": "Workshops update Zyklus",
   "every": "alle",
-  "minutes": "Minuten"
+  "minutes": "Minuten",
+  "Englisch": "Englisch",
+  "German": "German",
+  "Change Language": "Sprache ändern"
 }

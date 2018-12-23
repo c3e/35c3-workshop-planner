@@ -167,7 +167,8 @@ const Color = ({ value }: any) => {
 
 const mapStateToProps = ({ global }: ApplicationState) => ({
   currentWorkshop: global.currentWorkshop,
-  currentEvent: global.currentEvent
+  currentEvent: global.currentEvent,
+  currentLanguage: global.currentLanguage
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

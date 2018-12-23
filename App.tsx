@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 // @ts-ignore
 import SpaceMonoRegular from './src/assets/fonts/SpaceMono-Regular.ttf';
 import { loadWorkshopData, loadWorkshopFavorites } from './src/actions/Load';
-import { retrieveData, StorageKeys } from './src/persist/Storage';
 
 // disable debugger warning
 YellowBox.ignoreWarnings(['Remote debugger']);

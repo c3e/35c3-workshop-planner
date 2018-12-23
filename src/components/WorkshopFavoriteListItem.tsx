@@ -45,8 +45,6 @@ export default class WorkshopFavoriteListItem extends Component<IWorkshopFavorit
     }
     now.add(1, 'hours'); // We are in germany... the saved times are utc...
 
-    console.log(now);
-
     const workshopRunning = now.isBetween(event.startTimeObject, event.endTimeObject);
     const isInPast = now.isAfter(event.endTimeObject);
 

@@ -18,8 +18,11 @@ export default function t(text: string): string {
       break;
     default: {
       currentLanguage = EN;
+      break;
     }
   }
+
+  console.log(currentLanguage[text]);
 
   if (!currentLanguage.hasOwnProperty(text)) {
     LOGGER.info(`Missing translation for key: "${text}"`);

@@ -62,7 +62,8 @@ class YourWorkshopsScreen extends React.Component<IYourWorkshopScreenProps> {
 }
 
 const mapStateToProps = ({ global }: ApplicationState) => ({
-  favorites: global.favorites
+  favorites: global.favorites,
+  currentLanguage: global.currentLanguage
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

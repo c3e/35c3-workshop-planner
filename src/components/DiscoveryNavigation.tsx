@@ -43,7 +43,6 @@ class DiscoveryNavigation extends React.Component<IDiscoveryNavigationProps, IDi
                   this.setState({
                     selectedDate: value
                   });
-                  console.log(value);
                   this.props.dispatch(selectedDateChanged(value));
                 }}
                 onUpArrow={() => {

@@ -42,7 +42,9 @@ class DiscoverWorkshopsScreen
 
   render(): any {
     const locations = this.getLocations(this.props.rooms);
-    console.log(locations);
+    if (__DEV__) {
+      LOGGER.debug(locations);
+    }
     const selectedDateObj = parseZone(this.props.selectedDate, 'YYYY/MM/DD');
     const year = selectedDateObj.year();
     const month = selectedDateObj.month() + 1;
@@ -153,7 +155,8 @@ class DiscoverWorkshopsScreen
 const mapStateToProps = ({ global }: ApplicationState) => ({
   workshops: global.workshops,
   rooms: global.rooms,
-  selectedDate: global.selectedDate
+  selectedDate: global.selectedDate,
+  currentLanguage: global.currentLanguage
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

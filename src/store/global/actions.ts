@@ -3,6 +3,7 @@ import { GlobalActionTypes } from './types';
 import WorkshopSession from '../../dataobjects/WorkshopSession';
 import WorkshopEvent from '../../dataobjects/WorkshopEvent';
 import WorkshopFavorite from '../../dataobjects/WorkshopFavorite';
+import { AvailableLanguages } from '../../i18n/AvailableLanguages';
 // Here we use the `action` helper function provided by `typesafe-actions`.
 // This library provides really useful helpers for writing Redux actions in a type-safe manner.
 // For more info: https://github.com/piotrwitek/typesafe-actions
@@ -27,3 +28,7 @@ export const newWorkshopFavoriteAdded = (favorite: WorkshopFavorite) => action<s
 export const workshopFavoriteRemoved = (favorite: WorkshopFavorite) => action<string, WorkshopFavorite>(GlobalActionTypes.WORKSHOP_FAVORITE_REMOVED, favorite);
 
 export const workshopFavoritesLoaded = (favorites: WorkshopFavorite[]) => action<string, WorkshopFavorite[]>(GlobalActionTypes.WORKSHOP_FAVORITES_LOADED, favorites);
+
+export const languageChanged = (lang: AvailableLanguages) => action<string, AvailableLanguages>(
+    GlobalActionTypes.LANGUAGE_CHANGED, lang
+);

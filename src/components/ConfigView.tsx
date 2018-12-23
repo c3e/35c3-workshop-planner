@@ -1,15 +1,21 @@
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
-import { SectionList, Image, StyleSheet, Text, View } from 'react-native';
+import { Image, SectionList, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo';
 import OfflineNotification from './OfflineNotification';
 import t from '../i18n/Translator';
 import { parseZone } from 'moment';
 // @ts-ignore
 import TimerMixin from 'react-timer-mixin';
+import { ButtonGroup } from 'react-native-elements';
+import { Dispatch } from 'redux';
+import { AvailableLanguages } from '../i18n/AvailableLanguages';
+import { languageChanged } from '../store/global/actions';
 
 interface IConfigViewProps {
   lastApiUpdate: number;
   updateApiFrequency: number;
+  dispatch: Dispatch;
+  currentLanguage: AvailableLanguages;
 }
 
 interface IConfigViewState {
@@ -47,7 +53,8 @@ export default class ConfigView extends React.Component<IConfigViewProps, IConfi
       },
       { data: [{ value: 'Van Fanel' }], title: t('Author') },
       { data: [{ value: 'vanfanel@quantentunnel.de' }], title: t('Contact - email') },
-      { data: [{ value: 'DECT: 8263' }], title: t('Contact - phone') }
+      { data: [{ value: 'DECT: 8263' }], title: t('Contact - phone') },
+      { data: [{ value: [], type: 'language' }], title: t('Change Language') }
     ];
 
     return (
@@ -73,10 +80,34 @@ export default class ConfigView extends React.Component<IConfigViewProps, IConfi
   }
 
   _renderItem = ({ item }: any) => {
-    if (item.type === 'color') {
+    if (item.type === 'language') {
+
+      const component1 = () => (<Text>{t('Englisch')}</Text>);
+      const component2 = () => (<Text>{t('German')}</Text>);
+      const buttons = [{ element: component1 }, { element: component2 }];
+
+      let selectedIndex = 0;
+      if (this.props.currentLanguage === 0) {
+        selectedIndex = 0;
+      }
+      if (this.props.currentLanguage === 1) {
+        selectedIndex = 1;
+      }
+
       return (
           <SectionContent>
-            {item.value && <Color value={item.value} />}
+              <ButtonGroup
+                  onPress={(selectedIndex) => {
+                    if (selectedIndex === 0) {
+                      this.props.dispatch(languageChanged(AvailableLanguages.en));
+                    }
+                    if (selectedIndex === 1) {
+                      this.props.dispatch(languageChanged(AvailableLanguages.de));
+                    }
+                  }}
+                  selectedIndex={selectedIndex}
+                  buttons={buttons}
+                  containerStyle={styles.chooseLanguageContainer} />
           </SectionContent>
       );
     } else {
@@ -238,5 +269,8 @@ const styles = StyleSheet.create({
   },
   colorTextContainer: {
     flex: 1
+  },
+  chooseLanguageContainer: {
+    height: 20
   }
 });

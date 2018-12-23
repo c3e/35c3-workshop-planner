@@ -4,6 +4,7 @@ import LOGGER from '../../utils/Logger';
 import { StorageKeys, storeData } from '../../persist/Storage';
 import { parseRoomsFrom } from '../../helper/RoomParser';
 import WorkshopFavorite from '../../dataobjects/WorkshopFavorite';
+import AppSettings from '../../helper/AppSettings';
 
 // Type-safe initialState
 const initialState: GlobalState = defaultGlobalState;
@@ -35,6 +36,17 @@ const reducer: Reducer<GlobalState> = (state = initialState, action: any) => {
     }
     case GlobalActionTypes.WORKSHOP_FAVORITES_LOADED: {
       return { ...state, favorites: action.payload };
+    }
+    case GlobalActionTypes.LANGUAGE_CHANGED: {
+      AppSettings.LANGUAGE = action.payload;
+      storeData(StorageKeys.LANGUAGE, action.payload)
+          .then((val) => {
+            LOGGER.debug(`WorkshopFavorites stored call result in : ${val}`);
+          })
+          .catch((e) => {
+            LOGGER.error(`Cannot store workshop list. Error: ${e}`);
+          });
+      return { ...state, currentLanguage: action.payload };
     }
     case GlobalActionTypes.NEW_WORKSHOP_FAVORITE_ADDED: {
       const newFav: WorkshopFavorite = action.payload;

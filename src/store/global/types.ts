@@ -2,6 +2,8 @@ import WorkshopSession from '../../dataobjects/WorkshopSession';
 import WorkshopEvent from '../../dataobjects/WorkshopEvent';
 import t from '../../i18n/Translator';
 import WorkshopFavorite from '../../dataobjects/WorkshopFavorite';
+import { AvailableLanguages } from '../../i18n/AvailableLanguages';
+import AppSettings from '../../helper/AppSettings';
 
 export interface GlobalState {
   workshops: WorkshopSession[];
@@ -12,6 +14,7 @@ export interface GlobalState {
   selectedDate: '2018/12/27' | '2018/12/28' | '2018/12/29' | '2018/12/30';
   lastApiUpdate: number;
   updateApiFrequency: number;
+  currentLanguage: AvailableLanguages;
 }
 
 export const VALID_DATES = [
@@ -28,7 +31,8 @@ export const defaultGlobalState: GlobalState = {
   rooms: [],
   selectedDate: '2018/12/27',
   lastApiUpdate: 0,
-  updateApiFrequency: 15 * 60 * 1000
+  updateApiFrequency: 15 * 60 * 1000,
+  currentLanguage: AppSettings.LANGUAGE
 } ;
 
 // Use `const enum`s for better autocompletion of action type names. These will
@@ -45,5 +49,6 @@ export enum GlobalActionTypes {
   API_UPDATE_FREQUENCY_CHANGED = '@@global/API_UPDATE_FREQUENCY_CHANGED',
   NEW_WORKSHOP_FAVORITE_ADDED = '@@global/NEW_WORKSHOP_FAVORITE_ADDED',
   WORKSHOP_FAVORITE_REMOVED = '@@global/WORKSHOP_FAVORITE_REMOVED',
-  WORKSHOP_FAVORITES_LOADED = '@@global/WORKSHOP_FAVORITES_LOADED'
+  WORKSHOP_FAVORITES_LOADED = '@@global/WORKSHOP_FAVORITES_LOADED',
+  LANGUAGE_CHANGED = '@@global/LANGUAGE_CHANGED'
 }
