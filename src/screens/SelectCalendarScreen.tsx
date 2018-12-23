@@ -37,8 +37,8 @@ export default class SelectCalendarScreen extends Component<ISelectCalendarScree
                     onPress={async () => {
                       const details = {
                         title: fav.workshopSession.title,
-                        startDate: fav.workshopEvent.startTimeObject.toDate(),
-                        endDate: fav.workshopEvent.endTimeObject.toDate(),
+                        startDate: fav.workshopEvent.startTimeObject.subtract(1, 'hours').toDate(),
+                        endDate: fav.workshopEvent.endTimeObject.subtract(1, 'hours').toDate(),
                         allDay: false,
                         location: fav.workshopEvent.location,
                         timeZone: Localization.timezone
