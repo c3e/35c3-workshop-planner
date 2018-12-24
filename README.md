@@ -2,6 +2,9 @@
 This is an expo.io app for mobile devices to plan your workshops at the 35c3 event in Leipzig
 
 
+## DOWNLOAD
+[Version 1.0.0](app-releases/35c3-workshop-planner-23ca4b2f7f1d49eb932bc333e0d163a3-signed.v1.0.0.apk)
+
 ## Software to build this project
 
 First you need node.js
