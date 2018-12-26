@@ -80,7 +80,6 @@ class DiscoverWorkshopsScreen
     const date = selectedDateObj.date();
     const startHour = this.getStartHourFor(this.props.selectedTimeFilter);
     const lengthInHour = this.getLengthInHourFor(this.props.selectedTimeFilter);
-    console.log(startHour, lengthInHour);
     const lengthInMilli = lengthInHour * 60 * 60 * 1000; // in milliseconds
     const startObject = parseZone(`${year}/${month}/${date} ${startHour}:00`, 'YYYY/MM/DD H:mm');
     const events: WorkshopEvent[] = [];

@@ -29,7 +29,6 @@ const reducer: Reducer<GlobalState> = (state = initialState, action: any) => {
       return { ...state, selectedDate: action.payload };
     }
     case GlobalActionTypes.SELECTED_TIME_FILTER_CHANGED: {
-      console.log(action.payload);
       return { ...state, selectedTimeFilter: action.payload };
     }
     case GlobalActionTypes.LAST_API_UPDATE_CHANGED: {
