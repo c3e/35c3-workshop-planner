@@ -3,7 +3,7 @@ import LOGGER from '../utils/Logger';
 import { Dispatch } from 'redux';
 import { lastApiUpdateChanged, workshopFavoritesLoaded, workshopsLoaded } from '../store/global/actions';
 import WorkshopSession from '../dataobjects/WorkshopSession';
-import { resetData, retrieveData, StorageKeys } from '../persist/Storage';
+import { retrieveData, StorageKeys } from '../persist/Storage';
 import WorkshopFavorite from '../dataobjects/WorkshopFavorite';
 
 export async function loadWorkshopData(dispatch: Dispatch, lastUpdate: number,
@@ -12,7 +12,6 @@ export async function loadWorkshopData(dispatch: Dispatch, lastUpdate: number,
   if (loadFromStore) {
     LOGGER.debug('Start loading workshops from store');
     try {
-      await resetData(StorageKeys.SESSIONS);
       const loadedFromStore = await retrieveData(StorageKeys.SESSIONS);
       const workshops: WorkshopSession[] = [];
       if (loadedFromStore !== null) {
