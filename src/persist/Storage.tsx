@@ -27,6 +27,18 @@ export async function retrieveData (key: StorageKeys): Promise<string | null> {
   return null;
 }
 
+export async function resetData (key: StorageKeys): Promise<void> {
+  try {
+    await AsyncStorage.removeItem(`WORKSHOP_PLANNER:${key}`);
+    LOGGER.info(`Storage: Reset Key "${key}"`);
+    return;
+  } catch (error) {
+    // Error retrieving data
+    LOGGER.error(`Error on reset key "${key}"`);
+  }
+  return;
+}
+
 export enum StorageKeys {
   'SETTINGS' = 'SETTINGS',
   'SESSIONS' = 'SESSIONS',

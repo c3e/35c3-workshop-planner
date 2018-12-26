@@ -8,7 +8,7 @@ import GetSessionsData from './GetSessionsData';
 export default class GetAllSessions {
 
   // wiki api url for all sessions
-  private static API_URL = 'https://events.ccc.de/congress/2018/wiki/api.php?action=query&format=json&list=categorymembers&cmprop=ids|title|type|sortkey|timestamp&cmlimit=5000&cmtitle=Category:Session';
+  private static API_URL = 'https://events.cccccc.de/congress/2018/wiki/api.php?action=query&format=json&list=categorymembers&cmprop=ids|title|type|sortkey|timestamp&cmlimit=5000&cmtitle=Category:Session';
 
   private _dispatcher: Dispatch;
   private _getSessionsData: GetSessionsData;
@@ -38,7 +38,7 @@ export default class GetAllSessions {
     return new Promise(async (resolve, reject) => {
 
       if (AppSettings.OFFLINE_DEBUG) {
-        const result = require('../helper/offline-debug.json');
+        const result = require('../helper/offlineBackup.json');
         const workshops: WorkshopSession[] = [];
         result.forEach((w: any) => {
           workshops.push(WorkshopSession.buildFromStoreObject(w));
