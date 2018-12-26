@@ -17,7 +17,7 @@ class Chunk {
 export default class GetSessionsData {
 
   // wiki api url for all sessions
-  private static API_URL = 'https://events.cccccc.de/congress/2018/wiki/api.php?action=query&prop=revisions&rvprop=ids|timestamp|user|userid|size|tags|parsetree&format=json&pageids=';
+  private static API_URL = 'https://events.ccc.de/congress/2018/wiki/api.php?action=query&prop=revisions&rvprop=ids|timestamp|user|userid|size|tags|parsetree&format=json&pageids=';
 
   private static OFFLINE_DEBUG_LIST: WorkshopSession[] = [];
 
