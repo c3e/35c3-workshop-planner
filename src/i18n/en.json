@@ -36,5 +36,9 @@
   "I cannot write an event to your calendar if you deny me access to your calendar.": "I cannot write an event to your calendar if you deny me access to your calendar.",
   "Back": "Back",
   "Choose a calendar for event": "Choose a calendar for event",
-  "Calendar entry added successfully": "Calendar entry added successfully"
+  "Calendar entry added successfully": "Calendar entry added successfully",
+  "Select time filter": "Select time filter",
+  "Hole Day": "Hole Day",
+  "Next 6h": "Next 6h",
+  "Now": "Now"
 }

@@ -19,6 +19,8 @@ export const currentWorkshopSelected = (workshop: WorkshopSession, event: Worksh
 
 export const selectedDateChanged = (date: string) => action<string, string>(GlobalActionTypes.SELECTED_DATE_CHANGED, date);
 
+export const selectedTimeFilterChanged = (filter: string) => action<string, string>(GlobalActionTypes.SELECTED_TIME_FILTER_CHANGED, filter);
+
 export const apiUpdateFrequencyChanged = (frequency: number) => action<string, number>(GlobalActionTypes.API_UPDATE_FREQUENCY_CHANGED, frequency);
 
 export const lastApiUpdateChanged = (time: number) => action<string, number>(GlobalActionTypes.LAST_API_UPDATE_CHANGED, time);

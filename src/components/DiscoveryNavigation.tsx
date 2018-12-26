@@ -1,21 +1,23 @@
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
 import { StyleSheet, View } from 'react-native';
-import RNPickerSelect, { Item } from 'react-native-picker-select';
+import RNPickerSelect from 'react-native-picker-select';
 import { ApplicationState } from '../store';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import t from '../i18n/Translator';
-import { VALID_DATES } from '../store/global/types';
-import { selectedDateChanged } from '../store/global/actions';
+import { DAY_FILTER_OPTIONS, VALID_DATES } from '../store/global/types';
+import { selectedDateChanged, selectedTimeFilterChanged } from '../store/global/actions';
 
 interface IDiscoveryNavigationProps {
   selectedDate: string;
   dispatch: Dispatch;
+  selectedTimeFilter: string;
 }
 
 interface IDiscoveryNavigationState {
   counter: number;
   selectedDate: string;
+  selectedTimeFilter: string;
 }
 
 class DiscoveryNavigation extends React.Component<IDiscoveryNavigationProps, IDiscoveryNavigationState> {
@@ -24,7 +26,8 @@ class DiscoveryNavigation extends React.Component<IDiscoveryNavigationProps, IDi
     super(props);
     this.state = {
       counter: 0,
-      selectedDate: this.props.selectedDate
+      selectedDate: this.props.selectedDate,
+      selectedTimeFilter: this.props.selectedTimeFilter
     };
   }
 
@@ -58,13 +61,40 @@ class DiscoveryNavigation extends React.Component<IDiscoveryNavigationProps, IDi
                 }}
             />
           </View>
+          <View style={styles.timeFilterContainer}>
+            <RNPickerSelect
+                placeholder={{
+                  label: t('Select time filter'),
+                  value: t('Hole Day'),
+                  color: '#9EA0A4'
+                }}
+                items={DAY_FILTER_OPTIONS}
+                onValueChange={(value) => {
+                  this.setState({
+                    selectedTimeFilter: value
+                  });
+                  this.props.dispatch(selectedTimeFilterChanged(value));
+                }}
+                onUpArrow={() => {
+                  // this.inputRefs.name.focus();
+                }}
+                onDownArrow={() => {
+                  // this.inputRefs.picker2.togglePicker();
+                }}
+                value={this.state.selectedTimeFilter}
+                ref={(el) => {
+                  // this.inputRefs.picker = el;
+                }}
+            />
+          </View>
         </View>
     );
   }
 }
 
 const mapStateToProps = ({ global }: ApplicationState) => ({
-  selectedDate: global.selectedDate
+  selectedDate: global.selectedDate,
+  selectedTimeFilter: global.selectedTimeFilter
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -103,10 +133,18 @@ const styles = StyleSheet.create({
   headerContainer: {
     width: '100%',
     height: 44,
-    borderWidth: 0
+    borderWidth: 0,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   dayPickerContainer: {
     width: '33%',
+    height: 44,
+    borderWidth: 0
+  },
+  timeFilterContainer: {
+    width: '40%',
     height: 44,
     borderWidth: 0
   }

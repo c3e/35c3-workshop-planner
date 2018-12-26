@@ -4,6 +4,7 @@ import t from '../../i18n/Translator';
 import WorkshopFavorite from '../../dataobjects/WorkshopFavorite';
 import { AvailableLanguages } from '../../i18n/AvailableLanguages';
 import AppSettings from '../../helper/AppSettings';
+import { WorkshopFilterOptions } from '../../constants/WorkshopFilterOptions';
 
 export interface GlobalState {
   workshops: WorkshopSession[];
@@ -12,6 +13,7 @@ export interface GlobalState {
   favorites: WorkshopFavorite[];
   rooms: string[];
   selectedDate: '2018/12/27' | '2018/12/28' | '2018/12/29' | '2018/12/30';
+  selectedTimeFilter: WorkshopFilterOptions.DAY | WorkshopFilterOptions.SIX_HOURS | WorkshopFilterOptions.NOW;
   lastApiUpdate: number;
   updateApiFrequency: number;
   currentLanguage: AvailableLanguages;
@@ -23,6 +25,12 @@ export const VALID_DATES = [
     { label: t('Day 3'), value: '2018/12/29' },
     { label: t('Day 4'), value: '2018/12/30' }];
 
+export const DAY_FILTER_OPTIONS = [
+    { label: t('Hole Day'), value: WorkshopFilterOptions.DAY },
+    { label: t('Next 6h'), value: WorkshopFilterOptions.SIX_HOURS },
+    { label: t('Now'), value: WorkshopFilterOptions.NOW }
+];
+
 export const defaultGlobalState: GlobalState = {
   workshops: [],
   currentWorkshop: null,
@@ -32,7 +40,8 @@ export const defaultGlobalState: GlobalState = {
   selectedDate: '2018/12/27',
   lastApiUpdate: 0,
   updateApiFrequency: 15 * 60 * 1000,
-  currentLanguage: AppSettings.LANGUAGE
+  currentLanguage: AppSettings.LANGUAGE,
+  selectedTimeFilter: WorkshopFilterOptions.DAY
 } ;
 
 // Use `const enum`s for better autocompletion of action type names. These will
@@ -50,5 +59,6 @@ export enum GlobalActionTypes {
   NEW_WORKSHOP_FAVORITE_ADDED = '@@global/NEW_WORKSHOP_FAVORITE_ADDED',
   WORKSHOP_FAVORITE_REMOVED = '@@global/WORKSHOP_FAVORITE_REMOVED',
   WORKSHOP_FAVORITES_LOADED = '@@global/WORKSHOP_FAVORITES_LOADED',
-  LANGUAGE_CHANGED = '@@global/LANGUAGE_CHANGED'
+  LANGUAGE_CHANGED = '@@global/LANGUAGE_CHANGED',
+  SELECTED_TIME_FILTER_CHANGED = '@@global/SELECTED_TIME_FILTER_CHANGED'
 }

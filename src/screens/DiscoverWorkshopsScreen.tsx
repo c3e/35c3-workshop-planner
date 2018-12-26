@@ -10,11 +10,13 @@ import DiscoveryNavigation from '../components/DiscoveryNavigation';
 import Location from '../dataobjects/Location';
 import WorkshopEvent from '../dataobjects/WorkshopEvent';
 import LOGGER from '../utils/Logger';
-import { parseZone } from 'moment';
+// @ts-ignore
+import moment, { Moment, parseZone } from 'moment';
 import * as React from 'react';
 import { currentWorkshopSelected } from '../store/global/actions';
 import t from '../i18n/Translator';
 import { onlyUnique } from '../helper/ArrayHelper';
+import { WorkshopFilterOptions } from '../constants/WorkshopFilterOptions';
 
 interface IDiscoverWorkshopsScreenProps {
   workshops: WorkshopSession[];
@@ -22,6 +24,7 @@ interface IDiscoverWorkshopsScreenProps {
   rooms: string[];
   navigation: any;
   selectedDate: string;
+  selectedTimeFilter: WorkshopFilterOptions;
 }
 
 interface IDiscoverWorkshopsScreenState {
@@ -40,6 +43,32 @@ class DiscoverWorkshopsScreen
     headerStyle: { borderWidth: 0, borderBottom: 0, margin: 0 }
   };
 
+  private getStartHourFor(filter: WorkshopFilterOptions): number {
+    switch (filter) {
+      case WorkshopFilterOptions.DAY:
+        return 8;
+      case WorkshopFilterOptions.SIX_HOURS:
+      case WorkshopFilterOptions.NOW:
+        const hour = moment().hour() - 1;
+        return hour >= 0 ? hour : 0;
+      default:
+        return 8;
+    }
+  }
+
+  private getLengthInHourFor(filter: WorkshopFilterOptions): number {
+    switch (filter) {
+      case WorkshopFilterOptions.DAY:
+        return 18;
+      case WorkshopFilterOptions.SIX_HOURS:
+        return 6;
+      case WorkshopFilterOptions.NOW:
+        return 2;
+      default:
+        return 18;
+    }
+  }
+
   render(): any {
     const locations = this.getLocations(this.props.rooms);
     if (__DEV__) {
@@ -49,8 +78,9 @@ class DiscoverWorkshopsScreen
     const year = selectedDateObj.year();
     const month = selectedDateObj.month() + 1;
     const date = selectedDateObj.date();
-    const startHour = 8;
-    const lengthInHour = 18;
+    const startHour = this.getStartHourFor(this.props.selectedTimeFilter);
+    const lengthInHour = this.getLengthInHourFor(this.props.selectedTimeFilter);
+    console.log(startHour, lengthInHour);
     const lengthInMilli = lengthInHour * 60 * 60 * 1000; // in milliseconds
     const startObject = parseZone(`${year}/${month}/${date} ${startHour}:00`, 'YYYY/MM/DD H:mm');
     const events: WorkshopEvent[] = [];
@@ -156,7 +186,8 @@ const mapStateToProps = ({ global }: ApplicationState) => ({
   workshops: global.workshops,
   rooms: global.rooms,
   selectedDate: global.selectedDate,
-  currentLanguage: global.currentLanguage
+  currentLanguage: global.currentLanguage,
+  selectedTimeFilter: global.selectedTimeFilter
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
