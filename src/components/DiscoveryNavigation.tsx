@@ -7,11 +7,14 @@ import { connect } from 'react-redux';
 import t from '../i18n/Translator';
 import { DAY_FILTER_OPTIONS, VALID_DATES } from '../store/global/types';
 import { selectedDateChanged, selectedTimeFilterChanged } from '../store/global/actions';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Colors from '../constants/Colors';
 
 interface IDiscoveryNavigationProps {
   selectedDate: string;
   dispatch: Dispatch;
   selectedTimeFilter: string;
+  navigation: any;
 }
 
 interface IDiscoveryNavigationState {
@@ -59,6 +62,7 @@ class DiscoveryNavigation extends React.Component<IDiscoveryNavigationProps, IDi
                 ref={(el) => {
                   // this.inputRefs.picker = el;
                 }}
+                useNativeAndroidPickerStyle={true}
             />
           </View>
           <View style={styles.timeFilterContainer}>
@@ -81,10 +85,18 @@ class DiscoveryNavigation extends React.Component<IDiscoveryNavigationProps, IDi
                 onDownArrow={() => {
                   // this.inputRefs.picker2.togglePicker();
                 }}
+                style={{ styles }}
                 value={this.state.selectedTimeFilter}
                 ref={(el) => {
                   // this.inputRefs.picker = el;
                 }}
+                useNativeAndroidPickerStyle={true}
+            />
+          </View>
+          <View style={styles.searchIconContainer}>
+            <MaterialCommunityIcons
+                name={'database-search'} size={30} color={Colors.black}
+                onPress={() => this.props.navigation.navigate('SearchScreen')}
             />
           </View>
         </View>
@@ -147,5 +159,11 @@ const styles = StyleSheet.create({
     width: '40%',
     height: 44,
     borderWidth: 0
+  },
+  searchIconContainer: {
+    width: 32,
+    height: 32,
+    alignSelf: 'center',
+    marginRight: 5
   }
 });

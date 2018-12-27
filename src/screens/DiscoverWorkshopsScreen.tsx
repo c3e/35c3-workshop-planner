@@ -17,6 +17,7 @@ import { currentWorkshopSelected } from '../store/global/actions';
 import t from '../i18n/Translator';
 import { onlyUnique } from '../helper/ArrayHelper';
 import { WorkshopFilterOptions } from '../constants/WorkshopFilterOptions';
+import { NavigationComponent, NavigationScreenConfig } from 'react-navigation';
 
 interface IDiscoverWorkshopsScreenProps {
   workshops: WorkshopSession[];
@@ -38,10 +39,12 @@ class DiscoverWorkshopsScreen
   }
 
   // noinspection JSUnusedGlobalSymbols
-  static navigationOptions = {
-    headerTitle: <DiscoveryNavigation />,
-    headerStyle: { borderWidth: 0, borderBottom: 0, margin: 0 }
-  };
+  static navigationOptions: NavigationScreenConfig<any> = ({ navigation }: NavigationComponent) => {
+    return {
+      headerTitle: <DiscoveryNavigation navigation={navigation}/>,
+      headerStyle: { borderWidth: 0, borderBottom: 0, margin: 0 }
+    };
+  }
 
   private getStartHourFor(filter: WorkshopFilterOptions): number {
     switch (filter) {

@@ -8,6 +8,7 @@ import SettingsScreen from '../screens/SettingsScreen';
 import t from '../i18n/Translator';
 import WorkshopDetailsScreen from '../screens/WorkshopDetailsScreen';
 import SelectCalendarScreen from '../screens/SelectCalendarScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const YourWorkshopStack = createStackNavigator({
   YourWorkshopsScreen,
@@ -26,7 +27,8 @@ YourWorkshopStack.navigationOptions = {
 
 const DiscoverWorkshopsStack = createStackNavigator({
   DiscoverWorkshopsScreen,
-  WorkshopDetailsScreen
+  WorkshopDetailsScreen,
+  SearchScreen
 });
 
 // noinspection JSUnusedGlobalSymbols
