@@ -1,5 +1,5 @@
 import * as React from 'react'; // tslint:disable-line no-duplicate-imports
-import { SectionList, StyleSheet, Text, View } from 'react-native';
+import { SectionList, StyleSheet, Text, View, Linking } from 'react-native';
 import OfflineNotification from '../components/OfflineNotification';
 import t from '../i18n/Translator';
 import { connect } from 'react-redux';
@@ -11,6 +11,7 @@ import WorkshopEvent from '../dataobjects/WorkshopEvent';
 import AddToFavoriteButton from '../components/AddToFavoriteButton';
 import { GetIconBySessionType } from '../helper/IconSwitch';
 import Colors from '../constants/Colors';
+import * as querystring from 'querystring';
 
 interface IWorkshopDetailsScreenProps {
   currentWorkshop: WorkshopSession | null;
@@ -47,15 +48,29 @@ class WorkshopDetailsScreen extends React.Component<IWorkshopDetailsScreenProps>
       { data: [{ value: workshop.description }], title: t('Description') },
       { data: [{ value: workshop.organizedBy }], title: t('Orga') },
       { data: [{ value: workshop.orgaContact }], title: t('Orga Contact') },
-      { data: [{ value: event.location }], title: t('Location') },
-      { data: [{ value: `${event.startTime} - ${t('duration')}: ${event.duration}${t('min.')}` }], title: t('Starttime') },
+
+      { data: [{
+        value: event.location,
+        type: 'location'
+      }], title: t('Location') },
+
+      { data: [{
+        value: `${event.startTimeObject.format('MMMM Do YYYY, h:mm a')} - ${t('duration')}: ${event.duration}${t('min.')}`,
+        type: 'time'
+      }], title: t('Starttime') },
+
       { data: [{ value: workshop.tags.join(', ') }], title: t('Tags') },
       { data: [{ value: workshop.keywords.join(', ') }], title: t('Keywords') },
-      { data: [{ value: workshop.website }], title: t('Website') },
+
+      { data: [{
+        value: workshop.website,
+        type: 'link'
+      }], title: t('Website') },
+
       { data: [{ value: workshop.language }], title: t('Language') },
       { data: [{ value: workshop.sessionType }], title: 'Session Type' },
       { data: [{ value: workshop.forKids }], title: 'For Kids' },
-      { data: [{ value: workshop.timestamp }], title: 'Last Update' },
+      { data: [{ value: workshop.timestamp , type: 'timestamp' }], title: 'Last Update' },
       { data: [{ value: workshop.description }], title: 'Description - long' }
     ];
 
@@ -90,10 +105,33 @@ class WorkshopDetailsScreen extends React.Component<IWorkshopDetailsScreenProps>
   }
 
   _renderItem = ({ item }: any) => {
-    if (item.type === 'color') {
+    if (item.type === 'link') {
       return (
           <SectionContent>
-            {item.value && <Color value={item.value} />}
+            <Text style={styles.sectionLinkText} onPress={() => Linking.openURL(item.value)}>
+              {item.value}
+            </Text>
+          </SectionContent>
+      );
+    } else if (item.type === 'location') {
+      let location: string = item.value;
+      location = location.replace('Room:','');
+      location = location.replace('Assembly:','');
+      location = location.trim();
+      const url = `https://35c3.c3nav.de/`;
+      return (
+          <SectionContent>
+            <Text style={styles.sectionLinkText} onPress={() => Linking.openURL(encodeURI(url))}>
+              {item.value}
+            </Text>
+          </SectionContent>
+      );
+    } else if (item.type === 'time') {
+      return (
+          <SectionContent>
+            <Text style={styles.sectionContentText}>
+              {item.value}
+            </Text>
           </SectionContent>
       );
     } else {
@@ -225,6 +263,10 @@ const styles = StyleSheet.create({
   },
   sectionContentText: {
     color: '#808080',
+    fontSize: 14
+  },
+  sectionLinkText: {
+    color: Colors.fresh,
     fontSize: 14
   },
   nameText: {

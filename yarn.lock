@@ -882,6 +882,11 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.5.1.tgz#a38f69c62528d56ba7bd1f91335a8004988d72f7"
   integrity sha512-mNhVdZHdtKHMMxbqzNK3RzkBcN1cux3AvuCYGTvjEIQT2uheH3eCAyYsbMbh2Bq8nXkeOWs1kyDiF7geWRFQ4Q==
 
+"@types/query-string@^6.1.1":
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/@types/query-string/-/query-string-6.1.1.tgz#1cfd9209c8dbd91b940192c8a2b7005d2a743e6f"
+  integrity sha512-wRUeF7KN2yxCMw4VoXzPh3GWStbGaiyVjyX22fG7mpSzt6etLvsA2S0g0IuGeXGwVNIlztzVmGP6AxZMmYTQhw==
+
 "@types/react-native-vector-icons@*", "@types/react-native-vector-icons@^4.6.3":
   version "4.6.4"
   resolved "https://registry.yarnpkg.com/@types/react-native-vector-icons/-/react-native-vector-icons-4.6.4.tgz#83c2d88f0c2615a44b9059eb75c11f92702c1ee2"
